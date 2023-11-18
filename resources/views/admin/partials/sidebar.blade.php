@@ -16,7 +16,7 @@
 
             <li class="nav-label">Setting</li>
             <li><a href="#"><i class="fa fa-envelope-square"><span class="nav-text"> Jenis Surat</span></i></a></li>
-            <li><a href="#"><i class="fa fa-users"><span class="nav-text"> Bidang</span></i></a></li>
+            <li><a href="#"><i class="fa fa-building-o"><span class="nav-text"> Company</span></i></a></li>
             <li><a href="#"><i class="fa fa-tags"><span class="nav-text"> Approval</span></i></a></li>
             <li><a href="#"><i class="fa fa-user-circle"><span class="nav-text"> User</span></i></a></li>
             <li><a href="#"><i class="fa fa-cog"><span class="nav-text"> Role</span></i></a></li>

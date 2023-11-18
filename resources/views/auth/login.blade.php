@@ -41,7 +41,32 @@
             </div>
         </div>
     </div>
+@endsection
 
+@push('css')
+    <style type="text/css">
+        #showHidePassword {
+            position: relative;
+        }
+
+        .red-star::after {
+            content: '*';
+            color: red;
+        }
+
+
+        #togglePassword,
+        #togglePasswordConfirm {
+            position: absolute;
+            top: 52%;
+            right: 18px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+@endpush
+
+@push('js')
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -62,4 +87,4 @@
             });
         });
     </script>
-@endsection
+@endpush

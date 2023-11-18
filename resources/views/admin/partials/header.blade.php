@@ -22,6 +22,9 @@
 
     <!-- Focus Theme CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    @stack('css')
+
     <style type="text/css">
         .horizontal {
             border: 1px solid black;
@@ -30,7 +33,7 @@
         }
 
         #header {
-            background-color: #3b3384 !important;
+            background-color: var(--dishub-color) !important;
         }
     </style>
 

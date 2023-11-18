@@ -13,30 +13,13 @@
     <script src="{{ asset('vendor/moment/moment.min.js') }}"></script>
     <script src="{{ asset('vendor/moment/moment-with-timezone.min.js') }}"></script>
     <script src="{{ asset('vendor/moment/moment-with-locale.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/time.js') }}"></script>
 
     <script src="{{ asset('vendor/highlightjs/highlight.pack.min.js') }}"></script>
     <!-- Circle progress -->
 
-    <script type="text/javascript">
-        let datetime = null,
-            date = null;
+    @stack('js')
 
-        let updateTime = function() {
-            date = moment(new Date()).tz('Asia/Makassar');
-            datetime.html(date.format('dddd, DD MMMM YYYY, HH:mm:ss z'));
-        };
-
-        $(document).ready(function() {
-            moment.locale('id');
-            datetime = $('#datetime')
-            updateTime();
-            setInterval(updateTime, 1000);
-
-            $('.hamburger').click(function() {
-                $('.brand-logo').toggleClass('show');
-            });
-        });
-    </script>
 
     </body>
 

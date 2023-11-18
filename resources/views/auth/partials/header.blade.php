@@ -22,26 +22,7 @@
 
     <!-- Focus Theme CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <style type="text/css">
-        #showHidePassword {
-            position: relative;
-        }
-
-        .red-star::after {
-            content: '*';
-            color: red;
-        }
-
-
-        #togglePassword,
-        #togglePasswordConfirm {
-            position: absolute;
-            top: 52%;
-            right: 18px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-    </style>
+    @stack('css')
 </head>
 
 <body class="h-100">

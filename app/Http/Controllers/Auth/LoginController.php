@@ -45,6 +45,8 @@ class LoginController extends Controller
                     'password' => bcrypt($request->input('password')),
                 ]);
 
+                \Illuminate\Support\Facades\Log::info('User dengan nama ' . $request->input('name') . 'berhasil di buat!');
+
                 return redirect()->route('home');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->route('register')->with('loginError', $e->getMessage());
@@ -78,6 +80,9 @@ class LoginController extends Controller
         if (!$validated->fails()) {
             $credentials = ['email' => $request->input('email'), 'password' => $request->input('password')];
             if (\Illuminate\Support\Facades\Auth::attempt($credentials)) {
+
+                \Illuminate\Support\Facades\Log::info('User dengan email ' . $request->input('email') . 'berhasil di login!');
+
                 return redirect()->route('home');
             }
             return redirect()->route('login')->with('loginError', 'Email atau Password salah');
@@ -93,6 +98,9 @@ class LoginController extends Controller
     {
         if (\Illuminate\Support\Facades\Auth::check()) {
             \Illuminate\Support\Facades\Auth::logout();
+
+            \Illuminate\Support\Facades\Log::info('User berhasil di logout!');
+
             return redirect()->route('login');
         }
 

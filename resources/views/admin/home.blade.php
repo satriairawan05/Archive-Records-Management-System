@@ -27,7 +27,7 @@
                     </div>
                     <div class="stat-content d-inline-block">
                         <div class="stat-text">Surat Masuk</div>
-                        <div class="stat-digit">1,012</div>
+                        <div class="stat-digit">{{ $smCount }}</div>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="stat-content d-inline-block">
                         <div class="stat-text">Surat Keluar Menunggu Persetujuan</div>
-                        <div class="stat-digit">961</div>
+                        <div class="stat-digit">{{ $skWait }}</div>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="stat-content d-inline-block">
                         <div class="stat-text">Surat Keluar yang Disetujui</div>
-                        <div class="stat-digit">770</div>
+                        <div class="stat-digit">{{ $skAcc }}</div>
                     </div>
                 </div>
             </div>

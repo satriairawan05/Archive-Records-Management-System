@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, veritatis impedit nihil optio odit mollitia suscipit cupiditate reprehenderit necessitatibus quis fugiat voluptatibus deserunt voluptatem dignissimos corrupti quia accusamus assumenda molestiae expedita tempore asperiores totam nam? Amet, ratione ullam! Corporis dicta, ab nesciunt temporibus at quod officia dolorem necessitatibus ut enim tempora totam blanditiis mollitia voluptas facere nobis tenetur, consectetur vitae iure eaque, ad dignissimos autem. A obcaecati at quasi eaque unde quisquam consequuntur dolor inventore neque, suscipit, aliquid doloribus, eligendi accusantium consequatur vel voluptate quibusdam iusto libero. Illo officia cumque accusamus iure, itaque et quisquam ex saepe quibusdam voluptas quae!
+                    
                 </div>
             </div>
         </div>
