@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('js_id');
             $table->string('js_jenis')->nullable();
             $table->string('js_kode')->nullable();
-            $table->string('js_nomor')->nullable();
             $table->string('js_ordinal')->nullable();
             $table->timestamps();
         });

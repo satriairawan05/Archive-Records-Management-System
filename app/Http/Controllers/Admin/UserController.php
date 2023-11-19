@@ -43,7 +43,7 @@ class UserController extends Controller
             }
         }
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -55,7 +55,7 @@ class UserController extends Controller
                 if (auth()->user()->group_id == 1) {
                     $user = User::all();
                 } else {
-                    $user = User::where('users.id', auth()->user()->id)->get();
+                    $user = User::where('id', auth()->user()->id)->get();
                 }
 
                 return view('admin.setting.account.index', [
@@ -76,7 +76,18 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                return view('admin.setting.account.create', [
+                    'name' => $this->name,
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -125,7 +136,19 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $this->get_access_page();
+        if ($this->update == 1) {
+            try {
+                return view('admin.setting.account.edit', [
+                    'name' => $this->name,
+                    'user' => $user->find(request()->segment(2))
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**

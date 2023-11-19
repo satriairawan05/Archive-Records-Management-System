@@ -39,7 +39,7 @@
                         <i class="fa fa-envelope text-danger border-danger"></i>
                     </div>
                     <div class="stat-content d-inline-block">
-                        <div class="stat-text">Surat Keluar Menunggu Persetujuan</div>
+                        <div class="stat-text">Surat Keluar (Waiting)</div>
                         <div class="stat-digit">{{ $skWait }}</div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         <i class="fa fa-envelope text-success border-success"></i>
                     </div>
                     <div class="stat-content d-inline-block">
-                        <div class="stat-text">Surat Keluar yang Disetujui</div>
+                        <div class="stat-text">Surat Keluar (Accepted)</div>
                         <div class="stat-digit">{{ $skAcc }}</div>
                     </div>
                 </div>

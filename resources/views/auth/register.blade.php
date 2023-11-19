@@ -65,7 +65,6 @@
             color: red;
         }
 
-
         #togglePassword,
         #togglePasswordConfirm {
             position: absolute;
