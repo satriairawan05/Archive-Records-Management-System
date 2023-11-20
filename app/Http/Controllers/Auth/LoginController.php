@@ -18,7 +18,7 @@ class LoginController extends Controller
     /**
      * Display a form for a new User.
      */
-    public function showRegisterForm()
+    public function showRegisterForm(): \Illuminate\View\View
     {
         $this->name = 'Register Account!';
         return view('auth.register', [
@@ -59,7 +59,7 @@ class LoginController extends Controller
     /**
      * Display a listing for User of the resource.
      */
-    public function showLoginForm()
+    public function showLoginForm(): \Illuminate\View\View
     {
         $this->name = 'Login to your Account!';
         return view('auth.login', [

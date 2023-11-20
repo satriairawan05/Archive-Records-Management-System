@@ -11,7 +11,7 @@ class CompanyController extends Controller
     /**
      * Constructor for Controller.
      */
-    public function __construct(private $name = 'Company', public $create = 0, public $read = 0, public $update = 0, public $delete = 0)
+    public function __construct(private $name = 'Perusahaan', public $create = 0, public $read = 0, public $update = 0, public $delete = 0)
     {
         //
     }
@@ -47,12 +47,14 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\View\View
+    public function index()
     {
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                //
+                return view('admin.setting.company.index',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -64,12 +66,14 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): \Illuminate\View\View
+    public function create()
     {
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                return view('admin.setting.company.create',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -106,12 +110,14 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company): \Illuminate\View\View
+    public function edit(Company $company)
     {
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                return view('admin.setting.company.edit',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

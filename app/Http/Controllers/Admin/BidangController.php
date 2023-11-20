@@ -47,7 +47,7 @@ class BidangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\View\View
+    public function index()
     {
         $this->get_access_page();
         if ($this->read == 1) {
@@ -66,7 +66,7 @@ class BidangController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): \Illuminate\View\View
+    public function create()
     {
         $this->get_access_page();
         if ($this->create == 1) {
@@ -110,7 +110,7 @@ class BidangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bidang $bidang): \Illuminate\View\View
+    public function edit(Bidang $bidang)
     {
         $this->get_access_page();
         if ($this->update == 1) {

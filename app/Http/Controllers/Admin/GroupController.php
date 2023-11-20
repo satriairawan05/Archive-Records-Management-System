@@ -19,7 +19,7 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\View\View
+    public function index()
     {
         if (auth()->user()->group_id == 1) {
             try {
@@ -38,7 +38,7 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): \Illuminate\View\View
+    public function create()
     {
         if (auth()->user()->group_id == 1) {
             try {
@@ -102,7 +102,7 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Group $group): \Illuminate\View\View
+    public function edit(Group $group)
     {
         if (auth()->user()->group_id == 1) {
             try {

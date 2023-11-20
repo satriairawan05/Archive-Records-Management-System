@@ -16,17 +16,17 @@
             </li>
 
             <li class="nav-label">Registration</li>
-            <li><a href="#"><i class="fa fa-envelope-open"></i><span class="nav-text">Surat Masuk</span></a></li>
-            <li><a href="#"><i class="fa fa-envelope-o"></i><span class="nav-text">Surat Keluar</span></a></li>
+            <li><a href="{{ route('surat_masuk.create') }}"><i class="fa fa-envelope-open"></i><span class="nav-text">Surat Masuk</span></a></li>
+            <li><a href="{{ route('surat_keluar.create') }}"><i class="fa fa-envelope-o"></i><span class="nav-text">Surat Keluar</span></a></li>
 
             <li class="nav-label">Bank File</li>
-            <li><a href="#"><i class="fa fa-envelope-open"></i><span class="nav-text">Surat Masuk</span></a></li>
-            <li><a href="#"><i class="fa fa-envelope-o"></i><span class="nav-text">Surat Keluar</span></a></li>
-            <li><a href="#"><i class="fa fa-archive"></i><span class="nav-text">Archives</span></a></li>
+            <li><a href="{{ route('surat_masuk.index') }}"><i class="fa fa-envelope-open"></i><span class="nav-text">Surat Masuk</span></a></li>
+            <li><a href="{{ route('surat_keluar.index') }}"><i class="fa fa-envelope-o"></i><span class="nav-text">Surat Keluar</span></a></li>
+            <li><a href="{{ route('archives') }}"><i class="fa fa-archive"></i><span class="nav-text">Archives</span></a></li>
 
             <li class="nav-label">Setting</li>
-            <li><a href="#"><i class="fa fa-envelope-square"><span class="nav-text"> Jenis Surat</span></i></a></li>
-            <li><a href="#"><i class="fa fa-building-o"><span class="nav-text"> Company</span></i></a></li>
+            <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span class="nav-text"> Jenis Surat</span></i></a></li>
+            <li><a href="{{ route('perusahaan.index') }}"><i class="fa fa-building-o"><span class="nav-text"> Company</span></i></a></li>
             <li><a href="{{ route('user.index') }}"><i class="fa fa-user-circle"><span class="nav-text"> User</span></i></a></li>
             @if(auth()->user()->group_id == 1)
             <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text"> Role</span></i></a></li>

@@ -35,6 +35,23 @@ Route::middleware(['auth'])->group(function(){
         ]);
     })->name('home');
 
+    // Archive
+    Route::get('archive', [\App\Http\Controllers\Admin\ArchiveController::class, 'index'])->name('archives');
+
+    // Bidang
+    Route::resource('bidang', \App\Http\Controllers\Admin\BidangController::class)->except(['show']);
+
+    // Sub Bidang
+    Route::resource('sub_bidang', \App\Http\Controllers\Admin\SubBidangController::class)->except(['show']);
+
+    // Company
+    Route::resource('perusahaan', \App\Http\Controllers\Admin\CompanyController::class)->except(['show']);
+
+    // Jenis Surat
+    Route::resource('jenis_surat', \App\Http\Controllers\Admin\JenisSuratController::class)->except(['show']);
+    Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
+    Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
+
     // Role
     Route::resource('role', \App\Http\Controllers\Admin\GroupController::class)->except(['show']);
 

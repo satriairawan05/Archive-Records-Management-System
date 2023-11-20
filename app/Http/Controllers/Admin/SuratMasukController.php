@@ -47,12 +47,14 @@ class SuratMasukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\View\View
+    public function index()
     {
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                //
+                return view('admin.surat_masuk.index',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -64,12 +66,14 @@ class SuratMasukController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): \Illuminate\View\View
+    public function create()
     {
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                return view('admin.surat_masuk.create',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -106,12 +110,14 @@ class SuratMasukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SuratMasuk $suratMasuk): \Illuminate\View\View
+    public function edit(SuratMasuk $suratMasuk)
     {
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                return view('admin.surat_masuk.edit',[
+                    'name' => $this->name
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
