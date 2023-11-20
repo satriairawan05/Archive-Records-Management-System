@@ -47,17 +47,39 @@ class BidangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->read == 1) {
+            try {
+                return view('admin.setting.bidang.index',[
+                    'name' => $this->name
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                return view('admin.setting.bidang.create',[
+                    'name' => $this->name
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -65,7 +87,16 @@ class BidangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -79,9 +110,20 @@ class BidangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bidang $bidang)
+    public function edit(Bidang $bidang): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->update == 1) {
+            try {
+                return view('admin.setting.bidang.edit',[
+                    'name' => $this->name
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -89,7 +131,16 @@ class BidangController extends Controller
      */
     public function update(Request $request, Bidang $bidang)
     {
-        //
+        $this->get_access_page();
+        if ($this->update == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -97,6 +148,15 @@ class BidangController extends Controller
      */
     public function destroy(Bidang $bidang)
     {
-        //
+        $this->get_access_page();
+        if ($this->delete == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 }

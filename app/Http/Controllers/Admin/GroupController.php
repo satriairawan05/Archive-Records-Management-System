@@ -19,7 +19,7 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         if (auth()->user()->group_id == 1) {
             try {
@@ -38,7 +38,7 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         if (auth()->user()->group_id == 1) {
             try {
@@ -102,7 +102,7 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Group $group)
+    public function edit(Group $group): \Illuminate\View\View
     {
         if (auth()->user()->group_id == 1) {
             try {
@@ -160,7 +160,7 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        if (auth()->user()->group_id == 1) {
+        if (!$group->group_id == 1) {
             try {
                 Group::where('group_id', $group->group_id)->delete();
 

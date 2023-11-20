@@ -13,33 +13,59 @@ class JenisSuratSeeder extends Seeder
     public function run(): void
     {
         \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Keterangan',
+        ]);
+
+        \App\Models\JenisSurat::create([
             'js_jenis' => 'Surat Balasan',
-            'js_kode' => 'SB',
-            'js_ordinal' => '0',
-        ]);
-
-        \App\Models\JenisSurat::create([
-            'js_jenis' => 'Surat Teguran',
-            'js_kode' => 'ST',
-            'js_ordinal' => '0',
-        ]);
-
-        \App\Models\JenisSurat::create([
-            'js_jenis' => 'Surat Permohonan',
-            'js_kode' => 'SPm',
-            'js_ordinal' => '0',
         ]);
 
         \App\Models\JenisSurat::create([
             'js_jenis' => 'Surat Undangan',
-            'js_kode' => 'SU',
-            'js_ordinal' => '0',
         ]);
 
         \App\Models\JenisSurat::create([
-            'js_jenis' => 'Surat Teknis',
-            'js_kode' => 'STe',
-            'js_ordinal' => '0',
+            'js_jenis' => 'Pengumuman',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Edaran',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Kuasa',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Perintah Tugas',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Pengantar',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Permohonan Izin',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Keputusan',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Notulen Rapat',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Berita Acara',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Surat Perjanjian',
+        ]);
+
+        \App\Models\JenisSurat::create([
+            'js_jenis' => 'Saran Teknis',
         ]);
     }
 }

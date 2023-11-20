@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('admin123'),
             'remember_token' => \Illuminate\Support\Str::random(10),
-            'group_id' => 1
+            'group_id' => 1,
         ]);
 
         \App\Models\User::factory(49)->create();

@@ -47,17 +47,35 @@ class JenisSuratController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->read == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -65,7 +83,16 @@ class JenisSuratController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -79,9 +106,18 @@ class JenisSuratController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JenisSurat $jenisSurat)
+    public function edit(JenisSurat $jenisSurat): \Illuminate\View\View
     {
-        //
+        $this->get_access_page();
+        if ($this->update == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -89,7 +125,16 @@ class JenisSuratController extends Controller
      */
     public function update(Request $request, JenisSurat $jenisSurat)
     {
-        //
+        $this->get_access_page();
+        if ($this->update == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -97,6 +142,15 @@ class JenisSuratController extends Controller
      */
     public function destroy(JenisSurat $jenisSurat)
     {
-        //
+        $this->get_access_page();
+        if ($this->delete == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 }

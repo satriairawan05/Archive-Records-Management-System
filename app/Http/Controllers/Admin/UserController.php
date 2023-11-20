@@ -47,7 +47,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         $this->get_access_page();
         if ($this->read == 1) {
@@ -74,13 +74,16 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         $this->get_access_page();
         if ($this->create == 1) {
             try {
                 return view('admin.setting.account.create', [
                     'name' => $this->name,
+                    'group' => \App\Models\Group::all(),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -134,14 +137,17 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): \Illuminate\View\View
     {
         $this->get_access_page();
         if ($this->update == 1) {
             try {
                 return view('admin.setting.account.edit', [
                     'name' => $this->name,
-                    'user' => $user->find(request()->segment(2))
+                    'user' => $user->find(request()->segment(2)),
+                    'group' => \App\Models\Group::all(),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

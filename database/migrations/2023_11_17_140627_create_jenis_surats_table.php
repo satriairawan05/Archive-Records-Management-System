@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('jenis_surats', function (Blueprint $table) {
             $table->increments('js_id');
             $table->string('js_jenis')->nullable();
-            $table->string('js_kode')->nullable();
-            $table->string('js_ordinal')->nullable();
+            $table->string('js_ordinal')->default('0')->nullable();
             $table->timestamps();
         });
     }
