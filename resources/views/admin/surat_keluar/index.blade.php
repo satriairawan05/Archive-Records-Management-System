@@ -18,9 +18,11 @@
 
 @section('app')
     <div class="row">
-        <div class="col-xl-6 col-xxl-12">
+        <div class="col-12">
             <div class="card">
-
+                <div class="card-body">
+                
+                </div>
             </div>
         </div>
     </div>

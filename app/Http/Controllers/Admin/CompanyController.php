@@ -53,7 +53,11 @@ class CompanyController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.setting.company.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'companies' => Company::all(),
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id),
+                    'page_bids' => $this->get_access('Bidang', auth()->user()->group_id),
+                    'page_subs' => $this->get_access('Sub Bidang', auth()->user()->group_id),
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

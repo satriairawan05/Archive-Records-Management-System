@@ -7,7 +7,7 @@
     $delete = 0;
 
     foreach ($pages as $r) {
-        if ($r->page_name == 'User') {
+        if ($r->page_name == $name) {
             if ($r->action == 'Create') {
                 $create = $r->access;
             }
@@ -82,6 +82,9 @@
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Bidang</th>
+                                    <th>Sub Bidang</th>
+                                    <th>Role</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -91,6 +94,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{{ $user->bid_name ?? 'Not Found' }}</td>
+                                        <td>{{ $user->sub_name ?? 'Not Found' }}</td>
+                                        <td>{{ $user->group_name ?? 'Not Found' }}</td>
                                         <td>
                                             @if($update == 1)
                                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-warning"><i

@@ -53,7 +53,9 @@ class JenisSuratController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.setting.surat.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => JenisSurat::all(),
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -116,7 +118,8 @@ class JenisSuratController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.setting.surat.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => $jenisSurat->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

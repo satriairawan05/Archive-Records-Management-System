@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function(){
     // Home Page or Dashboard
     Route::get('home', function(){
         return view('admin.home',[
+            'name' => 'Home',
             'userCount' => \App\Models\User::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
             'skAcc' => \App\Models\SuratKeluar::whereNull('sk_no_surat')->whereMonth('created_at', '=', date('m'))->count(),

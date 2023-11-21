@@ -27,7 +27,7 @@
             <li class="nav-label">Setting</li>
             <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span class="nav-text"> Jenis Surat</span></i></a></li>
             <li><a href="{{ route('perusahaan.index') }}"><i class="fa fa-building-o"><span class="nav-text"> Company</span></i></a></li>
-            <li><a href="{{ route('user.index') }}"><i class="fa fa-user-circle"><span class="nav-text"> User</span></i></a></li>
+            <li><a href="{{ route('user.index') }}"><i class="fa fa-users"><span class="nav-text"> Users</span></i></a></li>
             @if(auth()->user()->group_id == 1)
             <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text"> Role</span></i></a></li>
             @endif

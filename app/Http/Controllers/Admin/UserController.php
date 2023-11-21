@@ -53,9 +53,9 @@ class UserController extends Controller
         if ($this->read == 1) {
             try {
                 if (auth()->user()->group_id == 1) {
-                    $user = User::all();
+                    $user = User::leftJoin('groups', 'users.group_id', '=', 'groups.group_id')->leftJoin('bidangs', 'users.bid_id', '=', 'bidangs.bid_id')->leftJoin('sub_bidangs', 'users.sub_id', '=', 'sub_bidangs.sub_id')->get();
                 } else {
-                    $user = User::where('id', auth()->user()->id)->get();
+                    $user = User::leftJoin('groups', 'users.group_id', '=', 'groups.group_id')->leftJoin('bidangs', 'users.bid_id', '=', 'bidangs.bid_id')->leftJoin('sub_bidangs', 'users.sub_id', '=', 'sub_bidangs.sub_id')->where('users.id', auth()->user()->id)->get();
                 }
 
                 return view('admin.setting.account.index', [
