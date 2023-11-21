@@ -112,6 +112,10 @@ class UserController extends Controller
                         'name' => $request->input('name'),
                         'email' => $request->input('email'),
                         'password' => bcrypt($request->input('password')),
+                        'position' => $request->input('position'),
+                        'group_id' => $request->input('group_id'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
                     ]);
 
                     return redirect('user')->with('success', 'Added Account Successfully');
@@ -176,6 +180,10 @@ class UserController extends Controller
                         'name' => $request->input('name'),
                         'email' => $request->input('email'),
                         'password' => bcrypt($request->input('password')),
+                        'position' => $request->input('position'),
+                        'group_id' => $request->input('group_id'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
                     ]);
 
                     return redirect('user')->with('success', 'Updated Account Successfully');
