@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('com_id');
-            $table->string('com_nama')->nullable();
+            $table->string('com_name')->nullable();
             $table->string('com_alias')->nullable();
-            $table->string('com_alamat')->nullable();
+            $table->string('com_address')->nullable();
             $table->string('com_no_hp')->nullable();
             $table->timestamps();
         });

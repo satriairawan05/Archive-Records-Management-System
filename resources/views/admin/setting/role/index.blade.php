@@ -14,7 +14,7 @@
     <!-- Datatable -->
     <script type="text/javascript" src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript">
-        let table = $('#myTable').DataTable({
+        $('#myTable').DataTable({
             createdRow: function(row, data, index) {
                 $(row).addClass('selected')
             }

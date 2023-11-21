@@ -89,7 +89,19 @@
     <!-- Datatable -->
     <script type="text/javascript" src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript">
-        let table = $('#myTable').DataTable({
+        $('#myTable').DataTable({
+            createdRow: function(row, data, index) {
+                $(row).addClass('selected')
+            }
+        });
+
+        $('#myTable2').DataTable({
+            createdRow: function(row, data, index) {
+                $(row).addClass('selected')
+            }
+        });
+
+        $('#myTable3').DataTable({
             createdRow: function(row, data, index) {
                 $(row).addClass('selected')
             }
@@ -117,27 +129,146 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header d-flex justify-content-end">
-                </div>
-                <div class="card-body">
-
-                </div>
+                @if ($createCompany == 1)
+                    <div class="card-header d-flex justify-content-end">
+                        <a href="{{ route('perusahaan.create') }}" class="btn btn-sm btn-success"><i
+                                class="fa fa-plus"></i></a>
+                    </div>
+                @endif
+                @if ($readCompany == 1)
+                    <div class="card-body">
+                        <table class="table" id="myTable">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>No HP</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($companies as $c)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $c->com_name }}</td>
+                                        <td>{{ $c->com_address }}</td>
+                                        <td>{{ $c->com_no_hp }}</td>
+                                        <td>
+                                            @if ($updateCompany == 1)
+                                                <a href="{{ route('perusahaan.edit', $c->com_id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if ($deleteCompany == 1)
+                                                <form action="{{ route('perusahaan.destroy', $c->com_id) }}"
+                                                    method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
 
             <div class="card">
-                <div class="card-header d-flex justify-content-end">
-                </div>
-                <div class="card-body">
-
-                </div>
+                @if ($createBid == 1)
+                    <div class="card-header d-flex justify-content-end">
+                        <a href="{{ route('bidang.create') }}" class="btn btn-sm btn-success"><i
+                                class="fa fa-plus"></i></a>
+                    </div>
+                @endif
+                @if ($readBid == 1)
+                    <div class="card-body">
+                        <table class="table" id="myTable2">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Alias</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($bidang as $b)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $b->bid_name }}</td>
+                                        <td>{{ $b->bid_alias }}</td>
+                                        <td>
+                                            @if ($updateBid == 1)
+                                                <a href="{{ route('bidang.edit', $b->bid_id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if ($deleteBid == 1)
+                                                <form action="{{ route('bidang.destroy', $b->bid_id) }}"
+                                                    method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
 
             <div class="card">
-                <div class="card-header d-flex justify-content-end">
-                </div>
-                <div class="card-body">
-
-                </div>
+                @if ($createSub == 1)
+                    <div class="card-header d-flex justify-content-end">
+                        <a href="{{ route('sub_bidang.create') }}" class="btn btn-sm btn-success"><i
+                                class="fa fa-plus"></i></a>
+                    </div>
+                @endif
+                @if ($readSub == 1)
+                    <div class="card-body">
+                        <table class="table" id="myTable3">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Alias</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($subBidang as $b)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $b->sub_name }}</td>
+                                        <td>{{ $b->sub_alias }}</td>
+                                        <td>
+                                            @if ($updateSub == 1)
+                                                <a href="{{ route('sub_bidang.edit', $b->sub_id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if ($deleteSub == 1)
+                                                <form action="{{ route('sub_bidang.destroy', $b->sub_id) }}"
+                                                    method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

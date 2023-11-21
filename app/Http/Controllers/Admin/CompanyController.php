@@ -55,6 +55,8 @@ class CompanyController extends Controller
                 return view('admin.setting.company.index',[
                     'name' => $this->name,
                     'companies' => Company::all(),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'subBidang' => \App\Models\SubBidang::all(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id),
                     'page_bids' => $this->get_access('Bidang', auth()->user()->group_id),
                     'page_subs' => $this->get_access('Sub Bidang', auth()->user()->group_id),

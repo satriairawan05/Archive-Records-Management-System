@@ -13,9 +13,9 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         \App\Models\Company::create([
-            'com_nama' => 'Dinas Perhubungan Kota Samarinda',
+            'com_name' => 'Dinas Perhubungan Kota Samarinda',
             'com_alias' => 'DISHUB',
-            'com_alamat' => 'Air Putih, Kec. Samarinda Ulu, Kota Samarinda, Kalimantan Timur 75243',
+            'com_address' => 'Air Putih, Kec. Samarinda Ulu, Kota Samarinda, Kalimantan Timur 75243',
             'com_no_hp' => '(0541) 748537',
         ]);
     }
