@@ -93,7 +93,13 @@ class SubBidangController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                SubBidang::create([
+                    'bid_id' => $request->input('bid_id'),
+                    'sub_name' => $request->input('sub_name'),
+                    'sub_alias' => $request->input('sub_alias'),
+                ]);
+
+                return redirect()->to(route('sub_bidang.index'))->with('success', 'Successfully Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -139,7 +145,13 @@ class SubBidangController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                SubBidang::wehere('sub_id',$subBidang->sub_id)->update([
+                    'bid_id' => $request->input('bid_id'),
+                    'sub_name' => $request->input('sub_name'),
+                    'sub_alias' => $request->input('sub_alias'),
+                ]);
+
+                return redirect()->to(route('sub_bidang.index'))->with('success', 'Successfully Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -156,7 +168,10 @@ class SubBidangController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $subBidang->find(request()->segment(2));
+                SubBidang::destroy($data->sub_id);
+
+                return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

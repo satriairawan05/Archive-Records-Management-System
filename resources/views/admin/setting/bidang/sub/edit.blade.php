@@ -16,7 +16,7 @@
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script type="text/javascript">
         // single select box
-        $("#company").select2();
+        $("#bidang").select2();
     </script>
 @endpush
 
@@ -42,7 +42,64 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
+                    <form action="{{ route('sub_bidang.update',$sub->sub_id) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="form-group row mt-3">
+                            <div class="col-6">
+                                <label for="sub_name" class="col-form-label text-dark">Nama Sub Bidang <span
+                                        class="text-danger">*</span> </label>
+                                <input type="text"
+                                    class="form-control form-control-sm @error('sub_name')
+                                    is-invalid
+                                @enderror"
+                                    id="sub_name" placeholder="Masukan Nama Sub Bidang" value="{{ old('sub_name',$sub->sub_name) }}"
+                                    name="sub_name" required>
+                                @error('com_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="sub_alias" class="col-form-label text-dark">Alias Sub Bidang <span
+                                        class="text-danger">*</span> </label>
+                                <input type="text"
+                                    class="form-control form-control-sm @error('sub_alias')
+                                    is-invalid
+                                @enderror"
+                                    id="sub_alias" placeholder="Masukan Alias Sub Bidang" value="{{ old('sub_alias',$sub->sub_alias) }}"
+                                    name="sub_alias" required>
+                                @error('sub_alias')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
+                                <label for="bid_id" class="col-form-label text-dark">Bidang <span
+                                        class="text-danger">*</span> </label>
+                                <select id="bidang" name="bid_id" class="form-control form-control-sm">
+                                    @foreach ($bidang as $b)
+                                        @if (old('bid_id',$sub->bid_id) == $b->bid_id)
+                                            <option value="{{ $b->bid_id }}" selected>{{ $b->bid_name }}</option>
+                                        @else
+                                            <option value="{{ $b->bid_id }}">{{ $b->bid_name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12 d-flex justify-content-center">
+                                <a href="{{ route('sub_bidang.index') }}" class="btn btn-sm btn-info mx-2"><i
+                                        class="fa fa-reply-all"></i></a>
+                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

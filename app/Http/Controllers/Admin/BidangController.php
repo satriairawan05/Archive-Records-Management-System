@@ -100,6 +100,11 @@ class BidangController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
+                    Bidang::create([
+                        'com_id' => $request->input('com_id'),
+                        'bid_name' => $request->input('bid_name'),
+                        'bid_alias' => $request->input('bid_alias'),
+                    ]);
 
                     return redirect()->to(route('bidang.index'))->with('success', 'Successfully Saved!');
                 } else {
@@ -157,6 +162,11 @@ class BidangController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
+                    Bidang::where('bid_id', $bidang->bid_id)->update([
+                        'com_id' => $request->input('com_id'),
+                        'bid_name' => $request->input('bid_name'),
+                        'bid_alias' => $request->input('bid_alias'),
+                    ]);
 
                     return redirect()->to(route('bidang.index'))->with('success', 'Successfully Updated!');
                 } else {

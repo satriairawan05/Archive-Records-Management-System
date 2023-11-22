@@ -42,7 +42,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('bidang.store') }}" method="post">
+                    <form action="{{ route('sub_bidang.store') }}" method="post">
                         @csrf
                         <div class="form-group row mt-3">
                             <div class="col-6">
@@ -61,14 +61,14 @@
                                 @enderror
                             </div>
                             <div class="col-6">
-                                <label for="bid_alias" class="col-form-label text-dark">Alias Bidang/Departemen <span
+                                <label for="sub_alias" class="col-form-label text-dark">Alias Sub Bidang <span
                                         class="text-danger">*</span> </label>
                                 <input type="text"
-                                    class="form-control form-control-sm @error('bid_alias')
+                                    class="form-control form-control-sm @error('sub_alias')
                                     is-invalid
                                 @enderror"
-                                    id="bid_alias" placeholder="Masukan Alias Bidang/Departemen" value="{{ old('bid_alias') }}"
-                                    name="bid_alias" required>
+                                    id="sub_alias" placeholder="Masukan Alias Sub Bidang" value="{{ old('sub_alias') }}"
+                                    name="sub_alias" required>
                                 @error('bid_alias')
                                     <div class="invalid-feedback">
                                         {{ $message }}
