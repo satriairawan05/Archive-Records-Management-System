@@ -10,7 +10,7 @@
         <div class="col-sm-6 p-md-0 justify-content-sm-end mt-sm-0 d-flex mt-2">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Surat Keluar</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('surat_keluar.index') }}">Surat Keluar</a></li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
         </div>
@@ -22,7 +22,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                
+
                 </div>
             </div>
         </div>

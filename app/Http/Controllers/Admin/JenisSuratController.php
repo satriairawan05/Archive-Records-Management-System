@@ -92,7 +92,20 @@ class JenisSuratController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'js_jenis' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+                    JenisSurat::create([
+                        'js_jenis' => $request->input('js_jenis'),
+                        'js_count' => '0'
+                    ]);
+
+                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Successfully Added!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -137,7 +150,19 @@ class JenisSuratController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'js_jenis' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+                    JenisSurat::where('js_id', $jenisSurat->js_id)->update([
+                        'js_jenis' => $request->input('js_jenis')
+                    ]);
+
+                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Successfully Updated!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -154,7 +179,10 @@ class JenisSuratController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $jenisSurat->find(request()->segment(2));
+                JenisSurat::destroy($data->id);
+
+                return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
