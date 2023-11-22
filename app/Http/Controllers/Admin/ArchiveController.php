@@ -39,9 +39,27 @@ class ArchiveController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                return view('admin.archives.archives',[
-                    'name' => $this->name
-                ]);
+                if ($request->input('bidang_id') && $request->input('sub_id')) {
+                    return view('admin.archives.arc', [
+                        'name' => $this->name,
+                        'bidang' => \App\Models\Bidang::where('bid_id', $request->input('bidang_id'))->first(),
+                        'sub' => \App\Models\SubBidang::where('sub_id', $request->input('sub_id'))->first(),
+                        'surat' => \App\Models\SuratKeluar::where('bid_id', $request->input('bidang_id'))->where('sub_id', $request->input('sub_id'))->whereNotNull('sk_no_surat')->get()
+                    ]);
+                } else {
+                    if ($request->input('bidang_id')) {
+                        return view('admin.archives.archive', [
+                            'name' => $this->name,
+                            'bidang' => \App\Models\Bidang::where('bid_id', $request->input('bidang_id'))->first(),
+                            'sub' => \App\Models\SubBidang::where('bid_id', $request->input('bidang_id'))->get()
+                        ]);
+                    } else {
+                        return view('admin.archives.archives', [
+                            'name' => $this->name,
+                            'bidang' => \App\Models\Bidang::all()
+                        ]);
+                    }
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

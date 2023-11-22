@@ -6,6 +6,11 @@
         ->where('group_pages.group_id', '=', auth()->user()->group_id)
         ->select(['group_pages.access', 'pages.page_name', 'pages.action'])
         ->get();
+
+    foreach($pages as $r)
+    {
+        //
+    }
 @endphp
 
 <div class="quixnav">
