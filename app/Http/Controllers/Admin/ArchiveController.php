@@ -34,7 +34,7 @@ class ArchiveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->get_access_page();
         if ($this->read == 1) {

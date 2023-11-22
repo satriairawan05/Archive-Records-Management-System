@@ -53,7 +53,9 @@ class BidangController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.setting.bidang.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'bidang' => Bidang::leftJoin('companies','bidangs.com_id','=','companies.com_id')->get(),
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -72,7 +74,8 @@ class BidangController extends Controller
         if ($this->create == 1) {
             try {
                 return view('admin.setting.bidang.create',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'companies' => \App\Models\Company::all()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -90,7 +93,18 @@ class BidangController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'com_id' => ['required', 'string'],
+                    'bid_name' => ['required', 'string', 'max:255'],
+                    'bid_alias' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+
+                    return redirect()->to(route('bidang.index'))->with('success', 'Successfully Saved!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -116,7 +130,9 @@ class BidangController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.setting.bidang.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'companies' => \App\Models\Company::all(),
+                    'bidang' => $bidang->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -134,7 +150,18 @@ class BidangController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'com_id' => ['required', 'string'],
+                    'bid_name' => ['required', 'string', 'max:255'],
+                    'bid_alias' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+
+                    return redirect()->to(route('bidang.index'))->with('success', 'Successfully Updated!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -151,7 +178,10 @@ class BidangController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $bidang->find(request()->segment(2));
+                Bidang::destroy($data->bid_id);
+
+                return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

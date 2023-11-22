@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('com_name')->nullable();
             $table->string('com_alias')->nullable();
             $table->string('com_address')->nullable();
-            $table->string('com_no_hp')->nullable();
+            $table->string('com_phone')->nullable();
             $table->timestamps();
         });
     }

@@ -53,7 +53,9 @@ class SubBidangController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.setting.bidang.sub.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'subBidang' => SubBidang::leftJoin('bidangs','sub_bidangs.bid_id','=','bidangs.bid_id')->get(),
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -72,7 +74,8 @@ class SubBidangController extends Controller
         if ($this->create == 1) {
             try {
                 return view('admin.setting.bidang.sub.create',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'bidang' => \App\Models\Bidang::all()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -116,7 +119,9 @@ class SubBidangController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.setting.bidang.sub.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => $subBidang->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

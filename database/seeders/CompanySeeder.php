@@ -16,7 +16,7 @@ class CompanySeeder extends Seeder
             'com_name' => 'Dinas Perhubungan Kota Samarinda',
             'com_alias' => 'DISHUB',
             'com_address' => 'Air Putih, Kec. Samarinda Ulu, Kota Samarinda, Kalimantan Timur 75243',
-            'com_no_hp' => '(0541) 748537',
+            'com_phone' => '(0541) 748537',
         ]);
     }
 }

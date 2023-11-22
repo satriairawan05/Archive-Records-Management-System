@@ -55,11 +55,7 @@ class CompanyController extends Controller
                 return view('admin.setting.company.index',[
                     'name' => $this->name,
                     'companies' => Company::all(),
-                    'bidang' => \App\Models\Bidang::all(),
-                    'subBidang' => \App\Models\SubBidang::all(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id),
-                    'page_bids' => $this->get_access('Bidang', auth()->user()->group_id),
-                    'page_subs' => $this->get_access('Sub Bidang', auth()->user()->group_id),
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -96,7 +92,25 @@ class CompanyController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'com_name' => ['required', 'string', 'max:255'],
+                    'com_alias' => ['required', 'string', 'max:255'],
+                    'com_address' => ['required', 'string', 'max:255'],
+                    'com_phone' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+                    Company::create([
+                        'com_name' => $request->input('com_name'),
+                        'com_alias' => $request->input('com_alias'),
+                        'com_address' => $request->input('com_address'),
+                        'com_phone' => $request->input('com_phone'),
+                    ]);
+
+                    return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Saved!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -122,7 +136,8 @@ class CompanyController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.setting.company.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'com' => $company->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -140,7 +155,25 @@ class CompanyController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                    'com_name' => ['required', 'string', 'max:255'],
+                    'com_alias' => ['required', 'string', 'max:255'],
+                    'com_address' => ['required', 'string', 'max:255'],
+                    'com_phone' => ['required', 'string', 'max:255'],
+                ]);
+
+                if (!$validated->fails()) {
+                    Company::where('com_id',$company->com_id)->update([
+                        'com_name' => $request->input('com_name'),
+                        'com_alias' => $request->input('com_alias'),
+                        'com_address' => $request->input('com_address'),
+                        'com_phone' => $request->input('com_phone'),
+                    ]);
+
+                    return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Updated!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -157,7 +190,10 @@ class CompanyController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $company->find(request()->segment(2));
+                Company::destroy($data->com_id);
+
+                return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
