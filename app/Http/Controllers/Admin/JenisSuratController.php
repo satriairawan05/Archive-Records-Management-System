@@ -93,7 +93,7 @@ class JenisSuratController extends Controller
         if ($this->create == 1) {
             try {
                 $validated = \Illuminate\Support\Facades\Validator::make($request->all(), [
-                    'js_jenis' => ['required', 'string', 'max:255'],
+                    'js_jenis' => ['required', 'string', 'max:255', 'unique:jenis_surats,js_jenis'],
                 ]);
 
                 if (!$validated->fails()) {
