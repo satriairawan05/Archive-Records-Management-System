@@ -22,7 +22,6 @@
 
     @stack('js')
 
-
     </body>
 
     </html>

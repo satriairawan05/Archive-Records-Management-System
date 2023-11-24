@@ -11,7 +11,7 @@ class SuratKeluarController extends Controller
     /**
      * Constructor for Controller.
      */
-    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0)
+    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0)
     {
         //
     }
@@ -31,6 +31,10 @@ class SuratKeluarController extends Controller
 
                 if ($r->action == 'Read') {
                     $this->read = $r->access;
+                }
+
+                if ($r->action == 'Approval') {
+                    $this->approval = $r->access;
                 }
 
                 if ($r->action == 'Update') {
@@ -53,7 +57,8 @@ class SuratKeluarController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.surat_keluar.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -133,6 +138,23 @@ class SuratKeluarController extends Controller
     {
         $this->get_access_page();
         if ($this->update == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateApproval(Request $request, SuratKeluar $suratKeluar)
+    {
+        $this->get_access_page();
+        if ($this->approval == 1) {
             try {
                 //
             } catch (\Illuminate\Database\QueryException $e) {
