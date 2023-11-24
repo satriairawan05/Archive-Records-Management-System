@@ -66,47 +66,47 @@
             <div class="card">
                 <div class="card-body">
                     @if ($read == 1)
-                    <div class="card-body">
-                        <table class="table" id="myTable">
-                            <thead class="thead-primary">
-                                <tr>
-                                    <th>No</th>
-                                    <th>No Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Pengirim</th>
-                                    <th>Penerima</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($surat as $s)
+                        <div class="card-body">
+                            <table class="table" id="myTable">
+                                <thead class="thead-primary">
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $c->sm_no_surat }}</td>
-                                        <td>{{ $c->sm_tgl_surat }}</td>
-                                        <td>{{ $c->sm_pengirim }}</td>
-                                        <td>{{ $c->sm_penerima }}</td>
-                                        <td>
-                                            @if ($update == 1)
-                                                <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"
-                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                            @endif
-                                            @if ($delete == 1)
-                                                <form action="{{ route('surat_masuk.destroy', $s->sm_id) }}"
-                                                    method="post" class="d-inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </form>
-                                            @endif
-                                        </td>
+                                        <th>No</th>
+                                        <th>No Surat</th>
+                                        <th>Tanggal Surat</th>
+                                        <th>Pengirim</th>
+                                        <th>Penerima</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
+                                </thead>
+                                <tbody>
+                                    @foreach ($surat as $s)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $s->sm_no_surat }}</td>
+                                            <td>{{ $s->sm_tgl_surat }}</td>
+                                            <td>{{ $s->sm_pengirim }}</td>
+                                            <td>{{ $s->sm_penerima }}</td>
+                                            <td>
+                                                @if ($update == 1)
+                                                    <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"
+                                                        class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                @endif
+                                                @if ($delete == 1)
+                                                    <form action="{{ route('surat_masuk.destroy', $s->sm_id) }}"
+                                                        method="post" class="d-inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

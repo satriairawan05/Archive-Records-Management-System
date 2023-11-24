@@ -24,10 +24,10 @@ Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'
 // Route::post('register', [\App\Http\Controllers\Auth\LoginController::class, 'register'])->name('register_store');
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
     // Home Page or Dashboard
-    Route::get('home', function(){
-        return view('admin.home',[
+    Route::get('home', function () {
+        return view('admin.home', [
             'name' => 'Home',
             'userCount' => \App\Models\User::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('jenis_surat', \App\Http\Controllers\Admin\JenisSuratController::class)->except(['show']);
     Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
     Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
-
+    Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, ['updateApproval']]);
     // Role
     Route::resource('role', \App\Http\Controllers\Admin\GroupController::class)->except(['show']);
 
@@ -62,4 +62,3 @@ Route::middleware(['auth'])->group(function(){
     // Logout
     Route::post('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
-

@@ -1,5 +1,39 @@
 @extends('admin.layout.app')
 
+@php
+    $read = 0;
+
+    foreach ($pages as $r) {
+        if ($r->page_name == $name) {
+            if ($r->action == 'Read') {
+                $read = $r->access;
+            }
+        }
+    }
+@endphp
+
+@push('css')
+    <!-- Datatable -->
+    <style>
+        .thead-primary {
+            color: var(--dishub-color) !important;
+        }
+    </style>
+    <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+@endpush
+
+@push('js')
+    <!-- Datatable -->
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $('#myTable').DataTable({
+            createdRow: function(row, data, index) {
+                $(row).addClass('selected')
+            }
+        });
+    </script>
+@endpush
+
 @section('breadcrumb')
     <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0 justify-content-sm-start">
@@ -20,10 +54,30 @@
 
 @section('app')
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
+                    @if ($read == 1)
+                        <table class="table" id="myTable">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($surat as $s)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <a href="{{ route('surat_keluar.show', $s->sk_id) }}"
+                                                class="btn btn-sm btn-info"><i class="fa fa-file-pdf-o"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </div>
