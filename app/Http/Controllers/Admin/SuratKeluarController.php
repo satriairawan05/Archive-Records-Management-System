@@ -12,6 +12,7 @@ class SuratKeluarController extends Controller
      * Constructor for Controller.
      */
     public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0)
+    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0)
     {
         //
     }
@@ -31,6 +32,10 @@ class SuratKeluarController extends Controller
 
                 if ($r->action == 'Read') {
                     $this->read = $r->access;
+                }
+
+                if ($r->action == 'Approval') {
+                    $this->approval = $r->access;
                 }
 
                 if ($r->action == 'Approval') {
@@ -57,6 +62,8 @@ class SuratKeluarController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.surat_keluar.index',[
+                    'name' => $this->name,
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                     'name' => $this->name,
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
