@@ -46,6 +46,11 @@ class PageSeeder extends Seeder
 
         \App\Models\Page::create([
             'page_name' => 'Surat Keluar',
+            'action' => 'Approval',
+        ]);
+
+        \App\Models\Page::create([
+            'page_name' => 'Surat Keluar',
             'action' => 'Update',
         ]);
 

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('sm_subject')->nullable();
             $table->string('sm_halaman')->nullable();
             $table->string('sm_file')->nullable();
+            $table->string('sm_created')->nullable();
+            $table->string('sm_updated')->nullable();
             $table->timestamps();
         });
     }

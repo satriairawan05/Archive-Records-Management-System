@@ -53,7 +53,9 @@ class SuratMasukController extends Controller
         if ($this->read == 1) {
             try {
                 return view('admin.surat_masuk.index',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => SuratMasuk::all(),
+                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -90,7 +92,21 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                SuratMasuk::create([
+                    'sm_jenis' => $request->input('sm_jenis'),
+                    'sm_asal' => $request->input('sm_asal'),
+                    'sm_no_surat' => $request->input('sm_no_surat'),
+                    'sm_tgl_surat' => $request->input('sm_tgl_surat'),
+                    'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
+                    'sm_pengirim' => $request->input('sm_pengirim'),
+                    'sm_penerima' => $request->input('sm_penerima'),
+                    'sm_subject' => $request->input('sm_subject'),
+                    'sm_halaman' => $request->input('sm_halaman'),
+                    'sm_file' => $request->file('sm_file')->store('surat_masuk'),
+                    'sm_created' => auth()->user()->name,
+                ]);
+
+                return redirect()->back()->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -116,7 +132,8 @@ class SuratMasukController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.surat_masuk.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => $suratMasuk->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -134,7 +151,29 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                if ($request->hasFile('sm_file')) {
+                    \Illuminate\Support\Facades\Storage::delete($suratMasuk->sm_file);
+                    $file = $request->file('sm_file');
+                    $filePath = $file->store('surat_masuk');
+                } else {
+                    $filePath = $suratMasuk->sm_file;
+                }
+
+                SuratMasuk::where('sm_id',$suratMasuk->sm_id)->update([
+                    'sm_jenis' => $request->input('sm_jenis'),
+                    'sm_asal' => $request->input('sm_asal'),
+                    'sm_no_surat' => $request->input('sm_no_surat'),
+                    'sm_tgl_surat' => $request->input('sm_tgl_surat'),
+                    'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
+                    'sm_pengirim' => $request->input('sm_pengirim'),
+                    'sm_penerima' => $request->input('sm_penerima'),
+                    'sm_subject' => $request->input('sm_subject'),
+                    'sm_halaman' => $request->input('sm_halaman'),
+                    'sm_file' => $filePath,
+                    'sm_updated' => auth()->user()->name,
+                ]);
+
+                return redirect()->back()->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -151,7 +190,17 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $suratMasuk->find(request()->segment(2));
+
+                $filePath = $data->file_path;
+
+                SuratMasuk::destroy($data->sm_id);
+
+                if ($filePath && \Illuminate\Support\Facades\Storage::exists($filePath)) {
+                    \Illuminate\Support\Facades\Storage::delete($filePath);
+                }
+
+                return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
