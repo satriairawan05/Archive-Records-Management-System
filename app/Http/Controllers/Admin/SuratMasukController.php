@@ -100,8 +100,7 @@ class SuratMasukController extends Controller
                     'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
                     'sm_pengirim' => $request->input('sm_pengirim'),
                     'sm_penerima' => $request->input('sm_penerima'),
-                    'sm_subject' => $request->input('sm_subject'),
-                    'sm_halaman' => $request->input('sm_halaman'),
+                    'sm_perihal' => $request->input('sm_perihal'),
                     'sm_file' => $request->file('sm_file')->store('surat_masuk'),
                     'sm_created' => auth()->user()->name,
                 ]);
@@ -167,8 +166,7 @@ class SuratMasukController extends Controller
                     'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
                     'sm_pengirim' => $request->input('sm_pengirim'),
                     'sm_penerima' => $request->input('sm_penerima'),
-                    'sm_subject' => $request->input('sm_subject'),
-                    'sm_halaman' => $request->input('sm_halaman'),
+                    'sm_perihal' => $request->input('sm_perihal'),
                     'sm_file' => $filePath,
                     'sm_updated' => auth()->user()->name,
                 ]);

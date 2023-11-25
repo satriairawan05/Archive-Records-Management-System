@@ -26,46 +26,46 @@
                         @csrf
                         <div class="form-group row mt-3">
                             <div class="col-6">
-                                <label for="sm_subject" class="col-form-label text-dark">Subject Surat <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" id="sm_subject"
-                                    placeholder="Subject/Judul Surat" name="sm_subject" required>
-                                @error('sm_subject')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-6">
                                 <label for="sm_jenis" class="col-form-label text-dark">Jenis Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_jenis"
-                                    placeholder="Jenis Surat" name="sm_jenis" required>
+                                    placeholder="Jenis Surat" name="sm_jenis" value="{{ old('sm_jenis') }}" required>
                                 @error('sm_jenis')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row mt-3">
                             <div class="col-6">
                                 <label for="sm_asal" class="col-form-label text-dark">Asal Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_asal"
-                                    placeholder="Asal Surat" name="sm_asal" required>
+                                    placeholder="Asal Surat" name="sm_asal" value="{{ old('sm_asal') }}" required>
                                 @error('sm_asal')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="form-group row mt-3">
                             <div class="col-6">
                                 <label for="sm_no_surat" class="col-form-label text-dark">Nomor Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_no_surat"
-                                    placeholder="Nomor Surat" name="sm_no_surat" required>
+                                    placeholder="Nomor Surat" name="sm_no_surat" value="{{ old('sm_no_surat') }}" required>
                                 @error('sm_no_surat')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="sm_perihal" class="col-form-label text-dark">Perihal Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sm_perihal"
+                                    placeholder="Perihal Surat" name="sm_perihal" value="{{ old('sm_perihal') }}" required>
+                                @error('sm_perihal')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -74,11 +74,11 @@
                         </div>
                         <div class="form-group row mt-3">
                             <div class="col-6">
-                                <label for="sm_tgl_surat" class="col-form-label text-dark">Tanggal Surat <span
+                                <label for="sm_penerima" class="col-form-label text-dark">Penerima Surat <span
                                         class="text-danger">*</span></label>
-                                <input type="date" class="form-control form-control-sm" id="sm_tgl_surat"
-                                    placeholder="Tanggal Surat" name="sm_tgl_surat" required>
-                                @error('sm_tgl_surat')
+                                <input type="text" class="form-control form-control-sm" id="sm_penerima"
+                                    placeholder="Penerima Surat" name="sm_penerima" value="{{ old('sm_penerima') }}" required>
+                                @error('sm_penerima')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -88,7 +88,7 @@
                                 <label for="sm_tgl_diterima" class="col-form-label text-dark">Tanggal Diterima Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="date" class="form-control form-control-sm" id="sm_tgl_diterima"
-                                    placeholder="Tanggal diterima" name="sm_tgl_diterima" required>
+                                    placeholder="Tanggal diterima" name="sm_tgl_diterima" value="{{ old('sm_tgl_diterima') }}" required>
                                 @error('sm_tgl_diterima')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -97,42 +97,7 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-6">
-                                <label for="sm_pengirim" class="col-form-label text-dark">Pengirim Surat <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" id="sm_pengirim"
-                                    placeholder="Pengirim Surat" name="sm_pengirim" required>
-                                @error('sm_pengirim')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="sm_penerima" class="col-form-label text-dark">Penerima Surat <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" id="sm_penerima"
-                                    placeholder="Penerima Surat" name="sm_penerima" required>
-                                @error('sm_penerima')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row mt-3">
-                            <div class="col-6">
-                                <label for="sm_halaman" class="col-form-label text-dark">Total Halaman Surat <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" id="sm_halaman"
-                                    placeholder="Halaman Surat" name="sm_halaman" required>
-                                @error('sm_halaman')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <label for="sm_file" class="col-form-label text-dark">File Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="file" class="form-control-file" id="sm_file" name="sm_file" required>

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->date('sm_tgl_diterima')->nullable();
             $table->string('sm_pengirim')->nullable();
             $table->string('sm_penerima')->nullable();
-            $table->string('sm_subject')->nullable();
-            $table->string('sm_halaman')->nullable();
+            $table->string('sm_perihal')->nullable();
+            // $table->string('sm_halaman')->nullable();
             $table->string('sm_file')->nullable();
             $table->string('sm_created')->nullable();
             $table->string('sm_updated')->nullable();

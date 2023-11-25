@@ -73,7 +73,6 @@
                                         <th>No</th>
                                         <th>No Surat</th>
                                         <th>Tanggal Surat</th>
-                                        <th>Pengirim</th>
                                         <th>Penerima</th>
                                         <th>Action</th>
                                     </tr>
@@ -84,7 +83,6 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $s->sm_no_surat }}</td>
                                             <td>{{ $s->sm_tgl_surat }}</td>
-                                            <td>{{ $s->sm_pengirim }}</td>
                                             <td>{{ $s->sm_penerima }}</td>
                                             <td>
                                                 @if ($update == 1)
