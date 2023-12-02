@@ -99,7 +99,7 @@
                                                 <a href="{{ route('perusahaan.edit', $c->com_id) }}"
                                                     class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                             @endif
-                                            @if ($delete == 1)
+                                            @if ($delete == 1 && $c->com_id != 1)
                                                 <form action="{{ route('perusahaan.destroy', $c->com_id) }}"
                                                     method="post" class="d-inline">
                                                     @csrf

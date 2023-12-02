@@ -45,7 +45,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="{{ route('archives') }}">Archive</a></li>
-                <li class="breadcrumb-item">{{ $bidang->bid_name }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('archives') }}?bidang_id={{ $bidang->bid_id }}">{{ $bidang->bid_name }}</a></li>
                 <li class="breadcrumb-item active">{{ $sub->sub_name }}</li>
             </ol>
         </div>

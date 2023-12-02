@@ -1,5 +1,27 @@
 @extends('admin.layout.app')
 
+@push('css')
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+@endpush
+
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $("#jenis_surat").select2();
+
+        $("#bidang").select2();
+
+        $("#sub-bidang").select2();
+    </script>
+@endpush
+
 @section('breadcrumb')
     <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0 justify-content-sm-start">
@@ -22,9 +44,80 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
+                    <form action="{{ route('surat_keluar.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group row mt-3">
+                            <div class="col-6">
+                                <label for="js_id" class="col-form-label text-dark">Jenis Surat <span
+                                        class="text-danger">*</span></label>
+                                <select name="js_id" id="jenis_surat" class="form-control form-control-sm">
+                                    @foreach ($surat as $s)
+                                        @if (old('js_id') == $s->js_id)
+                                            <option name="js_id" value="{!! $s->js_id !!}" selected>
+                                                {!! $s->js_jenis !!}</option>
+                                        @else
+                                            <option name="js_id" value="{!! $s->js_id !!}">
+                                                {!! $s->js_jenis !!}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="sk_asal" class="col-form-label text-dark">Asal Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_asal"
+                                    placeholder="Asal Surat" name="sk_asal" value="{{ old('sk_asal', $com->com_name) }}"
+                                    readonly required>
+                                @error('sk_asal')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-6">
+                                <label for="bid_id" class="col-form-label text-dark">Bidang <span
+                                        class="text-danger">*</span> </label>
+                                <select id="bidang" name="bid_id" class="form-control form-control-sm">
+                                    @foreach ($bidang as $b)
+                                        @if (old('bid_id') == $b->bid_id)
+                                            <option value="{{ $b->bid_id }}" selected>{{ $b->bid_name }}</option>
+                                        @else
+                                            <option value="{{ $b->bid_id }}">{{ $b->bid_name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="sub_id" class="col-form-label text-dark">Sub Bidang <span
+                                        class="text-danger">*</span> </label>
+                                <select id="sub-bidang" name="sub_id" class="form-control form-control-sm">
+                                    @foreach ($sub as $s)
+                                        @if (old('sub_id') == $s->sub_id)
+                                            <option value="{{ $s->sub_id }}" selected>{{ $s->sub_name }}</option>
+                                        @else
+                                            <option value="{{ $s->sub_id }}">{{ $s->sub_name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12 d-flex justify-content-center">
+                                <a href="{{ route('surat_keluar.index') }}" class="btn btn-sm btn-info mx-2"><i
+                                        class="fa fa-reply-all"></i></a>
+                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <form id="approval" method="POST" action="{{ route('surat_keluars.approval_temp') }}">
+        @csrf
+    </form>
 @endsection

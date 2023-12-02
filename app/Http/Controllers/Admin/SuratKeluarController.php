@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Approval;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -34,11 +35,7 @@ class SuratKeluarController extends Controller
                 }
 
                 if ($r->action == 'Approval') {
-                    $this->approval = $r->access;
-                }
-
-                if ($r->action == 'Approval') {
-                    $this->approval = $r->access;
+                    $this->read = $r->access;
                 }
 
                 if ($r->action == 'Update') {
@@ -81,7 +78,11 @@ class SuratKeluarController extends Controller
         if ($this->create == 1) {
             try {
                 return view('admin.surat_keluar.create',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => \App\Models\JenisSurat::all(),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all(),
+                    'com' => \App\Models\Company::where('com_id',1)->first()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -125,7 +126,8 @@ class SuratKeluarController extends Controller
         if ($this->update == 1) {
             try {
                 return view('admin.surat_keluar.edit',[
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'surat' => $suratKeluar->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -134,6 +136,7 @@ class SuratKeluarController extends Controller
             return redirect()->back()->with('failed', 'You not Have Authority!');
         }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -153,9 +156,26 @@ class SuratKeluarController extends Controller
     }
 
     /**
+     * Added the Approval in Surat Keluar resource in storage.
+     */
+    public function addedTempApproval(Request $request, Approval $approval)
+    {
+        $this->get_access_page();
+        if ($this->create == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
+    }
+
+    /**
      * Update the Approval & Surat Keluar resource in storage.
      */
-    public function updateApproval(Request $request, SuratKeluar $suratKeluar)
+    public function updateApprovalStep(Request $request, SuratKeluar $suratKeluar)
     {
         $this->get_access_page();
         if ($this->approval == 1) {
@@ -177,7 +197,11 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->delete == 1) {
             try {
-                //
+                $data = $suratKeluar->find(request()->segment(2));
+
+                SuratKeluar::destroy($data->sk_id);
+
+                return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

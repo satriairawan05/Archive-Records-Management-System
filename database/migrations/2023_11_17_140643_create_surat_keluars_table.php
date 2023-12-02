@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('surat_keluars', function (Blueprint $table) {
             $table->increments('sk_id');
+            $table->foreignId('js_id')->nullable();
             $table->foreignId('bid_id')->nullable();
             $table->foreignId('sub_id')->nullable();
-            $table->string('sk_no_surat')->nullable();
-            $table->string('sk_no_surat_old')->nullable();
-            $table->date('sk_tgl_surat')->nullable();
-            $table->string('sk_disposisi')->nullable();
+            $table->string('sk_asal')->nullable();
+            $table->string('sk_tujuan')->nullable();
+            $table->string('sk_no')->nullable();
+            $table->string('sk_no_old')->nullable();
+            $table->string('sk_sifat')->nullable();
+            $table->string('sk_perihal')->nullable();
+            $table->string('sk_deskripsi')->nullable();
+            $table->date('sk_tgl')->nullable();
+            $table->date('sk_tgl_old')->nullable();
+            $table->string('sk_file')->nullable();
             $table->string('sk_step')->nullable();
             $table->timestamps();
         });
