@@ -19,8 +19,11 @@
         $("#bidang").select2();
 
         $("#sub-bidang").select2();
+
+        $("#company").select2();
     </script>
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace('sk_deskripsi');
     </script>
@@ -109,12 +112,47 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-12">
+                            <div class="col-6">
+                                <label for="sk_sifat" class="col-form-label text-dark">Sifat <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_sifat"
+                                    placeholder="Sifat Surat" name="sk_sifat" value="{{ old('sk_sifat') }}" required>
+                                @error('sk_sifat')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-6">
                                 <label for="sk_perihal" class="col-form-label text-dark">Perihal <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sk_perihal"
                                     placeholder="Perihal Surat" name="sk_perihal" value="{{ old('sk_perihal') }}" required>
                                 @error('sk_perihal')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-6">
+                                <label for="sk_asal" class="col-form-label text-dark">Asal <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_asal"
+                                    placeholder="Asal Surat" name="sk_asal" value="{{ old('sk_asal',$com->com_name) }}" readonly required>
+                                @error('sk_asal')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="sk_tujuan" class="col-form-label text-dark">Tujuan <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_tujuan"
+                                    placeholder="Tujuan Surat" name="sk_tujuan" value="{{ old('sk_tujuan') }}" required>
+                                @error('sk_tujuan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

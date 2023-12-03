@@ -128,7 +128,11 @@ class SuratKeluarController extends Controller
             try {
                 return view('admin.surat_keluar.edit',[
                     'name' => $this->name,
-                    'surat' => $suratKeluar->find(request()->segment(2))
+                    'surat' => \App\Models\JenisSurat::all(),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all(),
+                    'com' => \App\Models\Company::where('com_id',1)->first(),
+                    'keluar' => $suratKeluar->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
