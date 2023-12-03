@@ -55,8 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('jenis_surat', \App\Http\Controllers\Admin\JenisSuratController::class)->except(['show']);
     Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
     Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
-    Route::post('surat_keluar/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'addedTempApproval'])->name('surat_keluars.approval_temp');
     Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, ['updateApproval']])->name('surat_keluar.approval');
+
     // Role
     Route::resource('role', \App\Http\Controllers\Admin\GroupController::class)->except(['show']);
 

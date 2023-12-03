@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('sub_id')->nullable();
             $table->foreignId('sk_id')->nullable();
             $table->string('app_status')->nullable();
+            $table->string('app_disposisi')->nullable();
             $table->date('app_date')->nullable();
             $table->string('app_ordinal')->nullable();
             $table->string('app_created')->nullable();

@@ -62,6 +62,8 @@
                             <thead class="thead-primary">
                                 <tr>
                                     <th>No</th>
+                                    <th>Perihal</th>
+                                    <th>Nomor Surat</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -69,6 +71,8 @@
                                 @foreach ($surat as $s)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $s->sk_perihal }}</td>
+                                        <td>{{ $s->sk_no }}</td>
                                         <td>
                                             <a href="{{ route('surat_keluar.show', $s->sk_id) }}"
                                                 class="btn btn-sm btn-info"><i class="fa fa-file-pdf-o"></i></a>

@@ -156,23 +156,6 @@ class SuratKeluarController extends Controller
     }
 
     /**
-     * Added the Approval in Surat Keluar resource in storage.
-     */
-    public function addedTempApproval(Request $request, Approval $approval)
-    {
-        $this->get_access_page();
-        if ($this->create == 1) {
-            try {
-                //
-            } catch (\Illuminate\Database\QueryException $e) {
-                return redirect()->back()->with('failed', $e->getMessage());
-            }
-        } else {
-            return redirect()->back()->with('failed', 'You not Have Authority!');
-        }
-    }
-
-    /**
      * Update the Approval & Surat Keluar resource in storage.
      */
     public function updateApprovalStep(Request $request, SuratKeluar $suratKeluar)

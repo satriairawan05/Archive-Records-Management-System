@@ -52,7 +52,7 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                return view('admin.surat_masuk.index',[
+                return view('admin.surat_masuk.index', [
                     'name' => $this->name,
                     'surat' => SuratMasuk::all(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
@@ -73,7 +73,7 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                return view('admin.surat_masuk.create',[
+                return view('admin.surat_masuk.create', [
                     'name' => $this->name
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
@@ -105,7 +105,7 @@ class SuratMasukController extends Controller
                     'sm_created' => auth()->user()->name,
                 ]);
 
-                return redirect()->back()->with('success', 'Data Saved!');
+                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -119,7 +119,19 @@ class SuratMasukController extends Controller
      */
     public function show(SuratMasuk $suratMasuk)
     {
-        //
+        $this->get_access_page();
+        if ($this->read == 1) {
+            try {
+                return view('admin.surat_masuk.document', [
+                    'name' => $this->name,
+                    'surat' => $suratMasuk->find(request()->segment(2))
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -130,7 +142,7 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                return view('admin.surat_masuk.edit',[
+                return view('admin.surat_masuk.edit', [
                     'name' => $this->name,
                     'surat' => $suratMasuk->find(request()->segment(2))
                 ]);
@@ -151,14 +163,16 @@ class SuratMasukController extends Controller
         if ($this->update == 1) {
             try {
                 if ($request->hasFile('sm_file')) {
-                    \Illuminate\Support\Facades\Storage::delete($suratMasuk->sm_file);
+                    if ($suratMasuk->sm_file != $request->file('sm_file')) {
+                        \Illuminate\Support\Facades\Storage::delete($suratMasuk->sm_file);
+                    }
                     $file = $request->file('sm_file');
                     $filePath = $file->store('surat_masuk');
                 } else {
                     $filePath = $suratMasuk->sm_file;
                 }
 
-                SuratMasuk::where('sm_id',$suratMasuk->sm_id)->update([
+                SuratMasuk::where('sm_id', $suratMasuk->sm_id)->update([
                     'sm_jenis' => $request->input('sm_jenis'),
                     'sm_asal' => $request->input('sm_asal'),
                     'sm_no_surat' => $request->input('sm_no_surat'),
@@ -171,7 +185,7 @@ class SuratMasukController extends Controller
                     'sm_updated' => auth()->user()->name,
                 ]);
 
-                return redirect()->back()->with('success', 'Data Saved!');
+                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

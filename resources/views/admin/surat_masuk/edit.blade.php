@@ -111,18 +111,6 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-12">
-                                <label for="sm_file" class="col-form-label text-dark">File Surat <span
-                                        class="text-danger">*</span></label>
-                                <input type="file" class="form-control-file" id="sm_file" name="sm_file" required>
-                                @error('sm_file')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row mt-3">
                             <div class="col-12 d-flex justify-content-center">
                                 <a href="{{ route('surat_masuk.index') }}" class="btn btn-sm btn-info mx-2"><i
                                         class="fa fa-reply-all"></i></a>

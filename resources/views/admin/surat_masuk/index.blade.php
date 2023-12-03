@@ -82,9 +82,12 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $s->sm_no_surat }}</td>
-                                            <td>{{ $s->sm_tgl_surat }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($s->sm_tgl_surat)->isoFormat('DD MMMM YYYY') }}</td>
                                             <td>{{ $s->sm_penerima }}</td>
                                             <td>
+                                                @if($s->sm_file != null)
+                                                <a href="{{ route('surat_masuk.show',$s->sm_id) }}" class="btn btn-sm btn-info" target="__blank"><i class="fa fa-file-pdf-o"></i></a>
+                                                @endif
                                                 @if ($update == 1)
                                                     <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"
                                                         class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
