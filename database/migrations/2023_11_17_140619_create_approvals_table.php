@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('bid_id')->nullable();
             $table->foreignId('sub_id')->nullable();
+            $table->foreignId('sk_id')->nullable();
             $table->string('app_status')->nullable();
             $table->date('app_date')->nullable();
             $table->string('app_ordinal')->nullable();

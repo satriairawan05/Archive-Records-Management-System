@@ -24,7 +24,7 @@
                     <div class="list-group">
                         @foreach ($bidang as $d)
                         @php
-                            $skCount = \App\Models\SuratKeluar::where('bid_id', $d->bid_id)->whereNotNull('sk_no_surat')->count();
+                            $skCount = \App\Models\SuratKeluar::where('bid_id', $d->bid_id)->whereNotNull('sk_no')->count();
                         @endphp
                             <a href="?bidang_id={{ $d->bid_id }}"
                                 class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $d->bid_name }} <span

@@ -16,6 +16,7 @@
     $readCom = 0;
     $readBid = 0;
     $readSub = 0;
+    $readApproval = 0;
     $readUser = 0;
 
     foreach ($pages as $r) {
@@ -51,6 +52,10 @@
 
         if ($r->page_name == 'User') {
             $readUser = $r->access;
+        }
+
+        if ($r->page_name == 'Approval') {
+            $readApproval = $r->access;
         }
     }
 @endphp
@@ -116,6 +121,10 @@
                 <li><a href="{{ route('user.index') }}"><i class="fa fa-users"><span class="nav-text">
                                 Users</span></i></a>
                 </li>
+            @endif
+            @if ($readApproval == 1)
+                <li><a href="{{ route('approval.index') }}"><i class="fa fa-bookmark"><span
+                                class="nav-text"> Approval</span></i></a></li>
             @endif
             @if (auth()->user()->group_id == 1)
                 <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text">

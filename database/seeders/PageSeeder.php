@@ -154,6 +154,27 @@ class PageSeeder extends Seeder
             'action' => 'Delete',
         ]);
 
+        // Approval
+        \App\Models\Page::create([
+            'page_name' => 'Approval',
+            'action' => 'Create',
+        ]);
+
+        \App\Models\Page::create([
+            'page_name' => 'Approval',
+            'action' => 'Read',
+        ]);
+
+        \App\Models\Page::create([
+            'page_name' => 'Approval',
+            'action' => 'Update',
+        ]);
+
+        \App\Models\Page::create([
+            'page_name' => 'Approval',
+            'action' => 'Delete',
+        ]);
+
         // Account
         \App\Models\Page::create([
             'page_name' => 'User',

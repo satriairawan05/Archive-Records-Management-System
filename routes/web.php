@@ -31,13 +31,16 @@ Route::middleware(['auth'])->group(function () {
             'name' => 'Home',
             'userCount' => \App\Models\User::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
-            'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNull('sk_no_surat')->whereMonth('created_at', '=', date('m'))->count(),
-            'skWait' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNotNull('sk_no_surat')->whereMonth('created_at', '=', date('m'))->count(),
+            'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNull('sk_no')->count(),
+            'skWait' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNotNull('sk_no')->count(),
         ]);
     })->name('home');
 
     // Archive
     Route::get('archive', [\App\Http\Controllers\Admin\ArchiveController::class, 'index'])->name('archives');
+
+    // Approval
+    Route::resource('approval', \App\Http\Controllers\Admin\ApprovalController::class);
 
     // Bidang
     Route::resource('bidang', \App\Http\Controllers\Admin\BidangController::class)->except(['show']);
