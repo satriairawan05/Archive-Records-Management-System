@@ -185,7 +185,7 @@ class SuratMasukController extends Controller
                     'sm_updated' => auth()->user()->name,
                 ]);
 
-                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Saved!');
+                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -212,7 +212,7 @@ class SuratMasukController extends Controller
                     \Illuminate\Support\Facades\Storage::delete($filePath);
                 }
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

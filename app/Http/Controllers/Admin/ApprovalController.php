@@ -112,7 +112,7 @@ class ApprovalController extends Controller
                     'app_created' => auth()->user()->name
                 ]);
 
-                return redirect()->back()->with('success', 'Successfully Added!');
+                return redirect()->back()->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -153,7 +153,7 @@ class ApprovalController extends Controller
                     'app_updated' => auth()->user()->name
                 ]);
 
-                return redirect()->back()->with('success', 'Successfully Updated!');
+                return redirect()->back()->with('success', 'Data Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -173,7 +173,7 @@ class ApprovalController extends Controller
                 $data = $approval->find(request()->segment(2));
                 Approval::destroy('app_id',$data->app_id);
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

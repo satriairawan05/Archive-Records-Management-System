@@ -106,7 +106,7 @@ class BidangController extends Controller
                         'bid_alias' => $request->input('bid_alias'),
                     ]);
 
-                    return redirect()->to(route('bidang.index'))->with('success', 'Successfully Saved!');
+                    return redirect()->to(route('bidang.index'))->with('success', 'Data Saved!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -168,7 +168,7 @@ class BidangController extends Controller
                         'bid_alias' => $request->input('bid_alias'),
                     ]);
 
-                    return redirect()->to(route('bidang.index'))->with('success', 'Successfully Updated!');
+                    return redirect()->to(route('bidang.index'))->with('success', 'Data Updated!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -191,7 +191,7 @@ class BidangController extends Controller
                 $data = $bidang->find(request()->segment(2));
                 Bidang::destroy($data->bid_id);
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

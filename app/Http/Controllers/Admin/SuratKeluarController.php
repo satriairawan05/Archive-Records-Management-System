@@ -101,6 +101,7 @@ class SuratKeluarController extends Controller
         if ($this->create == 1) {
             try {
                 //
+                return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -147,6 +148,7 @@ class SuratKeluarController extends Controller
         if ($this->update == 1) {
             try {
                 //
+                return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

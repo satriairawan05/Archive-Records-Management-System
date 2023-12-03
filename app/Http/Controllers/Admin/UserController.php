@@ -118,7 +118,7 @@ class UserController extends Controller
                         'sub_id' => $request->input('sub_id'),
                     ]);
 
-                    return redirect()->to(route('user.index'))->with('success', 'Successfully Saved!');
+                    return redirect()->to(route('user.index'))->with('success', 'Data Saved!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -186,7 +186,7 @@ class UserController extends Controller
                         'sub_id' => $request->input('sub_id'),
                     ]);
 
-                    return redirect()->to(route('user.index'))->with('success', 'Successfully Updated!');
+                    return redirect()->to(route('user.index'))->with('success', 'Data Updated!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -209,7 +209,7 @@ class UserController extends Controller
                 $data = $user->find(request()->segment(2));
                 User::destroy($data->id);
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

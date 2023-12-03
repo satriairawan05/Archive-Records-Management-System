@@ -79,7 +79,7 @@ class GroupController extends Controller
                         $groupPage->save();
                     }
 
-                    return redirect()->to(route('role.index'))->with('success', 'Added Role Successfully!');
+                    return redirect()->to(route('role.index'))->with('success', 'Data Saved!');
                 }
 
                 return redirect()->back()->with('failed', $validate->getMessageBag());
@@ -143,7 +143,7 @@ class GroupController extends Controller
                             ->update(['access' => $request->input($page->page_id) == 'on' ? 1 : 0]);
                     }
 
-                    return redirect()->to(route('role.index'))->with('success', 'Updated Role Successfully!');
+                    return redirect()->to(route('role.index'))->with('success', 'Data Updated!');
                 } else {
                     return redirect()->back()->with('failed', $validate->getMessageBag());
                 }
@@ -175,7 +175,7 @@ class GroupController extends Controller
                     }
                 }
 
-                return redirect()->to(route('role.index'))->with('success', 'Deleted Role Successfully!');
+                return redirect()->to(route('role.index'))->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

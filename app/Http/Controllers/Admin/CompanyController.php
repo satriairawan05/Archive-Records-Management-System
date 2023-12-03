@@ -107,7 +107,7 @@ class CompanyController extends Controller
                         'com_phone' => $request->input('com_phone'),
                     ]);
 
-                    return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Saved!');
+                    return redirect()->to(route('perusahaan.index'))->with('success', 'Data Saved!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -170,7 +170,7 @@ class CompanyController extends Controller
                         'com_phone' => $request->input('com_phone'),
                     ]);
 
-                    return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Updated!');
+                    return redirect()->to(route('perusahaan.index'))->with('success', 'Data Updated!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -193,7 +193,7 @@ class CompanyController extends Controller
                 $data = $company->find(request()->segment(2));
                 Company::destroy($data->com_id);
 
-                return redirect()->to(route('perusahaan.index'))->with('success', 'Successfully Deleted!');
+                return redirect()->to(route('perusahaan.index'))->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

@@ -99,7 +99,7 @@ class SubBidangController extends Controller
                     'sub_alias' => $request->input('sub_alias'),
                 ]);
 
-                return redirect()->to(route('sub_bidang.index'))->with('success', 'Successfully Saved!');
+                return redirect()->to(route('sub_bidang.index'))->with('success', 'Data Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -151,7 +151,7 @@ class SubBidangController extends Controller
                     'sub_alias' => $request->input('sub_alias'),
                 ]);
 
-                return redirect()->to(route('sub_bidang.index'))->with('success', 'Successfully Updated!');
+                return redirect()->to(route('sub_bidang.index'))->with('success', 'Data Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -171,7 +171,7 @@ class SubBidangController extends Controller
                 $data = $subBidang->find(request()->segment(2));
                 SubBidang::destroy($data->sub_id);
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

@@ -102,7 +102,7 @@ class JenisSuratController extends Controller
                         'js_count' => '0'
                     ]);
 
-                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Successfully Added!');
+                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Data Saved!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -159,7 +159,7 @@ class JenisSuratController extends Controller
                         'js_jenis' => $request->input('js_jenis')
                     ]);
 
-                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Successfully Updated!');
+                    return redirect()->to(route('jenis_surat.index'))->with('success', 'Data Updated!');
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
@@ -182,7 +182,7 @@ class JenisSuratController extends Controller
                 $data = $jenisSurat->find(request()->segment(2));
                 JenisSurat::destroy($data->id);
 
-                return redirect()->back()->with('success', 'Successfully Deleted!');
+                return redirect()->back()->with('success', 'Data Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
