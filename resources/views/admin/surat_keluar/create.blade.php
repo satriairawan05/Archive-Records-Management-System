@@ -116,8 +116,4 @@
             </div>
         </div>
     </div>
-
-    <form id="approval" method="POST" action="{{ route('surat_keluars.approval_temp') }}">
-        @csrf
-    </form>
 @endsection

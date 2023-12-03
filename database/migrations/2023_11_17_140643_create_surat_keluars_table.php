@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('sk_deskripsi')->nullable();
             $table->date('sk_tgl')->nullable();
             $table->date('sk_tgl_old')->nullable();
-            $table->string('sk_file')->nullable();
             $table->string('sk_step')->nullable();
             $table->string('sk_created')->nullable();
             $table->string('sk_updated')->nullable();
