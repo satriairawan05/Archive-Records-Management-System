@@ -100,7 +100,21 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                //
+                SuratKeluar::create([
+                    'js_id' => $request->input('js_id'),
+                    'bid_id' => $request->input('bid_id'),
+                    'sub_id' => $request->input('sub_id'),
+                    'sk_asal' => $request->input('sk_asal'),
+                    'sk_tujuan' => $request->input('sk_tujuan'),
+                    'sk_sifat' => $request->input('sk_sifat'),
+                    'sk_perihal' => $request->input('sk_perihal'),
+                    'sk_deskripsi' => $request->input('sk_deskripsi'),
+                    'sk_created' => auth()->user()->name,
+                    'sk_tgl' => \Carbon\Carbon::now(),
+                    'sk_tgl_old' => \Carbon\Carbon::now(),
+                    'sk_step' => 1
+                ]);
+
                 return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -115,7 +129,16 @@ class SuratKeluarController extends Controller
      */
     public function show(SuratKeluar $suratKeluar)
     {
-        //
+        $this->get_access_page();
+        if ($this->read == 1) {
+            try {
+                //
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
     }
 
     /**
@@ -151,7 +174,20 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                //
+                SuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
+                    'js_id' => $request->input('js_id'),
+                    'bid_id' => $request->input('bid_id'),
+                    'sub_id' => $request->input('sub_id'),
+                    'sk_asal' => $request->input('sk_asal'),
+                    'sk_tujuan' => $request->input('sk_tujuan'),
+                    'sk_sifat' => $request->input('sk_sifat'),
+                    'sk_perihal' => $request->input('sk_perihal'),
+                    'sk_deskripsi' => $request->input('sk_deskripsi'),
+                    'sk_updated' => auth()->user()->name,
+                    'sk_tgl' => \Carbon\Carbon::now(),
+                    'sk_step' => 1
+                ]);
+
                 return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
