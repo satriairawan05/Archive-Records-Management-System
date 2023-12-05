@@ -94,6 +94,7 @@
                                     <th>Asal</th>
                                     <th>Tujuan</th>
                                     <th>Perihal</th>
+                                    <th>Tanggal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -104,6 +105,7 @@
                                         <td>{{ $s->sk_asal }}</td>
                                         <td>{{ $s->sk_tujuan }}</td>
                                         <td>{{ $s->sk_perihal }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMM YYYY') }}</td>
                                         <td>
                                             @if (
                                                 $approval == 1 &&
