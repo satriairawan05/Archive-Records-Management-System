@@ -6,6 +6,7 @@ use App\Models\Approval;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SuratKeluarController extends Controller
 {
@@ -59,6 +60,7 @@ class SuratKeluarController extends Controller
             try {
                 return view('admin.surat_keluar.index',[
                     'name' => $this->name,
+                    'surat' => SuratKeluar::all(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
@@ -97,25 +99,39 @@ class SuratKeluarController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                SuratKeluar::create([
-                    'js_id' => $request->input('js_id'),
-                    'bid_id' => $request->input('bid_id'),
-                    'sub_id' => $request->input('sub_id'),
-                    'sk_asal' => $request->input('sk_asal'),
-                    'sk_tujuan' => $request->input('sk_tujuan'),
-                    'sk_sifat' => $request->input('sk_sifat'),
-                    'sk_perihal' => $request->input('sk_perihal'),
-                    'sk_deskripsi' => $request->input('sk_deskripsi'),
-                    'sk_created' => auth()->user()->name,
-                    'sk_tgl' => \Carbon\Carbon::now(),
-                    'sk_tgl_old' => \Carbon\Carbon::now(),
-                    'sk_step' => 1
+                $validated = Validator::make($request->all(), [
+                    'sk_asal' => ['required','string'],
+                    'sk_asal' => ['required','string'],
+                    'sk_sifat' => ['required','string'],
+                    'sk_perihal' => ['required','string'],
+                    'sk_tujuan' => ['required','string'],
+                    'sk_deskripsi' => ['required'],
                 ]);
 
-                return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
+                if (!$validated->fails()) {
+                    SuratKeluar::create([
+                        'js_id' => $request->input('js_id'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
+                        'sk_asal' => $request->input('sk_asal'),
+                        'sk_sifat' => $request->input('sk_sifat'),
+                        'sk_perihal' => $request->input('sk_perihal'),
+                        'sk_tujuan' => $request->input('sk_tujuan'),
+                        'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_created' => auth()->user()->name,
+                        'sk_tgl' => \Carbon\Carbon::now(),
+                        'sk_tgl_old' => \Carbon\Carbon::now(),
+                        'sk_step' => 1
+                    ]);
+
+                    return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -174,21 +190,35 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                SuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
-                    'js_id' => $request->input('js_id'),
-                    'bid_id' => $request->input('bid_id'),
-                    'sub_id' => $request->input('sub_id'),
-                    'sk_asal' => $request->input('sk_asal'),
-                    'sk_tujuan' => $request->input('sk_tujuan'),
-                    'sk_sifat' => $request->input('sk_sifat'),
-                    'sk_perihal' => $request->input('sk_perihal'),
-                    'sk_deskripsi' => $request->input('sk_deskripsi'),
-                    'sk_updated' => auth()->user()->name,
-                    'sk_tgl' => \Carbon\Carbon::now(),
-                    'sk_step' => 1
+                $validated = Validator::make($request->all(), [
+                    'sk_asal' => ['required','string'],
+                    'sk_asal' => ['required','string'],
+                    'sk_sifat' => ['required','string'],
+                    'sk_perihal' => ['required','string'],
+                    'sk_tujuan' => ['required','string'],
+                    'sk_deskripsi' => ['required'],
                 ]);
 
-                return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
+                if (!$validated->fails()) {
+                    SuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
+                        'js_id' => $request->input('js_id'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
+                        'sk_asal' => $request->input('sk_asal'),
+                        'sk_sifat' => $request->input('sk_sifat'),
+                        'sk_perihal' => $request->input('sk_perihal'),
+                        'sk_tujuan' => $request->input('sk_tujuan'),
+                        'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_updated' => auth()->user()->name,
+                        'sk_tgl' => \Carbon\Carbon::now(),
+                        'sk_step' => 1
+                    ]);
+
+                    return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
+
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SuratMasukController extends Controller
 {
@@ -92,20 +93,35 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                SuratMasuk::create([
-                    'sm_jenis' => $request->input('sm_jenis'),
-                    'sm_asal' => $request->input('sm_asal'),
-                    'sm_no_surat' => $request->input('sm_no_surat'),
-                    'sm_tgl_surat' => $request->input('sm_tgl_surat'),
-                    'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
-                    'sm_pengirim' => $request->input('sm_pengirim'),
-                    'sm_penerima' => $request->input('sm_penerima'),
-                    'sm_perihal' => $request->input('sm_perihal'),
-                    'sm_file' => $request->file('sm_file')->store('surat_masuk'),
-                    'sm_created' => auth()->user()->name,
+                $validated = Validator::make($request->all(), [
+                    'sm_jenis' => ['required','string'],
+                    'sm_asal' => ['required','string'],
+                    'sm_no_surat' => ['required','string'],
+                    'sm_tgl_surat' => ['required','string'],
+                    'sm_tgl_diterima' => ['required','string'],
+                    'sm_pengirim' => ['required','string'],
+                    'sm_penerima' => ['required','string'],
+                    'sm_perihal' => ['required','string'],
                 ]);
 
-                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Saved!');
+                if (!$validated->fails()) {
+                    SuratMasuk::create([
+                        'sm_jenis' => $request->input('sm_jenis'),
+                        'sm_asal' => $request->input('sm_asal'),
+                        'sm_no_surat' => $request->input('sm_no_surat'),
+                        'sm_tgl_surat' => $request->input('sm_tgl_surat'),
+                        'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
+                        'sm_pengirim' => $request->input('sm_pengirim'),
+                        'sm_penerima' => $request->input('sm_penerima'),
+                        'sm_perihal' => $request->input('sm_perihal'),
+                        'sm_file' => $request->file('sm_file')->store('surat_masuk'),
+                        'sm_created' => auth()->user()->name,
+                    ]);
+
+                    return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Saved!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -162,30 +178,46 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                if ($request->hasFile('sm_file')) {
-                    if ($suratMasuk->sm_file != $request->file('sm_file')) {
-                        \Illuminate\Support\Facades\Storage::delete($suratMasuk->sm_file);
-                    }
-                    $file = $request->file('sm_file');
-                    $filePath = $file->store('surat_masuk');
-                } else {
-                    $filePath = $suratMasuk->sm_file;
-                }
-
-                SuratMasuk::where('sm_id', $suratMasuk->sm_id)->update([
-                    'sm_jenis' => $request->input('sm_jenis'),
-                    'sm_asal' => $request->input('sm_asal'),
-                    'sm_no_surat' => $request->input('sm_no_surat'),
-                    'sm_tgl_surat' => $request->input('sm_tgl_surat'),
-                    'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
-                    'sm_pengirim' => $request->input('sm_pengirim'),
-                    'sm_penerima' => $request->input('sm_penerima'),
-                    'sm_perihal' => $request->input('sm_perihal'),
-                    'sm_file' => $filePath,
-                    'sm_updated' => auth()->user()->name,
+                $validated = Validator::make($request->all(), [
+                    'sm_jenis' => ['required','string'],
+                    'sm_asal' => ['required','string'],
+                    'sm_no_surat' => ['required','string'],
+                    'sm_tgl_surat' => ['required','string'],
+                    'sm_tgl_diterima' => ['required','string'],
+                    'sm_pengirim' => ['required','string'],
+                    'sm_penerima' => ['required','string'],
+                    'sm_perihal' => ['required','string'],
                 ]);
 
-                return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Updated!');
+                if (!$validated->fails()) {
+                    if ($request->hasFile('sm_file')) {
+                        if ($suratMasuk->sm_file != $request->file('sm_file')) {
+                            \Illuminate\Support\Facades\Storage::delete($suratMasuk->sm_file);
+                        }
+                        $file = $request->file('sm_file');
+                        $filePath = $file->store('surat_masuk');
+                    } else {
+                        $filePath = $suratMasuk->sm_file;
+                    }
+
+                    SuratMasuk::where('sm_id', $suratMasuk->sm_id)->update([
+                        'sm_jenis' => $request->input('sm_jenis'),
+                        'sm_asal' => $request->input('sm_asal'),
+                        'sm_no_surat' => $request->input('sm_no_surat'),
+                        'sm_tgl_surat' => $request->input('sm_tgl_surat'),
+                        'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
+                        'sm_pengirim' => $request->input('sm_pengirim'),
+                        'sm_penerima' => $request->input('sm_penerima'),
+                        'sm_perihal' => $request->input('sm_perihal'),
+                        'sm_file' => $filePath,
+                        'sm_updated' => auth()->user()->name,
+                    ]);
+
+                    return redirect()->to(route('surat_masuk.index'))->with('success', 'Data Updated!');
+                } else {
+                    return redirect()->back()->with('failed', $validated->getMessageBag());
+                }
+
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

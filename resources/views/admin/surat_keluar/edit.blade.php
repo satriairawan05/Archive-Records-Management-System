@@ -51,7 +51,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('surat_keluar.update',$keluar->sk_id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('surat_keluar.update',$keluar->sk_id) }}" method="post">
                         @csrf
                         @method('put')
                         <div class="form-group row mt-3">

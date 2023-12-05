@@ -64,51 +64,51 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    @if ($read == 1)
-                        <div class="card-body">
-                            <table class="table" id="myTable">
-                                <thead class="thead-primary">
+                @if ($read == 1)
+                    <div class="card-body">
+                        <table class="table" id="myTable">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>No Surat</th>
+                                    <th>Tanggal Surat</th>
+                                    <th>Penerima</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($surat as $s)
                                     <tr>
-                                        <th>No</th>
-                                        <th>No Surat</th>
-                                        <th>Tanggal Surat</th>
-                                        <th>Penerima</th>
-                                        <th>Action</th>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $s->sm_no_surat }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($s->sm_tgl_surat)->isoFormat('DD MMMM YYYY') }}</td>
+                                        <td>{{ $s->sm_penerima }}</td>
+                                        <td>
+                                            @if ($s->sm_file != null)
+                                                <a href="{{ route('surat_masuk.show', $s->sm_id) }}"
+                                                    class="btn btn-sm btn-info" target="__blank"><i
+                                                        class="fa fa-file-pdf-o"></i></a>
+                                            @endif
+                                            @if ($update == 1)
+                                                <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if ($delete == 1)
+                                                <form action="{{ route('surat_masuk.destroy', $s->sm_id) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($surat as $s)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $s->sm_no_surat }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($s->sm_tgl_surat)->isoFormat('DD MMMM YYYY') }}</td>
-                                            <td>{{ $s->sm_penerima }}</td>
-                                            <td>
-                                                @if($s->sm_file != null)
-                                                <a href="{{ route('surat_masuk.show',$s->sm_id) }}" class="btn btn-sm btn-info" target="__blank"><i class="fa fa-file-pdf-o"></i></a>
-                                                @endif
-                                                @if ($update == 1)
-                                                    <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"
-                                                        class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                                @endif
-                                                @if ($delete == 1)
-                                                    <form action="{{ route('surat_masuk.destroy', $s->sm_id) }}"
-                                                        method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-sm btn-danger"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

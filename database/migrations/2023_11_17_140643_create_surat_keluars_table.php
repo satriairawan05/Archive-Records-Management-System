@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('sk_no_old')->nullable();
             $table->string('sk_sifat')->nullable();
             $table->string('sk_perihal')->nullable();
-            $table->string('sk_deskripsi')->nullable();
+            $table->longText('sk_deskripsi')->nullable();
             $table->date('sk_tgl')->nullable();
             $table->date('sk_tgl_old')->nullable();
             $table->string('sk_step')->nullable();

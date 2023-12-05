@@ -69,11 +69,46 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    @if($read == 1)
-
-                    @endif
-                </div>
+                @if ($read == 1)
+                    <div class="card-body">
+                        <table class="table" id="myTable">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Asal</th>
+                                    <th>Tujuan</th>
+                                    <th>Perihal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($surat as $s)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $s->sk_asal }}</td>
+                                        <td>{{ $s->sk_tujuan }}</td>
+                                        <td>{{ $s->sk_perihal }}</td>
+                                        <td>
+                                            @if ($update == 1)
+                                                <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            @endif
+                                            @if ($delete == 1)
+                                                <form action="{{ route('surat_keluar.destroy', $s->sk_id) }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
