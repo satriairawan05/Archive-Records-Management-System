@@ -58,7 +58,7 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                return view('admin.surat_keluar.index',[
+                return view('admin.surat_keluar.index', [
                     'name' => $this->name,
                     'surat' => SuratKeluar::all(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
@@ -79,12 +79,12 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->create == 1) {
             try {
-                return view('admin.surat_keluar.create',[
+                return view('admin.surat_keluar.create', [
                     'name' => $this->name,
                     'surat' => \App\Models\JenisSurat::all(),
                     'bidang' => \App\Models\Bidang::all(),
                     'sub' => \App\Models\SubBidang::all(),
-                    'com' => \App\Models\Company::where('com_id',1)->first()
+                    'com' => \App\Models\Company::where('com_id', 1)->first()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -104,11 +104,11 @@ class SuratKeluarController extends Controller
         if ($this->create == 1) {
             try {
                 $validated = Validator::make($request->all(), [
-                    'sk_asal' => ['required','string'],
-                    'sk_asal' => ['required','string'],
-                    'sk_sifat' => ['required','string'],
-                    'sk_perihal' => ['required','string'],
-                    'sk_tujuan' => ['required','string'],
+                    'sk_asal' => ['required', 'string'],
+                    'sk_asal' => ['required', 'string'],
+                    'sk_sifat' => ['required', 'string'],
+                    'sk_perihal' => ['required', 'string'],
+                    'sk_tujuan' => ['required', 'string'],
                     'sk_deskripsi' => ['required'],
                 ]);
 
@@ -165,12 +165,12 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->update == 1) {
             try {
-                return view('admin.surat_keluar.edit',[
+                return view('admin.surat_keluar.edit', [
                     'name' => $this->name,
                     'surat' => \App\Models\JenisSurat::all(),
                     'bidang' => \App\Models\Bidang::all(),
                     'sub' => \App\Models\SubBidang::all(),
-                    'com' => \App\Models\Company::where('com_id',1)->first(),
+                    'com' => \App\Models\Company::where('com_id', 1)->first(),
                     'keluar' => $suratKeluar->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
@@ -191,16 +191,16 @@ class SuratKeluarController extends Controller
         if ($this->update == 1) {
             try {
                 $validated = Validator::make($request->all(), [
-                    'sk_asal' => ['required','string'],
-                    'sk_asal' => ['required','string'],
-                    'sk_sifat' => ['required','string'],
-                    'sk_perihal' => ['required','string'],
-                    'sk_tujuan' => ['required','string'],
+                    'sk_asal' => ['required', 'string'],
+                    'sk_asal' => ['required', 'string'],
+                    'sk_sifat' => ['required', 'string'],
+                    'sk_perihal' => ['required', 'string'],
+                    'sk_tujuan' => ['required', 'string'],
                     'sk_deskripsi' => ['required'],
                 ]);
 
                 if (!$validated->fails()) {
-                    SuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
+                    SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
                         'js_id' => $request->input('js_id'),
                         'bid_id' => $request->input('bid_id'),
                         'sub_id' => $request->input('sub_id'),
@@ -218,7 +218,6 @@ class SuratKeluarController extends Controller
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
-
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -235,7 +234,43 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->approval == 1) {
             try {
-                //
+                $pic = \App\Models\User::where('id', $suratKeluar->pic_id)->select('name')->first();
+                $stepData = null;
+
+                $latestApproval = \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->latest('app_ordinal')->first();
+                if ($request->input('sk_dipsosisi') == 'Accepted') {
+                    \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->where('user_id', auth()->user()->id)->update([
+                        'app_status' => $request->input('sk_disposisi'),
+                        'app_date' => \Carbon\Carbon::now()
+                    ]);
+
+                    if ($latestApproval->app_ordinal == $suratKeluar->sk_step) {
+                        $stepData = $suratKeluar->sk_step;
+                    } else {
+                        $stepData = $suratKeluar->sk_step + 1;
+                    }
+
+                    SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                        'sk_disposisi' => $request->input('sk_disposisi'),
+                        'sk_remark' => $request->input('sk_remark'),
+                        'sk_approved_step' => $stepData
+                    ]);
+                } else {
+                    \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->where('user_id', auth()->user()->id)->update([
+                        'app_status' => $request->input('sk_disposisi'),
+                        'app_date' => \Carbon\Carbon::now()
+                    ]);
+
+                    $stepData = 1;
+                    SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                        'sk_disposisi' => $request->input('sk_disposisi'),
+                        'sk_remark' => $request->input('sk_remark'),
+                        'sk_approved_step' => $stepData
+                    ]);
+                }
+
+
+                return redirect()->back()->with('success', 'Surat Cuti ' . $pic->name . ' telah anda ' . $suratKeluar->sk_disposisi . '!');
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

@@ -35,7 +35,6 @@
         }
     </style>
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-    <!-- Select2 JS -->
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
@@ -51,10 +50,18 @@
             }
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.js') }}"></script>
+    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script type="text/javascript">
-        $("#sk_deskripsi").select2();
+        $(document).ready(function() {
+            $('#sk_deskripsi').select2({
+                dropdownParent: $('#modal')
+            });
+        });
     </script>
 @endpush
 
@@ -103,7 +110,7 @@
                                                     \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', (int) $s->skstep)->first())
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
-                                                        class="fa fa-bookmark-o"></i></button>
+                                                        class="fa fa-bookmark"></i></button>
 
                                                 <div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1"
                                                     role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
