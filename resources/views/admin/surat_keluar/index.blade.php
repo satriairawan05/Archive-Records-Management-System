@@ -35,6 +35,10 @@
         }
     </style>
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <!-- Select2 JS -->
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
 @endpush
 
 @push('js')
@@ -46,6 +50,11 @@
                 $(row).addClass('selected')
             }
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $("#sk_deskripsi").select2();
     </script>
 @endpush
 
@@ -89,13 +98,93 @@
                                         <td>{{ $s->sk_tujuan }}</td>
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>
+                                            @if (
+                                                $approval == 1 &&
+                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', (int) $s->skstep)->first())
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                                    data-target=".bd-example-modal-lg"><i
+                                                        class="fa fa-bookmark-o"></i></button>
+
+                                                <div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1"
+                                                    role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Surat Cuti
+                                                                    {{ $s->pic_name }}
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="{{ route('surat_keluar.approval', $s->sk_id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('put')
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-2">
+                                                                            <label for="sc_disposisi">Disposisi <span
+                                                                                    class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        @php
+                                                                            $disposisi = [['name' => 'Accepted'], ['name' => 'Rejected']];
+                                                                        @endphp
+                                                                        <div class="col-10">
+                                                                            <select class="form-select form-select-sm"
+                                                                                id="sk_disposisi" name="sk_disposisi">
+                                                                                @foreach ($disposisi as $d)
+                                                                                    @if (old('sk_disposisi') == $d['name'])
+                                                                                        <option name="sk_disposisi"
+                                                                                            value="{{ $d['name'] }}"
+                                                                                            selected>
+                                                                                            {!! $d['name'] !!}</option>
+                                                                                    @else
+                                                                                        <option name="sk_disposisi"
+                                                                                            value="{{ $d['name'] }}">
+                                                                                            {!! $d['name'] !!}
+                                                                                        </option>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mt-3">
+                                                                        <div class="col-2">
+                                                                            <label for="sl_remark">Remark <span
+                                                                                    class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-10">
+                                                                            <input type="text" name="sk_remark"
+                                                                                id="sk_remark"
+                                                                                class="form-control form-control-sm"
+                                                                                value="{{ old('sk_remark') }}"
+                                                                                placeholder="Ex: Okeee">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                        changes</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <a href="{{ route('surat_keluar.show', $s->sk_id) }}"
+                                                class="btn btn-sm btn-secondary" target="__blank"><i
+                                                    class="fa fa-print"></i></a>
                                             @if ($update == 1)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
                                                     class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
                                             @endif
                                             @if ($delete == 1)
-                                                <form action="{{ route('surat_keluar.destroy', $s->sk_id) }}" method="post"
-                                                    class="d-inline">
+                                                <form action="{{ route('surat_keluar.destroy', $s->sk_id) }}"
+                                                    method="post" class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-sm btn-danger"><i
