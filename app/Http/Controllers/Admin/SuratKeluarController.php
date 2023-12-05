@@ -252,7 +252,7 @@ class SuratKeluarController extends Controller
 
                     SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
                         'sk_remark' => $request->input('sk_remark'),
-                        'sk_approved_step' => $stepData
+                        'sk_step' => $stepData
                     ]);
                 } else {
                     \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->where('user_id', auth()->user()->id)->update([
@@ -263,7 +263,7 @@ class SuratKeluarController extends Controller
                     $stepData = 1;
                     SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
                         'sk_remark' => $request->input('sk_remark'),
-                        'sk_approved_step' => $stepData
+                        'sk_step' => $stepData
                     ]);
                 }
 
