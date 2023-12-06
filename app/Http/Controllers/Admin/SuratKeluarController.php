@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Approval;
+use App\Models\JenisSurat;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\PrintSuratKeluar;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class SuratKeluarController extends Controller
@@ -129,6 +130,10 @@ class SuratKeluarController extends Controller
                         'sk_step' => 1
                     ]);
 
+                    JenisSurat::where('js_id', $sk->js_id)->update([
+                        'js_count' => \Illuminate\Support\Facades\DB::raw('js_count + 1')
+                    ]);
+
                     PrintSuratKeluar::create([
                         'js_id' => $request->input('js_id'),
                         'sk_id' => $sk->sk_id
@@ -154,14 +159,13 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                PrintSuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
+                PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
                     'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
                 ]);
 
-                return view('admin.surat_keluar.document',[
+                return view('admin.surat_keluar.document', [
                     'name' => $this->name
                 ]);
-
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -228,8 +232,7 @@ class SuratKeluarController extends Controller
                     ]);
 
                     PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                        'js_id' => $request->input('js_id'),
-                        'sk_id' => $suratKeluar->sk_id
+                        'ps_count' => 0
                     ]);
 
                     return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
@@ -307,7 +310,11 @@ class SuratKeluarController extends Controller
 
                 SuratKeluar::destroy($data->sk_id);
 
-                PrintSuratKeluar::where('sk_id',$data->sk_id)->delete();
+                PrintSuratKeluar::where('sk_id', $data->sk_id)->delete();
+
+                JenisSurat::where('js_id', $data->js_id)->update([
+                    'js_count' => \Illuminate\Support\Facades\DB::raw('js_count - 1')
+                ]);
 
                 return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
