@@ -6,6 +6,7 @@ use App\Models\Approval;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\PrintSuratKeluar;
 use Illuminate\Support\Facades\Validator;
 
 class SuratKeluarController extends Controller
@@ -113,7 +114,7 @@ class SuratKeluarController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
-                    SuratKeluar::create([
+                    $sk = SuratKeluar::create([
                         'js_id' => $request->input('js_id'),
                         'bid_id' => $request->input('bid_id'),
                         'sub_id' => $request->input('sub_id'),
@@ -126,6 +127,11 @@ class SuratKeluarController extends Controller
                         'sk_tgl' => \Carbon\Carbon::now(),
                         'sk_tgl_old' => \Carbon\Carbon::now(),
                         'sk_step' => 1
+                    ]);
+
+                    PrintSuratKeluar::create([
+                        'js_id' => $request->input('js_id'),
+                        'sk_id' => $sk->sk_id
                     ]);
 
                     return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
@@ -148,8 +154,12 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                    'sk_print' => $suratKeluar->sk_print + 1
+                PrintSuratKeluar::where('sk_id',$suratKeluar->sk_id)->update([
+                    'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
+                ]);
+
+                return view('admin.surat_keluar.document',[
+                    'name' => $this->name
                 ]);
 
             } catch (\Illuminate\Database\QueryException $e) {
@@ -215,6 +225,11 @@ class SuratKeluarController extends Controller
                         'sk_updated' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
                         'sk_step' => 1
+                    ]);
+
+                    PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                        'js_id' => $request->input('js_id'),
+                        'sk_id' => $suratKeluar->sk_id
                     ]);
 
                     return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
@@ -291,6 +306,8 @@ class SuratKeluarController extends Controller
                 $data = $suratKeluar->find(request()->segment(2));
 
                 SuratKeluar::destroy($data->sk_id);
+
+                PrintSuratKeluar::where('sk_id',$data->sk_id)->delete();
 
                 return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {

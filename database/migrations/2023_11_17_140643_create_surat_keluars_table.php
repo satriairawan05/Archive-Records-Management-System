@@ -27,7 +27,6 @@ return new class extends Migration
             $table->date('sk_tgl_old')->nullable();
             $table->string('sk_remark')->nullable();
             $table->string('sk_step')->nullable();
-            $table->string('sk_print')->default('0')->nullable();
             $table->string('sk_created')->nullable();
             $table->string('sk_updated')->nullable();
             $table->timestamps();
