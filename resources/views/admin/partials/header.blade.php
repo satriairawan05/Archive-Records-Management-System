@@ -25,6 +25,9 @@
 
     @stack('css')
 
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}">
+
     <style type="text/css">
         .horizontal {
             border: 1px solid black;

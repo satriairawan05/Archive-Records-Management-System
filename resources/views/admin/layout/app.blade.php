@@ -8,9 +8,6 @@
         <div class="sk-child sk-bounce1"></div>
         <div class="sk-child sk-bounce2"></div>
         <div class="sk-child sk-bounce3"></div>
-        <div class="sk-child sk-bounce1"></div>
-        <div class="sk-child sk-bounce2"></div>
-        <div class="sk-child sk-bounce3"></div>
     </div>
 </div>
 <!--*******************
@@ -27,7 +24,7 @@
             Nav header start
         ***********************************-->
     <div class="nav-header" id="header">
-        <a href="#" class="brand-logo">
+        <a href="{{ route('home') }}" class="brand-logo">
             <img class="logo-abbr" src="{{ asset('images/logo.png') }}" alt="Logo">
             <span class="ml-2">{{ env('APP_NAME') }}</span>
         </a>

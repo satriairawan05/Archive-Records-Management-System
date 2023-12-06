@@ -22,6 +22,56 @@
 
     @stack('js')
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    @if (session('success'))
+        <script type="text/javascript">
+            let timerInterval;
+            Swal.fire({
+                title: "Success!",
+                text: "{{ session('success') }}",
+                timer: 5000,
+                icon: 'success',
+                timerProgressBar: true,
+                confirmButtonText: 'Oke',
+                didOpen: () => {
+                    timerInterval = setInterval(() => {}, 100)
+                },
+                willClose: () => {
+
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+
+                }
+            });
+        </script>
+    @endif
+    @if (session('failed'))
+        <script type="text/javascript">
+            let timerInterval;
+            Swal.fire({
+                title: "Fail!",
+                text: "{{ session('failed') }}",
+                timer: 500000,
+                icon: 'error',
+                timerProgressBar: true,
+                confirmButtonText: 'Oke',
+                didOpen: () => {
+                    timerInterval = setInterval(() => {}, 100)
+                },
+                willClose: () => {
+
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+
+                }
+            });
+        </script>
+    @endif
+
     </body>
 
     </html>
