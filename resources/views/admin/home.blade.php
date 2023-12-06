@@ -72,11 +72,11 @@
             <div class="card">
                 <div class="stat-widget-one card-body">
                     <div class="stat-icon d-inline-block">
-                        <i class="fa fa-user text-primary border-primary"></i>
+                        <i class="fa fa-envelope-square text-primary border-primary"></i>
                     </div>
                     <div class="stat-content d-inline-block">
-                        <div class="stat-text">Users</div>
-                        <div class="stat-digit">{{ $userCount }}</div>
+                        <div class="stat-text">Jenis Surat</div>
+                        <div class="stat-digit">{{ $count }}</div>
                     </div>
                 </div>
             </div>
