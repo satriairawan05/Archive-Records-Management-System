@@ -186,7 +186,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            <a href="{{ route('surat_keluar.show', $s->sk_id) }}"
+                                            <a href="{{ route('surat_keluar.print', $s->sk_id) }}"
                                                 class="btn btn-sm btn-secondary" target="__blank"><i
                                                     class="fa fa-print"></i></a>
                                             @if ($update == 1)

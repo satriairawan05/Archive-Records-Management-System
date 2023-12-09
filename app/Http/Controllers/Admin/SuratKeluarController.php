@@ -124,20 +124,21 @@ class SuratKeluarController extends Controller
                         'sk_no' => $request->input('sk_no'),
                         'sk_no_old' => $request->input('sk_no'),
                         'sk_perihal' => $request->input('sk_perihal'),
+                        'sk_tempat_tujuan' => $request->input('sk_tempat_tujuan'),
                         'sk_tujuan' => $request->input('sk_tujuan'),
                         'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_created' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
                         'sk_tgl_old' => \Carbon\Carbon::now(),
                         'sk_step' => 1
                     ]);
 
-                    JenisSurat::where('js_id', $sk->js_id)->update([
+                    JenisSurat::where('sk_id', $sk->sk_id)->update([
                         'js_count' => \Illuminate\Support\Facades\DB::raw('js_count + 1')
                     ]);
 
                     PrintSuratKeluar::create([
-                        'js_id' => $request->input('js_id'),
                         'sk_id' => $sk->sk_id
                     ]);
 
@@ -145,6 +146,30 @@ class SuratKeluarController extends Controller
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('failed', $e->getMessage());
+            }
+        } else {
+            return redirect()->back()->with('failed', 'You not Have Authority!');
+        }
+    }
+
+    /**
+     * Display the specified resource for print.
+     */
+    public function print(SuratKeluar $suratKeluar)
+    {
+        $this->get_access_page();
+        if ($this->read == 1) {
+            try {
+                PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                    'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
+                ]);
+
+                return view('admin.surat_keluar.document', [
+                    'name' => $this->name,
+                    'surat' => $suratKeluar
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
@@ -227,8 +252,10 @@ class SuratKeluarController extends Controller
                         'sk_sifat' => $request->input('sk_sifat'),
                         'sk_no' => $request->input('sk_no'),
                         'sk_perihal' => $request->input('sk_perihal'),
+                        'sk_tempat_tujuan' => $request->input('sk_tempat_tujuan'),
                         'sk_tujuan' => $request->input('sk_tujuan'),
                         'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_updated' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
                         'sk_step' => 1

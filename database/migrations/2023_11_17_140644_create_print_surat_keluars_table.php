@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('print_surat_keluars', function (Blueprint $table) {
             $table->increments('ps_id');
-            $table->foreignId('js_id');
             $table->foreignId('sk_id');
             $table->integer('ps_count')->default(0)->nullable();
             $table->timestamps();

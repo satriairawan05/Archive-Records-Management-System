@@ -160,7 +160,18 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-12">
+                            <div class="col-6">
+                                <label for="sk_tempat_tujuan" class="col-form-label text-dark">Tempat Tujuan Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_tempat_tujuan"
+                                    placeholder="Ex: Samarinda" name="sk_tempat_tujuan" value="{{ old('sk_tempat_tujuan') }}" required>
+                                @error('sk_tempat_tujuan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-6">
                                 <label for="sk_no" class="col-form-label text-dark">Nomor Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sk_no"

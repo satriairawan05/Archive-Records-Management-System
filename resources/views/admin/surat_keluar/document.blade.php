@@ -19,6 +19,10 @@
             padding: 0;
         }
 
+        .left-align {
+            text-align: left;
+        }
+
         @media print {
             @page {
                 size: A4 portrait;
@@ -28,32 +32,62 @@
 </head>
 
 <body>
-    <div class="mt-2">
+    <div class="container mt-2">
         <table align="center" style="width: 100%; max-width: 800px;">
-            <tr style="width: 100%;">
-                <td>
-                    <img src="{{ asset('images/kota_samarinda.png') }}" alt="Pemkot"
-                        style="width: 120px; height: 130px;">
-                </td>
-                <td align="center">
-                    <h4><b>PEMERINTAH KOTA SAMARINDA</b></h4>
-                    <h2>DINAS PERHUBUNGAN</h2>
-                    <h5 style="word-wrap: break-word; max-width: 800px;">Alamat : Jl. MT. Haryono, Kel
-                        Air Putih, Kec. Samarinda Ulu</h5>
-                    <h5 style="word-wrap: break-word; max-width: 800px;">Samarinda (Kalimantan Timur)
-                        Kode Pos 75124</h5>
-                    <h6 style="display: flex; justify-content: space-between;">
-                        <p style="margin: 0;">https://dishub.samarindakota.go.id/</p>
-                        <p style="margin: 0;">Email: dishub@samarindakota.go.id</p>
-                    </h6>
-                </td>
-            </tr>
-            <tr style="width: 100%; margin: 0;">
-                <td colspan="2">
-                    <hr style="border: 2px solid">
-                </td>
-            </tr>
+            <thead>
+                <tr style="width: 100%;">
+                    <td>
+                        <img src="{{ asset('images/kota_samarinda.png') }}" alt="Pemkot"
+                            style="width: 130px; height: 140px;">
+                    </td>
+                    <td align="center">
+                        <h2><b>PEMERINTAH KOTA SAMARINDA</b></h2>
+                        <h4>DINAS PERHUBUNGAN</h4>
+                        <h6 style="word-wrap: break-word; max-width: 800px;">Alamat : Jl. MT. Haryono, Kel
+                            Air Putih, Kec. Samarinda Ulu</h6>
+                        <h6 style="word-wrap: break-word; max-width: 800px;">Samarinda (Kalimantan Timur)
+                            Kode Pos 75124</h6>
+                        <h6 style="display: flex; justify-content: space-between;">
+                            <p style="margin: 0; padding: 0;">https://dishub.samarindakota.go.id/</p>
+                            <p style="margin: 0; padding: 0;">Email: dishub@samarindakota.go.id</p>
+                        </h6>
+                    </td>
+                </tr>
+                <tr style="width: 100%; max-width: 800px;">
+                    <td colspan="2">
+                        <hr style="border: 2px solid black;">
+                    </td>
+                </tr>
+            </thead>
         </table>
+        <div class="row" style="margin-top: 0;">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <h6 align="center">Samarinda,
+                    {{ \Carbon\Carbon::parse($surat->sk_tgl)->isoFormat('DD MMMM YYYY') }}</h6><br>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0;">
+            <div class="col-6 mt-0" style="margin-left: 125px;">
+                <h6 class="left-align" style="vertical-aling:top;">Nomor Surat :
+                    {{ $surat->sk_no_old == $surat->sk_no ? $surat->sk_no_old : $surat->sk_no }}</h6>
+                <h6 class="left-align" style="vertical-aling:top;">Lampiran &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $surat->sk_lampiran != null ? $surat->sk_lampiran : '-' }}</h6>
+                <h6 class="left-align" style="vertical-aling:top;">Perihal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $surat->sk_perihal }}</h6>
+            </div>
+        </div>
+        <div class="row mx-5 mt-2">
+            <div class="col-6">
+                <p style="margin-bottom: 0;">Yth. {{ $surat->sk_tujuan }}</p>
+                <p style="margin-left: 20px; margin-top: 0; margin-bottom: 0;">di - </p>
+                <p style="margin-left: 30px;">{{ $surat->sk_tempat_tujuan }}</p>
+            </div>
+            <div class="col-6"></div>
+        </div>
+        <div class="row mx-5">
+            <div class="col-12" style="text-align: justify;">
+                <p>{!! $surat->sk_deskripsi !!}</p>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->

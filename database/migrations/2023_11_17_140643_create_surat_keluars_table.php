@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('sub_id')->nullable();
             $table->string('sk_asal')->nullable();
             $table->string('sk_tujuan')->nullable();
+            $table->string('sk_tempat_tujuan')->nullable();
             $table->string('sk_no')->nullable();
             $table->string('sk_no_old')->nullable();
             $table->string('sk_sifat')->nullable();
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->date('sk_tgl_old')->nullable();
             $table->string('sk_remark')->nullable();
             $table->string('sk_step')->nullable();
+            $table->string('sk_lampiran')->nullable();
             $table->string('sk_created')->nullable();
             $table->string('sk_updated')->nullable();
             $table->timestamps();
