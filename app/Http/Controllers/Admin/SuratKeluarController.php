@@ -168,7 +168,8 @@ class SuratKeluarController extends Controller
 
                 return view('admin.surat_keluar.document', [
                     'name' => $this->name,
-                    'surat' => $suratKeluar
+                    'surat' => $suratKeluar,
+                    'approval' => \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->get()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

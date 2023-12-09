@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <div class="container mt-2">
+    <div class="container mt-4">
         <table align="center" style="width: 100%; max-width: 800px;">
             <thead>
                 <tr style="width: 100%;">

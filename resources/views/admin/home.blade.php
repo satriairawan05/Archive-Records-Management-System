@@ -44,17 +44,6 @@
 
 @section('app')
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="text-uppercase text-dark text-center"><i class="fa fa-clock-o"></i> Actual Data
-                        {{ \Carbon\Carbon::now()->isoFormat('MMMM YYYY') }}</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-lg-3 col-sm-6">
             <div class="card">
                 <div class="stat-widget-one card-body">
@@ -111,6 +100,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <h1 class="text-uppercase text-dark text-center mt-3"><i class="fa fa-clock-o"></i> Actual Data</h1>
                 <div class="card-body">
                     <table class="table">
                         <thead class="thead-primary">
