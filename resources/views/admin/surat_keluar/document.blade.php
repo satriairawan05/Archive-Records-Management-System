@@ -12,30 +12,43 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.ico') }}">
     <link rel="manifest" href="{{ asset('images/site.webmanifest') }}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}"
-        type="text/css">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" type="text/css">
     <style>
-        .kop {
-            line-height: 1;
+        :root {
+            margin: 0;
+            padding: 0;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <table align="center" class="kop">
-            <tr>
-                <td><img src="{{ asset('images/kota_samarinda.png') }}" alt="Pemkot"
-                        style="width: 90px; height: 100px;"></td>
+    <div class="mt-2">
+        <table align="center" style="width: 100%; max-width: 800px;">
+            <tr style="width: 100%;">
+                <td>
+                    <img src="{{ asset('images/kota_samarinda.png') }}" alt="Pemkot"
+                        style="width: 120px; height: 130px;">
+                </td>
                 <td align="center">
-                    <font size="4">PEMERINTAH KOTA SAMARINDA</font><br>
-                    <font size="6"><b>#</b></font><br>
-                    <font size="2">Alamat : # Telp/Fax #
-                        Email: #</font><br>
-                    <font size="3"># KODE POS:#</font>
+                    <h4><b>PEMERINTAH KOTA SAMARINDA</b></h4>
+                    <h2>DINAS PERHUBUNGAN</h2>
+                    <h5 style="word-wrap: break-word; max-width: 800px;">Alamat : Jl. MT. Haryono, Kel
+                        Air Putih, Kec. Samarinda Ulu</h5>
+                    <h5 style="word-wrap: break-word; max-width: 800px;">Samarinda (Kalimantan Timur)
+                        Kode Pos 75124</h5>
+                    <h6 style="display: flex; justify-content: space-between;">
+                        <p style="margin: 0;">https://dishub.samarindakota.go.id/</p>
+                        <p style="margin: 0;">Email: dishub@samarindakota.go.id</p>
+                    </h6>
                 </td>
             </tr>
-            <tr>
+            <tr style="width: 100%; margin: 0;">
                 <td colspan="2">
                     <hr style="border: 2px solid">
                 </td>

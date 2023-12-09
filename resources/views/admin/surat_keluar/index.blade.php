@@ -90,7 +90,8 @@
                         <table class="table" id="myTable">
                             <thead class="thead-primary">
                                 <tr>
-                                    <th>No</th>
+                                    <th>#</th>
+                                    <th>Nomor Surat</th>
                                     <th>Asal</th>
                                     <th>Tujuan</th>
                                     <th>Perihal</th>
@@ -102,10 +103,11 @@
                                 @foreach ($surat as $s)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $s->sk_no_old == $s->sk_no ? $s->sk_no_old : $s->sk_no }}</td>
                                         <td>{{ $s->sk_asal }}</td>
                                         <td>{{ $s->sk_tujuan }}</td>
                                         <td>{{ $s->sk_perihal }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMM YYYY') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMMM YYYY') }}</td>
                                         <td>
                                             @if (
                                                 $approval == 1 &&

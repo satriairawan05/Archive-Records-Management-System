@@ -161,6 +161,19 @@
                         </div>
                         <div class="form-group row mt-3">
                             <div class="col-12">
+                                <label for="sk_no" class="col-form-label text-dark">Nomor Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="sk_no"
+                                    placeholder="Nomor Surat" name="sk_no" value="{{ old('sk_no') }}" required>
+                                @error('sk_no')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
                                 <label for="sk_deskripsi" class="col-form-label text-dark">Deskripsi <span
                                         class="text-danger">*</span> </label>
                                 <textarea name="sk_deskripsi" id="sk_deskripsi" rows="10" cols="100">{{ old('sk_deskripsi') }}</textarea>
