@@ -1,5 +1,30 @@
 @extends('admin.layout.app')
 
+@push('css')
+    <!-- Datatable -->
+    <style>
+        .thead-primary {
+            color: var(--dishub-color) !important;
+        }
+    </style>
+    <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+@endpush
+
+@push('js')
+    <!-- Datatable -->
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $('#myTable').DataTable({
+            createdRow: function(row, data, index) {
+                $(row).addClass('selected')
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.js') }}"></script>
+@endpush
+
 @section('breadcrumb')
     <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0">
@@ -22,7 +47,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="text-uppercase text-dark text-center"><i class="fa fa-clock-o"></i> Actual Data {{ \Carbon\Carbon::now()->isoFormat('MMMM YYYY') }}</h1>
+                    <h1 class="text-uppercase text-dark text-center"><i class="fa fa-clock-o"></i> Actual Data
+                        {{ \Carbon\Carbon::now()->isoFormat('MMMM YYYY') }}</h1>
                 </div>
             </div>
         </div>
@@ -78,6 +104,32 @@
                         <div class="stat-text">Jenis Surat</div>
                         <div class="stat-digit">{{ $count }}</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="thead-primary">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Jenis Surat</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($surat as $s)
+                                <tr class="text-dark">
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $s->js_jenis }}</td>
+                                    <td>{{ $s->js_count }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

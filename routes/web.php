@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', function () {
         return view('admin.home', [
             'name' => 'Home',
+            'surat' => \App\Models\JenisSurat::all(),
             'count' => \App\Models\JenisSurat::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
             'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->where('sk_remark','Accepted')->count(),
