@@ -100,7 +100,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <h1 class="text-uppercase text-dark text-center mt-3"><i class="fa fa-clock-o"></i> Actual Data</h1>
+                <h1 class="text-uppercase text-dark text-center fs-4 mt-3"><i class="fa fa-envelope-square"></i> Jenis Surat</h1>
                 <div class="card-body">
                     <table class="table">
                         <thead class="thead-primary">
