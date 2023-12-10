@@ -26,6 +26,7 @@
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace('sk_deskripsi');
+        CKEDITOR.replace('sk_table');
     </script>
 @endpush
 
@@ -188,6 +189,12 @@
                                 <label for="sk_deskripsi" class="col-form-label text-dark">Deskripsi <span
                                         class="text-danger">*</span> </label>
                                 <textarea name="sk_deskripsi" id="sk_deskripsi" rows="10" cols="100">{{ old('sk_deskripsi') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
+                                <label for="sk_table" class="col-form-label text-dark">Approval Table </label>
+                                <textarea name="sk_table" id="sk_table" rows="10" cols="100">{{ old('sk_table') }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row mt-3">

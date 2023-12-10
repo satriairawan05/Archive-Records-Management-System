@@ -64,15 +64,19 @@
             <div class="col-6"></div>
             <div class="col-6">
                 <h6 align="center">Samarinda,
-                    {{ $surat->sk_tgl_old == $surat->sk_tgl ? \Carbon\Carbon::parse($surat->sk_tgl_old)->isoFormat('DD MMMM YYYY') : \Carbon\Carbon::parse($surat->sk_tgl)->isoFormat('DD MMMM YYYY') }}</h6><br>
+                    {{ $surat->sk_tgl_old == $surat->sk_tgl ? \Carbon\Carbon::parse($surat->sk_tgl_old)->isoFormat('DD MMMM YYYY') : \Carbon\Carbon::parse($surat->sk_tgl)->isoFormat('DD MMMM YYYY') }}
+                </h6><br>
             </div>
         </div>
         <div class="row" style="margin-top: 0;">
             <div class="col-6 mt-0" style="margin-left: 125px;">
-                <h6 class="left-align" style="vertical-aling:top;">Nomor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                <h6 class="left-align" style="vertical-aling:top;">Nomor
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
                     {{ $surat->sk_no_old == $surat->sk_no ? $surat->sk_no_old : $surat->sk_no }}</h6>
-                <h6 class="left-align" style="vertical-aling:top;">Lampiran &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $surat->sk_lampiran != null ? $surat->sk_lampiran : '-' }}</h6>
-                <h6 class="left-align" style="vertical-aling:top;">Perihal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $surat->sk_perihal }}</h6>
+                <h6 class="left-align" style="vertical-aling:top;">Lampiran &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                    {{ $surat->sk_lampiran != null ? $surat->sk_lampiran : '-' }}</h6>
+                <h6 class="left-align" style="vertical-aling:top;">Perihal
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $surat->sk_perihal }}</h6>
             </div>
         </div>
         <div class="row mx-5 mt-2">
@@ -86,6 +90,21 @@
         <div class="row mx-5">
             <div class="col-12" style="text-align: justify;">
                 <p>{!! $surat->sk_deskripsi !!}</p>
+            </div>
+        </div>
+
+        <div class="row mx-5">
+            <div class="col-6">
+                <p>{!! $surat->sk_table !!}</p>
+            </div>
+            <div class="col-6">
+                <div style="padding-left: 80px; text-align: center;">
+                    <h4 class="fs-6 h6">{{ $approval->position }}</h4>
+                    <br>
+                    <br>
+                    <h4 class="fs-6 h6"><u>{{ $approval->name }}</u></h4>
+                    <h4 class="fs-6 h6">NIP. {{ $approval->nip }}</h4>
+                </div>
             </div>
         </div>
     </div>

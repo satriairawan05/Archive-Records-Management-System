@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('position')->nullable();
+            $table->string('nip')->nullable();
             $table->foreignId('group_id')->nullable();
             $table->foreignId('bid_id')->nullable();
             $table->foreignId('sub_id')->nullable();

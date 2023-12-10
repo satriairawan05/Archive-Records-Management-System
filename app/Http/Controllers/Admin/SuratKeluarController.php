@@ -127,6 +127,7 @@ class SuratKeluarController extends Controller
                         'sk_tempat_tujuan' => $request->input('sk_tempat_tujuan'),
                         'sk_tujuan' => $request->input('sk_tujuan'),
                         'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_table' => $request->input('sk_table'),
                         'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_created' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
@@ -166,10 +167,15 @@ class SuratKeluarController extends Controller
                     'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
                 ]);
 
+                $surat = $suratKeluar->find(request()->segment(2));
+
                 return view('admin.surat_keluar.document', [
                     'name' => $this->name,
-                    'surat' => $suratKeluar,
-                    'approval' => \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->get()
+                    'surat' => $surat,
+                    'approval' => Approval::leftJoin('users', 'approvals.user_id', '=', 'users.id')
+                    ->where('approvals.sk_id', $surat->sk_id)
+                    ->latest('approvals.app_id')
+                    ->first()
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -256,6 +262,7 @@ class SuratKeluarController extends Controller
                         'sk_tempat_tujuan' => $request->input('sk_tempat_tujuan'),
                         'sk_tujuan' => $request->input('sk_tujuan'),
                         'sk_deskripsi' => $request->input('sk_deskripsi'),
+                        'sk_table' => $request->input('sk_table'),
                         'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_updated' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),

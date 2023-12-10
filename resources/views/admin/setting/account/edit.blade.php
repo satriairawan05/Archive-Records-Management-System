@@ -170,6 +170,23 @@
                                 @enderror
                             </div>
                             <div class="col-6">
+                            <label for="nip" class="col-form-label text-dark">Nomor Induk Pegawai <span
+                                        class="text-danger">*</span> </label>
+                                <input type="text"
+                                    class="form-control form-control-sm @error('nip')
+                                    is-invalid
+                                @enderror"
+                                    id="nip" placeholder="Masukan Nomor Induk Pegawai" value="{{ old('nip',$user->nip) }}"
+                                    name="nip" required>
+                                @error('nip')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
                                 <label for="group_id" class="col-form-label text-dark">Role <span
                                         class="text-danger">*</span> </label>
                                 <select id="group" name="group_id" class="form-control form-control-sm">

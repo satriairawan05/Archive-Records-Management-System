@@ -82,6 +82,7 @@
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>NIP</th>
                                     <th>Bidang</th>
                                     <th>Sub Bidang</th>
                                     <th>Role</th>
@@ -94,6 +95,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{{ $user->nip ?? 'Not Found' }}</td>
                                         <td>{{ $user->bid_name ?? 'Not Found' }}</td>
                                         <td>{{ $user->sub_name ?? 'Not Found' }}</td>
                                         <td>{{ $user->group_name ?? 'Not Found' }}</td>

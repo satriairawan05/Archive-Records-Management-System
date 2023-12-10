@@ -103,7 +103,7 @@
                             <tbody>
                                 @if ($update == 1)
                                     @foreach ($approval as $app)
-                                        <form action="{{ route('approval.update', $app->app_ids) }}" method="post">
+                                        <form action="{{ route('approval.update', $app->app_id) }}" method="post">
                                             @csrf
                                             @method('put')
                                             <input type="hidden" name="bid_id" value="{{ $bidang->bid_id }}">
@@ -152,7 +152,7 @@
                                                     @if ($delete == 1)
                                                         <button type="button" class="btn btn-sm btn-danger"
                                                             data-toggle="modal"
-                                                            data-target="#deleteData{{ $app->ap_id }}"><i
+                                                            data-target="#deleteData{{ $app->app_id }}"><i
                                                                 class="fa fa-trash"></i></button>
                                                     @endif
                                                 </td>
@@ -160,7 +160,7 @@
                                         </form>
 
                                         @if ($delete == 1)
-                                            <div class="modal fade" id="deleteData{{ $app->ap_id }}" tabindex="-1"
+                                            <div class="modal fade" id="deleteData{{ $app->app_id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="deleteDataLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
