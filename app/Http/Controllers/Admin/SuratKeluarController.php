@@ -15,7 +15,7 @@ class SuratKeluarController extends Controller
     /**
      * Constructor for Controller.
      */
-    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0)
+    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0, public $close = 0)
     {
         //
     }
@@ -47,6 +47,10 @@ class SuratKeluarController extends Controller
 
                 if ($r->action == 'Delete') {
                     $this->delete = $r->access;
+                }
+
+                if ($r->action == 'Close') {
+                    $this->close = $r->access;
                 }
             }
         }
@@ -302,6 +306,14 @@ class SuratKeluarController extends Controller
                         'app_disposisi' => $request->input('sk_disposisi'),
                         'app_date' => \Carbon\Carbon::now()
                     ]);
+
+                    if($this->close == 1){
+                        $dataStatus = $request->input('sk_status') == "on" ? 'Closing' : '';
+
+                        SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                            'sk_status' => $dataStatus,
+                        ]);
+                    }
 
                     if ($latestApproval->app_ordinal == $suratKeluar->sk_step) {
                         $stepData = $suratKeluar->sk_step;
