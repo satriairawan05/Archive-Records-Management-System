@@ -204,7 +204,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if($s->sk_created != null || $s->sk_updated != null)
+                                            @if(($s->sk_created != null || $s->sk_updated != null) && $s->sk_status != null)
                                             <a href="{{ route('surat_keluar.print', $s->sk_id) }}"
                                                 class="btn btn-sm btn-secondary" target="__blank"><i
                                                     class="fa fa-print"></i></a>

@@ -95,7 +95,9 @@
 
         <div class="row mx-5">
             <div class="col-6">
-                <p>{!! $surat->sk_table !!}</p>
+                @if ($surat->sk_table != null)
+                    <p>{!! $surat->sk_table !!}</p>
+                @endif
             </div>
             <div class="col-6">
                 <div style="padding-left: 80px; text-align: center;">
