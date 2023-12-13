@@ -7,6 +7,12 @@
         ->select(['group_pages.access', 'pages.page_name', 'pages.action'])
         ->get();
 
+    $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->first();
+
+    $countSK = \App\Models\SuratKeluar::where('sk_step', $approval->app_ordinal)
+        ->whereNull('sk_status')
+        ->count();
+
     $createSM = 0;
     $createSK = 0;
     $readSM = 0;
@@ -87,8 +93,10 @@
                 @endif
                 @if ($readSK == 1)
                     <li><a href="{{ route('surat_keluar.index') }}"><i class="fa fa-envelope-o"></i><span
-                                class="nav-text">Surat
-                                Keluar</span></a></li>
+                                class="nav-text">Surat Keluar <span
+                                    class="badge badge-info">{{ $countSK }}</span></span>
+                        </a>
+                    </li>
                 @endif
                 @if ($readArchive == 1)
                     <li><a href="{{ route('archives') }}"><i class="fa fa-archive"></i><span
@@ -123,8 +131,8 @@
                 </li>
             @endif
             @if ($readApproval == 1)
-                <li><a href="{{ route('approval.index') }}"><i class="fa fa-bookmark"><span
-                                class="nav-text"> Approval</span></i></a></li>
+                <li><a href="{{ route('approval.index') }}"><i class="fa fa-bookmark"><span class="nav-text">
+                                Approval</span></i></a></li>
             @endif
             @if (auth()->user()->group_id == 1)
                 <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text">
