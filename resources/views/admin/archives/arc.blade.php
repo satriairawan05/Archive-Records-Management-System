@@ -31,6 +31,52 @@
                 $(row).addClass('selected')
             }
         });
+
+        const print = (id) => {
+            var contents = "";
+            var url = "{{ route('surat_keluar.print', ':id') }}";
+            url = url.replace(':id', id);
+            $.get(url, function(data, status) {
+                contents = data;
+                var frame1 = $('<iframe />');
+                frame1[0].name = "frame1";
+                frame1.css({
+                    "position": "absolute",
+                    "top": "-1000000px"
+                });
+                $("body").append(frame1);
+                var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument
+                    .document ?
+                    frame1[0].contentDocument.document : frame1[0].contentDocument;
+                frameDoc.document.open();
+                frameDoc.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                    <title>{{ env('APP_NAME') }}</title>
+                    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
+                    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+                    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+                    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.ico') }}">
+                </head>
+
+                <body id='bodycontent'>`);
+                frameDoc.document.write(contents);
+                frameDoc.document.write(`
+                </body>
+            </html>`);
+                frameDoc.document.close();
+                setTimeout(function() {
+                    window.frames["frame1"].focus();
+                    window.frames["frame1"].print();
+                    frame1.remove();
+                }, 1000);
+            });
+        }
     </script>
 @endpush
 
@@ -45,7 +91,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="{{ route('archives') }}">Archive</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('archives') }}?bidang_id={{ $bidang->bid_id }}">{{ $bidang->bid_name }}</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('archives') }}?bidang_id={{ $bidang->bid_id }}">{{ $bidang->bid_name }}</a></li>
                 <li class="breadcrumb-item active">{{ $sub->sub_name }}</li>
             </ol>
         </div>
@@ -74,8 +121,9 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ $s->sk_no }}</td>
                                         <td>
-                                            <a href="{{ route('surat_keluar.show', $s->sk_id) }}"
-                                                class="btn btn-sm btn-info"><i class="fa fa-file-pdf-o"></i></a>
+                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                onclick="return print({{ $s->sk_id }})"><i
+                                                    class="fa fa-print"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
