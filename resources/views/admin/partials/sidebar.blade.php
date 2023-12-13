@@ -9,9 +9,9 @@
 
     $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->first();
 
-    $countSK = \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
+    $countSK = $approval != null ? \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
         ->whereNull('sk_status')
-        ->count();
+        ->count() : '0';
 
     $createSM = 0;
     $createSK = 0;
