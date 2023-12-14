@@ -55,7 +55,7 @@ class SuratMasukController extends Controller
             try {
                 return view('admin.surat_masuk.index', [
                     'name' => $this->name,
-                    'surat' => SuratMasuk::all(),
+                    'surat' => SuratMasuk::latest('created_at')->get(),
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
