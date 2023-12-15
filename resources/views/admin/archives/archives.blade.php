@@ -23,12 +23,15 @@
                 <div class="card-body">
                     <div class="list-group">
                         @foreach ($bidang as $d)
-                        @php
-                            $skCount = \App\Models\SuratKeluar::where('bid_id', $d->bid_id)->whereNotNull('sk_no')->count();
-                        @endphp
-                            <a href="?bidang_id={{ $d->bid_id }}"
-                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $d->bid_name }} <span
-                                    class=" badge rounded-pill @if ($skCount == 0) bg-secondary @else bg-primary @endif text-white">
+                            @php
+                                $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id != null ? auth()->user()->bid_id : $d->bid_id)
+                                    ->whereNotNull('sk_no')
+                                    ->count();
+                            @endphp
+                            <a href="?bidang_id={{ auth()->user()->bid_id != null ? auth()->user()->bid_id : $d->bid_id }}"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $d->bid_name }}
+                                <span
+                                    class="badge rounded-pill @if ($skCount == 0) bg-secondary @else bg-primary @endif text-white">
                                     {{ $skCount == 0 ? 'Empty Data' : $skCount }}
                                 </span>
                             </a>
