@@ -34,25 +34,25 @@ class ArchiveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                if (request()->bidang_id && request()->sub_id) {
+                if ($request->bidang_id && $request->sub_id) {
                     return view('admin.archives.arc', [
                         'name' => $this->name,
-                        'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first(),
-                        'sub' => \App\Models\SubBidang::where('sub_id', request()->sub_id)->first(),
-                        'surat' => \App\Models\SuratKeluar::where('bid_id', request()->bidang_id)->where('sub_id', request()->sub_id)->whereNotNull('sk_no')->get(),
+                        'bidang' => \App\Models\Bidang::where('bid_id', $request->bidang_id)->first(),
+                        'sub' => \App\Models\SubBidang::where('sub_id', $request->sub_id)->first(),
+                        'surat' => \App\Models\SuratKeluar::where('bid_id', $request->bidang_id)->where('sub_id', $request->sub_id)->whereNotNull('sk_no')->get(),
                         'pages' => $this->get_access($this->name, auth()->user()->group_id)
                     ]);
                 } else {
-                    if (request()->bidang_id) {
+                    if ($request->bidang_id) {
                         return view('admin.archives.archive', [
                             'name' => $this->name,
-                            'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first(),
-                            'sub' => \App\Models\SubBidang::where('bid_id', request()->bidang_id)->get()
+                            'bidang' => \App\Models\Bidang::where('bid_id', $request->bidang_id)->first(),
+                            'sub' => \App\Models\SubBidang::where('bid_id', $request->bidang_id)->get()
                         ]);
                     } else {
                         return view('admin.archives.archives', [
