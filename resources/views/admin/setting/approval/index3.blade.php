@@ -52,22 +52,6 @@
                 $(row).addClass('selected')
             }
         });
-
-        $('#btnSubmit').click(function() {
-            $.ajax({
-                type: "POST",
-                url: "proses.php",
-                data: {
-                    data: inputData
-                },
-                success: function(response) {
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
     </script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -106,7 +90,7 @@
             <div class="card">
                 <div class="card-body">
                     @if ($read == 1)
-                        <table class="table" id="myTable">
+                        <table class="table">
                             <thead class="thead-primary">
                                 <tr>
                                     <th>No</th>
