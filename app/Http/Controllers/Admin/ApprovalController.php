@@ -101,7 +101,6 @@ class ApprovalController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->get_access_page();
         if ($this->create == 1) {
             try {
@@ -109,6 +108,7 @@ class ApprovalController extends Controller
                     'user_id' => $request->input('user_id'),
                     'bid_id' => $request->input('bid_id'),
                     'sub_id' => $request->input('sub_id'),
+                    'sk_id' => $request->input('sk_id'),
                     'app_ordinal' => $request->input('app_ordinal'),
                     'app_created' => auth()->user()->name
                 ]);
@@ -151,6 +151,7 @@ class ApprovalController extends Controller
                     'bid_id' => $request->input('bid_id'),
                     'sub_id' => $request->input('sub_id'),
                     'app_ordinal' => $request->input('app_ordinal'),
+                    'sk_id' => $request->input('sk_id'),
                     'app_updated' => auth()->user()->name
                 ]);
 

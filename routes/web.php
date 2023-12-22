@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
     Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
     Route::get('surat_keluar/{surat_keluar}/document', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'print'])->name('surat_keluar.print');
-    Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'updateApproval'])->name('surat_keluar.approval');
+    Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'updateApprovalStep'])->name('surat_keluar.approval');
 
     // Role
     Route::resource('role', \App\Http\Controllers\Admin\GroupController::class)->except(['show']);

@@ -303,6 +303,7 @@ class SuratKeluarController extends Controller
      */
     public function updateApprovalStep(Request $request, SuratKeluar $suratKeluar)
     {
+        dd($request->all());
         $this->get_access_page();
         if ($this->approval == 1) {
             try {
