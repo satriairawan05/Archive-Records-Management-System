@@ -52,6 +52,22 @@
                 $(row).addClass('selected')
             }
         });
+
+        $('#btnSubmit').click(function() {
+            $.ajax({
+                type: "POST",
+                url: "proses.php",
+                data: {
+                    data: inputData
+                },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
     </script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -234,8 +250,8 @@
                                                     value="{{ old('app_ordinal') }}">
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-sm btn-success"><i
-                                                        class="fa fa-save"></i></button>
+                                                <button type="submit" id="btnSubmit" onclick="saveData()"
+                                                    class="btn btn-sm btn-success"><i class="fa fa-save"></i></button>
                                             </td>
                                         </tr>
                                     </form>

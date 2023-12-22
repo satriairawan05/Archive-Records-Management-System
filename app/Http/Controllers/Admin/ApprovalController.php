@@ -101,6 +101,7 @@ class ApprovalController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $this->get_access_page();
         if ($this->create == 1) {
             try {
