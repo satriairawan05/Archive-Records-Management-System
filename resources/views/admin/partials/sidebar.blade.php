@@ -9,9 +9,11 @@
 
     $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->first();
 
-    $countSK = \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
-        ->whereNull('sk_status')
-        ->count();
+    $countSK = $approval != null ?
+            \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
+                ->whereNull('sk_status')
+                ->count()
+            : '0';
 
     $createSM = 0;
     $createSK = 0;
@@ -93,8 +95,11 @@
                 @endif
                 @if ($readSK == 1)
                     <li><a href="{{ route('surat_keluar.index') }}"><i class="fa fa-envelope-o"></i><span
-                                class="nav-text">Surat Keluar <span
-                                    class="badge badge-info">{{ $countSK }}</span></span>
+                                class="nav-text">Surat Keluar
+                                @if ($countSK > 0)
+                                    <span class="badge badge-info">{{ $countSK }}</span>
+                                @endif
+                            </span>
                         </a>
                     </li>
                 @endif

@@ -64,9 +64,18 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
+                if(auth()->user()->group_id == 1){
+                    $surat = SuratKeluar::latest('created_at')->get();
+                } else {
+                    if(auth()->user()->sub_id == null){
+                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->latest('created_at')->get();
+                    } else {
+                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)->latest('created_at')->get();
+                    }
+                }
                 return view('admin.surat_keluar.index', [
                     'name' => $this->name,
-                    'surat' => SuratKeluar::all(),
+                    'surat' => $surat,
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {

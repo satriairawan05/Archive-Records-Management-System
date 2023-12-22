@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="sm_no_surat" class="col-form-label text-dark">Nomor Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_no_surat"
@@ -62,7 +62,7 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="sm_perihal" class="col-form-label text-dark">Perihal Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_perihal"
@@ -73,14 +73,25 @@
                                     </div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row mt-3">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="sm_penerima" class="col-form-label text-dark">Penerima Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_penerima"
                                     placeholder="Penerima Surat" name="sm_penerima" value="{{ old('sm_penerima',$surat->sm_penerima) }}" required>
                                 @error('sm_penerima')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-6">
+                                <label for="sm_tgl_surat" class="col-form-label text-dark">Tanggal Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control form-control-sm" id="sm_tgl_surat"
+                                    placeholder="Tanggal Surat" name="sm_tgl_surat" value="{{ old('sm_tgl_surat',$surat->sm_tgl_surat) }}" required>
+                                @error('sm_tgl_surat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
