@@ -86,7 +86,7 @@
                                         <td>
                                             @if ($s->sm_file != null)
                                                 <a href="{{ route('surat_masuk.show', $s->sm_id) }}"
-                                                    class="btn btn-sm btn-info" target="__blank"><i
+                                                    class="btn btn-sm btn-secondary" target="__blank"><i
                                                         class="fa fa-file-pdf-o"></i></a>
                                             @endif
                                             @if ($update == 1)

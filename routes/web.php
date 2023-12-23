@@ -23,7 +23,6 @@ Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'
 // Route::get('register', [\App\Http\Controllers\Auth\LoginController::class, 'showRegisterForm'])->name('register');
 // Route::post('register', [\App\Http\Controllers\Auth\LoginController::class, 'register'])->name('register_store');
 
-
 Route::middleware(['auth'])->group(function () {
     // Home Page or Dashboard
     Route::get('home', function () {

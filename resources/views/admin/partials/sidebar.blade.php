@@ -9,8 +9,9 @@
 
     $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->first();
 
-    $countSK = $approval != null ?
-            \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
+    $countSK =
+        $approval != null
+            ? \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
                 ->whereNull('sk_status')
                 ->count()
             : '0';
@@ -29,13 +30,23 @@
 
     foreach ($pages as $r) {
         if ($r->page_name == 'Surat Masuk') {
-            $createSM = $r->access;
-            $readSM = $r->access;
+            if ($r->action == 'Create') {
+                $createSM = $r->access;
+            }
+
+            if ($r->action == 'Read') {
+                $readSM = $r->access;
+            }
         }
 
         if ($r->page_name == 'Surat Keluar') {
-            $createSK = $r->access;
-            $readSK = $r->access;
+            if ($r->action == 'Create') {
+                $createSK = $r->access;
+            }
+
+            if ($r->action == 'Read') {
+                $readSK = $r->access;
+            }
         }
 
         if ($r->page_name == 'Archive') {
@@ -43,7 +54,9 @@
         }
 
         if ($r->page_name == 'Jenis Surat') {
-            $readJS = $r->access;
+            if ($r->action == 'Read') {
+                $readJS = $r->access;
+            }
         }
 
         if ($r->page_name == 'Perusahaan') {
@@ -55,7 +68,9 @@
         }
 
         if ($r->page_name == 'Sub Bidang') {
-            $readSub = $r->access;
+            if ($r->action == 'Read') {
+                $readSub = $r->access;
+            }
         }
 
         if ($r->page_name == 'User') {

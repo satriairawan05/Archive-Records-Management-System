@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('gp_id');
             $table->foreignId('group_id')->nullable();
             $table->foreignId('page_id')->nullable();
-            $table->string('access')->nullable();
+            $table->integer('access')->nullable();
             $table->timestamps();
         });
     }

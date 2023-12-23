@@ -252,7 +252,7 @@ class SuratKeluarController extends Controller
     public function update(Request $request, SuratKeluar $suratKeluar)
     {
         $this->get_access_page();
-        if ($this->update == 1) {
+        if ($this->update == 1 && $suratKeluar->sk_created == auth()->user()->name) {
             try {
                 $validated = Validator::make($request->all(), [
                     'sk_asal' => ['required', 'string'],
@@ -364,7 +364,7 @@ class SuratKeluarController extends Controller
     public function destroy(SuratKeluar $suratKeluar)
     {
         $this->get_access_page();
-        if ($this->delete == 1) {
+        if ($this->delete == 1 && $suratKeluar->sk_created == auth()->user()->name) {
             try {
                 $data = $suratKeluar->find(request()->segment(2));
 
