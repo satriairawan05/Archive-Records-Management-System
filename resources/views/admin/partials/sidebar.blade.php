@@ -50,7 +50,9 @@
         }
 
         if ($r->page_name == 'Archive') {
-            $readArchive = $r->access;
+            if ($r->action == 'Read') {
+                $readArchive = $r->access;
+            }
         }
 
         if ($r->page_name == 'Jenis Surat') {
@@ -60,11 +62,15 @@
         }
 
         if ($r->page_name == 'Perusahaan') {
-            $readCom = $r->access;
+            if ($r->action == 'Read') {
+                $readCom = $r->access;
+            }
         }
 
         if ($r->page_name == 'Bidang') {
-            $readBid = $r->access;
+            if ($r->action == 'Read') {
+                $readBid = $r->access;
+            }
         }
 
         if ($r->page_name == 'Sub Bidang') {
@@ -74,11 +80,15 @@
         }
 
         if ($r->page_name == 'User') {
-            $readUser = $r->access;
+            if ($r->action == 'Read') {
+                $readUser = $r->access;
+            }
         }
 
         if ($r->page_name == 'Approval') {
-            $readApproval = $r->access;
+            if ($r->action == 'Read') {
+                $readApproval = $r->access;
+            }
         }
     }
 @endphp
