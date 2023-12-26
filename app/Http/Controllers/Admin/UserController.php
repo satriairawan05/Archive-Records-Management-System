@@ -206,7 +206,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->get_access_page();
-        if ($this->delete == 1 && $user->group_id != 1) {
+        $dataUser = $user->find(request()->segment(2));
+        if ($this->delete == 1 && $dataUser->id != 1) {
             try {
                 $data = $user->find(request()->segment(2));
                 User::destroy($data->id);
