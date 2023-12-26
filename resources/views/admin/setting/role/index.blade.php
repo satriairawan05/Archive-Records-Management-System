@@ -62,7 +62,7 @@
                                     <td>
                                         <a href="{{ route('role.edit', $g->group_id) }}" class="btn btn-sm btn-warning"><i
                                                 class="fa fa-edit"></i></a>
-                                        @if (!$g->group_id == 1)
+                                        @if ($g->group_id != 1)
                                             <form action="{{ route('role.destroy', $g->group_id) }}" method="post"
                                                 class="d-inline">
                                                 @csrf
