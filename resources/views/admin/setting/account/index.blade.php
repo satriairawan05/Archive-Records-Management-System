@@ -104,7 +104,7 @@
                                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-warning"><i
                                                     class="fa fa-edit"></i></a>
                                             @endif
-                                            @if ($delete == 1 && $user->group_id != auth()->user()->group_id)
+                                            @if ($delete == 1 && $user->group_id != 1)
                                                 <form action="{{ route('user.destroy', $user->id) }}" method="post"
                                                     class="d-inline">
                                                     @csrf
