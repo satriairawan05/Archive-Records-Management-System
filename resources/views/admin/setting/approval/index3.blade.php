@@ -109,7 +109,17 @@
                                             <input type="hidden" name="bid_id" value="{{ $bidang->bid_id }}">
                                             <input type="hidden" name="sub_id" value="{{ $sub->sub_id }}">
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                @php
+                                                    $name = "";
+                                                    foreach($surat as $s){
+                                                        if(old('sk_id', $app->sk_id) == $s->sk_id){
+                                                            $name = $s->sk_created;
+                                                        } else {
+                                                            $name = "";
+                                                        }
+                                                    }
+                                                @endphp
+                                                <td>{{ $name }}</td>
                                                 <td>
                                                     <select id="user_edit" name="user_id"
                                                         class="form-control form-control-sm">
@@ -131,10 +141,10 @@
                                                         @foreach ($surat as $s)
                                                             @if (old('sk_id', $app->sk_id) == $s->sk_id)
                                                                 <option value="{{ $s->sk_id }}" selected>
-                                                                    {{ $s->sk_created }}
+                                                                    {{ $s->sk_perihal }}
                                                                 </option>
                                                             @else
-                                                                <option value="{{ $s->sk_id }}">{{ $s->sk_created }}
+                                                                <option value="{{ $s->sk_id }}">{{ $s->sk_perihal }}
                                                                 </option>
                                                             @endif
                                                         @endforeach
@@ -165,7 +175,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteDataLabel">Modal title</h5>
+                                                            <h5 class="modal-title" id="deleteDataLabel">Delete Approval</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
