@@ -121,9 +121,9 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ $s->sk_no }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-secondary"
-                                                onclick="return print({{ $s->sk_id }})"><i
-                                                    class="fa fa-print"></i></button>
+                                            <a class="btn btn-sm btn-secondary"
+                                                href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
+                                                    class="fa fa-print"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
