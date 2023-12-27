@@ -44,7 +44,7 @@ class ArchiveController extends Controller
                         'name' => $this->name,
                         'bidang' => \App\Models\Bidang::where('bid_id', $request->bidang_id)->first(),
                         'sub' => \App\Models\SubBidang::where('sub_id', $request->sub_id)->first(),
-                        'surat' => \App\Models\SuratKeluar::where('bid_id', $request->bidang_id)->where('sub_id', $request->sub_id)->where('sk_remark','Accepted')->get(),
+                        'surat' => \App\Models\SuratKeluar::where('bid_id', $request->bidang_id)->where('sub_id', $request->sub_id)->where('sk_status','Closing')->get(),
                         'pages' => $this->get_access($this->name, auth()->user()->group_id)
                     ]);
                 } else {
