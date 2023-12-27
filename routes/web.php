@@ -31,8 +31,8 @@ Route::middleware(['auth'])->group(function () {
             'surat' => \App\Models\JenisSurat::all(),
             'count' => \App\Models\JenisSurat::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
-            'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->where('sk_remark','Accepted')->count(),
-            'skWait' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNull('sk_remark')->count(),
+            'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->where('sk_status','Closing')->count(),
+            'skWait' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNull('sk_status')->count(),
         ]);
     })->name('home');
 
