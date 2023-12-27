@@ -20,5 +20,5 @@ class UserSeeder extends Seeder
             'remember_token' => \Illuminate\Support\Str::random(10),
             'group_id' => 1,
         ]);
-    }
+}
 }

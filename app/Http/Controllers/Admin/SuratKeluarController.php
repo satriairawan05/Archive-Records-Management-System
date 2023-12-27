@@ -64,13 +64,13 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                if(auth()->user()->group_id == 1){
+                if (auth()->user()->group_id == 1) {
                     $surat = SuratKeluar::latest('created_at')->get();
                 } else {
-                    if(auth()->user()->sub_id == null){
+                    if (auth()->user()->sub_id == null) {
                         $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->latest('created_at')->get();
                     } else {
-                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)->latest('created_at')->get();
+                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->where('sub_id', auth()->user()->sub_id)->latest('created_at')->get();
                     }
                 }
                 return view('admin.surat_keluar.index', [
@@ -170,26 +170,42 @@ class SuratKeluarController extends Controller
      */
     public function print(SuratKeluar $suratKeluar)
     {
-        $this->get_access_page();
-        if ($this->read == 1) {
-            try {
-                PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                    'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
-                ]);
+        // dd($suratKeluar);
+        try {
+            // Increment 'ps_count' in PrintSuratKeluar
+            PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
+            ]);
 
-                $surat = $suratKeluar->find(request()->segment(2));
+            // Find surat keluar based on the segment
+            $surat = $suratKeluar->find(request()->segment(2));
 
+            // Retrieve approval information
+            $approval = Approval::leftJoin('users', 'approvals.user_id', '=', 'users.id')
+                ->where('approvals.sk_id', $surat->sk_id)
+                ->latest('approvals.app_id')
+                ->first();
+
+            // Check if approval exists
+            if ($approval) {
                 return view('admin.surat_keluar.document', [
                     'name' => $this->name,
                     'surat' => $surat,
-                    'approval' => Approval::leftJoin('users', 'approvals.user_id', '=', 'users.id')
-                    ->where('approvals.sk_id', $surat->sk_id)
-                    ->latest('approvals.app_id')
-                    ->first()
+                    'approval' => $approval
                 ]);
-            } catch (\Illuminate\Database\QueryException $e) {
-                return redirect()->back()->with('failed', $e->getMessage());
+            } else {
+                // If approval does not exist, you might want to handle this case accordingly
+                return view('admin.surat_keluar.document', [
+                    'name' => $this->name,
+                    'surat' => $surat,
+                    'approval' => null
+                ]);
             }
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('failed', $e->getMessage());
+        }
+        $this->get_access_page();
+        if ($this->read == 1) {
         } else {
             return redirect()->back()->with('failed', 'You not Have Authority!');
         }
@@ -208,7 +224,7 @@ class SuratKeluarController extends Controller
                 ]);
 
                 return view('admin.surat_keluar.document', [
-                    'name' => $this->name
+                    'name' => $this->name,
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -314,7 +330,7 @@ class SuratKeluarController extends Controller
                         'app_date' => \Carbon\Carbon::now()
                     ]);
 
-                    if($this->close == 1){
+                    if ($this->close == 1) {
                         $dataStatus = $request->input('sk_status') == "on" ? 'Closing' : '';
 
                         SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
