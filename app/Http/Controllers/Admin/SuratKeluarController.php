@@ -114,7 +114,6 @@ class SuratKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->get_access_page();
         if ($this->create == 1) {
             try {
@@ -128,7 +127,7 @@ class SuratKeluarController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
-                    $sk = SuratKeluar::create([
+                    SuratKeluar::create([
                         'js_id' => $request->input('js_id'),
                         'bid_id' => $request->input('bid_id'),
                         'sub_id' => $request->input('sub_id'),
@@ -148,13 +147,11 @@ class SuratKeluarController extends Controller
                         'sk_step' => 1
                     ]);
 
-                    JenisSurat::where('sk_id', $sk->sk_id)->update([
-                        'js_count' => \Illuminate\Support\Facades\DB::raw('js_count + 1')
-                    ]);
+                    // JenisSurat::where('sk_id', $data->sk_id)->increment('js_count');
 
-                    PrintSuratKeluar::create([
-                        'sk_id' => $sk->sk_id
-                    ]);
+                    // PrintSuratKeluar::create([
+                    //     'sk_id' => $sk->sk_id
+                    // ]);
 
                     return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Saved!');
                 } else {
