@@ -251,9 +251,8 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            <button type="button" class="btn btn-sm btn-secondary"
-                                                onclick="return print({{ $s->sk_id }})"><i
-                                                    class="fa fa-eye"></i></button>
+                                            <a href="{{ route('surat_keluar.print', $s->sk_id) }}"
+                                                class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
                                                     class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
