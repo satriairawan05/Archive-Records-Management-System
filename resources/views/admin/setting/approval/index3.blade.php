@@ -109,17 +109,7 @@
                                             <input type="hidden" name="bid_id" value="{{ $bidang->bid_id }}">
                                             <input type="hidden" name="sub_id" value="{{ $sub->sub_id }}">
                                             <tr>
-                                                @php
-                                                    $name = "";
-                                                    foreach($surat as $s){
-                                                        if(old('sk_id', $app->sk_id) == $s->sk_id){
-                                                            $name = $s->sk_created;
-                                                        } else {
-                                                            $name = "";
-                                                        }
-                                                    }
-                                                @endphp
-                                                <td>{{ $name }}</td>
+                                                <td>{{ $app->app_ordinal }}</td>
                                                 <td>
                                                     <select id="user_edit" name="user_id"
                                                         class="form-control form-control-sm">
