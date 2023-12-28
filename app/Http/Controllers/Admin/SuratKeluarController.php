@@ -319,48 +319,55 @@ class SuratKeluarController extends Controller
         try {
             $surat = $suratKeluar->find(request()->segment(2));
             $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
-            $stepData = null;
+
+            $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
+                ->where('user_id', auth()->user()->id)
+                ->first();
 
             $updateData = [
-                'app_disposisi' => $request->input('sk_disposisi'),
+                'app_disposisi' => $request->input('sk_dipsosisi'),
                 'app_date' => \Carbon\Carbon::now(),
             ];
 
-            $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)->latest('app_ordinal')->first();
-            // dd((int) $latestApproval->app_ordinal, (int) $surat->sk_step);
             if ($request->input('sk_dipsosisi') == 'Accepted') {
-                \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->update($updateData);
+                \App\Models\Approval::where('sk_id', $surat->sk_id)
+                    ->where('user_id', auth()->user()->id)
+                    ->update($updateData);
 
-                if($surat->sk_step != $latestApproval->app_ordinal){
-                    $newStep = $surat->sk_step + 1;
-                    SuratKeluar::where('sk_id', $surat->sk_id)->update([
+                if ($latestApproval->app_ordinal != $surat->sk_step) {
+                    $skStep = $surat->sk_step != $latestApproval->app_ordinal ? $surat->sk_step : $surat->sk_step + 1;
+
+                    $surat->update([
                         'sk_remark' => $request->input('sk_remark'),
-                        'sk_step' => $newStep
+                        'sk_step' => $skStep
                     ]);
                 } else {
-                    SuratKeluar::where('sk_id', $surat->sk_id)->update([
+                    $surat->update([
                         'sk_remark' => $request->input('sk_remark'),
                         'sk_step' => $surat->sk_step
                     ]);
                 }
+
                 if ($this->close == 1) {
                     $dataStatus = $request->input('sk_status') == "on" ? 'Closing' : '';
                     SuratKeluar::where('sk_id', $surat->sk_id)->update([
-                        'sk_remark' => $request->input('sk_remark'),
                         'sk_status' => $dataStatus,
                     ]);
                 }
             } else {
-                \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->update($updateData);
-                $stepData = 1;
+                \App\Models\Approval::where('sk_id', $surat->sk_id)
+                    ->where('user_id', auth()->user()->id)
+                    ->update($updateData);
 
+                $stepData = 1;
                 SuratKeluar::where('sk_id', $surat->sk_id)->update([
                     'sk_remark' => $request->input('sk_remark'),
                     'sk_step' => $stepData
                 ]);
             }
 
-            return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_disposisi . '!');
+
+            return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_remark . '!');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('failed', $e->getMessage());
         }

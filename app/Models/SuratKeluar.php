@@ -13,4 +13,8 @@ class SuratKeluar extends Model
 
     protected $primaryKey = 'sk_id';
 
+    protected $casts = [
+        'sk_step' => 'integer',
+    ];
+
 }
