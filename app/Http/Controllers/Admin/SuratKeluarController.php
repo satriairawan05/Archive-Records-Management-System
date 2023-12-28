@@ -335,16 +335,14 @@ class SuratKeluarController extends Controller
                     ->update($updateData);
 
                 if ($latestApproval->app_ordinal != $surat->sk_step) {
-                    $skStep = $surat->sk_step != $latestApproval->app_ordinal ? $surat->sk_step : $surat->sk_step + 1;
-
                     $surat->update([
                         'sk_remark' => $request->input('sk_remark'),
-                        'sk_step' => $skStep
+                        'sk_step' => $surat->sk_step
                     ]);
                 } else {
                     $surat->update([
                         'sk_remark' => $request->input('sk_remark'),
-                        'sk_step' => $surat->sk_step
+                        'sk_step' => $surat->sk_step + 1
                     ]);
                 }
 
