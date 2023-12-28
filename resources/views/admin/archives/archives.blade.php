@@ -25,7 +25,7 @@
                         @if (auth()->user()->bid_id != null)
                             @php
                                 $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
-                                    ->where('sk_remark','Accepted')
+                                    ->where('sk_status','Closing')
                                     ->count();
                             @endphp
                             <a href="?bidang_id={{ auth()->user()->bid_id }}"
@@ -39,7 +39,7 @@
                             @foreach ($bidang as $d)
                                 @php
                                     $skCount = \App\Models\SuratKeluar::where('bid_id', $d->bid_id)
-                                        ->where('sk_remark','Accepted')
+                                        ->where('sk_status','Closing')
                                         ->count();
                                 @endphp
                                 <a href="?bidang_id={{ $d->bid_id }}"

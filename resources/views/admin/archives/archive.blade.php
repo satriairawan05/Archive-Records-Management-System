@@ -27,7 +27,7 @@
                             @php
                                 $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
                                     ->where('sub_id', auth()->user()->sub_id)
-                                    ->whereNotNull('sk_no')
+                                    ->where('sk_status','Closing')
                                     ->count();
                             @endphp
                             <a href="?bidang_id={{ auth()->user()->bid_id }}&sub_id={{ auth()->user()->sub_id }}"
@@ -42,7 +42,7 @@
                                 @php
                                     $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
                                         ->where('sub_id', auth()->user()->sub_id)
-                                        ->where('sk_remark','Accepted')
+                                        ->where('sk_status','Closing')
                                         ->count();
                                 @endphp
                                 <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ auth()->user()->sub_id }}"
@@ -57,7 +57,7 @@
                                     @php
                                         $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
                                             ->where('sub_id', $d->sub_id)
-                                            ->where('sk_remark','Accepted')
+                                            ->where('sk_status','Closing')
                                             ->count();
                                     @endphp
                                     <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ $d->sub_id }}"
