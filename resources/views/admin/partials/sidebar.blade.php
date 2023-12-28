@@ -12,7 +12,6 @@
     $countSK =
         $approval != null
             ? \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
-                ->whereNull('sk_status')
                 ->count()
             : '0';
 
