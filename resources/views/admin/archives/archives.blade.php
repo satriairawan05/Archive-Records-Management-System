@@ -25,11 +25,12 @@
                         @if (auth()->user()->bid_id != null)
                             @php
                                 $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
-                                    ->where('sk_status','Closing')
+                                    ->latest('sk_step')
                                     ->count();
+                                $bidangUser = \App\Models\Bidang::where('bid_id', auth()->user()->bid_id)->first();
                             @endphp
                             <a href="?bidang_id={{ auth()->user()->bid_id }}"
-                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $d->bid_name }}
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $bidangUser->bid_name }}
                                 <span
                                     class="badge rounded-pill @if ($skCount == 0) bg-secondary @else bg-primary @endif text-white">
                                     {{ $skCount == 0 ? 'Empty Data' : $skCount }}

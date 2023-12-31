@@ -121,7 +121,7 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ $s->sk_no }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-secondary"
+                                            <a class="btn btn-sm btn-secondary" target="__blank"
                                                 href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
                                                     class="fa fa-print"></i></a>
                                         </td>

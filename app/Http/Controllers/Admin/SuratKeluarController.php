@@ -38,7 +38,7 @@ class SuratKeluarController extends Controller
                 }
 
                 if ($r->action == 'Approval') {
-                    $this->read = $r->access;
+                    $this->approval = $r->access;
                 }
 
                 if ($r->action == 'Update') {
@@ -317,63 +317,57 @@ class SuratKeluarController extends Controller
     public function updateApprovalStep(Request $request, SuratKeluar $suratKeluar)
     {
         try {
+            $this->get_access_page();
             $surat = $suratKeluar->find(request()->segment(2));
-            $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
+            if ($this->approval == 1 && \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $surat->sk_step)->first()) {
+                $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
-            $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
-                ->where('user_id', auth()->user()->id)
-                ->first();
+                $updateApproval = [
+                    'app_disposisi' => $request->input('sk_dipsosisi'),
+                    'app_date' => \Carbon\Carbon::now(),
+                ];
 
-            $updateData = [
-                'app_disposisi' => $request->input('sk_dipsosisi'),
-                'app_date' => \Carbon\Carbon::now(),
-            ];
+                $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
+                    ->latest('app_ordinal')
+                    ->first();
 
-            if ($request->input('sk_dipsosisi') == 'Accepted') {
-                \App\Models\Approval::where('sk_id', $surat->sk_id)
-                    ->where('user_id', auth()->user()->id)
-                    ->update($updateData);
-
-                if ($latestApproval->app_ordinal != $surat->sk_step) {
-                    $surat->update([
-                        'sk_remark' => $request->input('sk_remark'),
-                        'sk_step' => $surat->sk_step
-                    ]);
+                if ($request->input('sk_dipsosisi') == 'Accepted') {
+                    \App\Models\Approval::where('sk_id', $surat->sk_id)
+                        ->where('user_id', auth()->user()->id)
+                        ->update($updateApproval);
                 } else {
-                    $surat->update([
-                        'sk_remark' => $request->input('sk_remark'),
-                        'sk_step' => $surat->sk_step + 1
-                    ]);
+                    \App\Models\Approval::where('sk_id', $surat->sk_id)
+                        ->where('user_id', auth()->user()->id)
+                        ->update($updateApproval);
                 }
 
-                if ($this->close == 1) {
-                    $dataStatus = $request->input('sk_status') == "on" ? 'Closing' : '';
-                    SuratKeluar::where('sk_id', $surat->sk_id)->update([
-                        'sk_status' => $dataStatus,
-                    ]);
-                }
-            } else {
-                \App\Models\Approval::where('sk_id', $surat->sk_id)
-                    ->where('user_id', auth()->user()->id)
-                    ->update($updateData);
+                // Menentukan nilai skStep sesuai kondisi yang ada
+                $skStep = $latestApproval && $latestApproval->app_ordinal != $surat->sk_step
+                    ? $surat->sk_step + 1
+                    : $surat->sk_step;
 
-                $stepData = 1;
-                SuratKeluar::where('sk_id', $surat->sk_id)->update([
+                // Membuat array update untuk SuratKeluar
+                $updateSK = [
                     'sk_remark' => $request->input('sk_remark'),
-                    'sk_step' => $stepData
-                ]);
+                    'sk_step' => $skStep,
+                ];
+
+                // Memeriksa apakah kondisi close adalah 1 untuk mengupdate sk_status
+                if ($this->close == 1) {
+                    $updateSK['sk_status'] = $request->input('sk_status') == "on" ? 'Closing' : '';
+                }
+
+                // Melakukan update pada SuratKeluar
+                SuratKeluar::where('sk_id', $surat->sk_id)->update($updateSK);
+
+
+                return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_remark . '!');
+            } else {
+                return redirect()->back()->with('failed', 'You Not Have Authority!');
             }
-
-
-            return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_remark . '!');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('failed', $e->getMessage());
         }
-        // $this->get_access_page();
-        // if ($this->approval == 1 && \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->where('app_ordinal', (int) $suratKeluar->sk_step)->first()) {
-        // } else {
-        //     return redirect()->back()->with('failed', 'You not Have Authority!');
-        // }
     }
 
     /**

@@ -162,7 +162,7 @@
                                         <td>
                                             @if (
                                                 $approval == 1 &&
-                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', (int) $s->sk_step)->first())
+                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $s->sk_step)->first())
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>
@@ -251,7 +251,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            <a href="{{ route('surat_keluar.print', $s->sk_id) }}"
+                                            <a href="{{ route('surat_keluar.print', $s->sk_id) }}" target="__blank"
                                                 class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"

@@ -12,9 +12,4 @@ class SuratKeluar extends Model
     protected $table = 'surat_keluars';
 
     protected $primaryKey = 'sk_id';
-
-    protected $casts = [
-        'sk_step' => 'integer',
-    ];
-
 }
