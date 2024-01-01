@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('sk_remark')->nullable();
             $table->string('sk_step')->nullable();
             $table->string('sk_lampiran')->nullable();
-            $table->string('sk_status')->nullable();
+            // $table->string('sk_status')->nullable();
             $table->longText('sk_table')->nullable();
             $table->string('sk_created')->nullable();
             $table->string('sk_updated')->nullable();

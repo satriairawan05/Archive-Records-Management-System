@@ -15,7 +15,7 @@ class SuratKeluarController extends Controller
     /**
      * Constructor for Controller.
      */
-    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0, public $close = 0)
+    public function __construct(private $name = 'Surat Keluar', public $create = 0, public $read = 0, public $update = 0, public $delete = 0, public $approval = 0)
     {
         //
     }
@@ -49,9 +49,9 @@ class SuratKeluarController extends Controller
                     $this->delete = $r->access;
                 }
 
-                if ($r->action == 'Close') {
-                    $this->close = $r->access;
-                }
+                // if ($r->action == 'Close') {
+                //     $this->close = $r->access;
+                // }
             }
         }
     }
@@ -353,13 +353,12 @@ class SuratKeluarController extends Controller
                 ];
 
                 // Memeriksa apakah kondisi close adalah 1 untuk mengupdate sk_status
-                if ($this->close == 1) {
-                    $updateSK['sk_status'] = $request->input('sk_status') == "on" ? 'Closing' : '';
-                }
+                // if ($this->close == 1) {
+                //     $updateSK['sk_status'] = $request->input('sk_status') == "on" ? 'Closing' : '';
+                // }
 
                 // Melakukan update pada SuratKeluar
                 SuratKeluar::where('sk_id', $surat->sk_id)->update($updateSK);
-
 
                 return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_remark . '!');
             } else {

@@ -162,7 +162,7 @@
                                         <td>
                                             @if (
                                                 $approval == 1 &&
-                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $s->sk_step)->first())
+                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $s->sk_step)->whereNull('app_disposisi')->first())
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>
@@ -225,7 +225,7 @@
                                                                                 placeholder="Ex: Okeee">
                                                                         </div>
                                                                     </div>
-                                                                    @if ($closing == 1)
+                                                                    {{-- @if ($closing == 1)
                                                                         <div class="row mt-3">
                                                                             <div class="col-2">
                                                                                 <label for="sk_status">Closing <span
@@ -238,7 +238,7 @@
                                                                                     id="sk_status">
                                                                             </div>
                                                                         </div>
-                                                                    @endif
+                                                                    @endif --}}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"

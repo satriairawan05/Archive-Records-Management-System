@@ -59,10 +59,10 @@ class PageSeeder extends Seeder
             'action' => 'Delete',
         ]);
 
-        \App\Models\Page::create([
-            'page_name' => 'Surat Keluar',
-            'action' => 'Close',
-        ]);
+        // \App\Models\Page::create([
+        //     'page_name' => 'Surat Keluar',
+        //     'action' => 'Close',
+        // ]);
 
         // Archive
         \App\Models\Page::create([
