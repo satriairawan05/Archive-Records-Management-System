@@ -195,7 +195,7 @@
                                                                         @endphp
                                                                         <div class="col-10">
                                                                             <select class="form-select form-select-sm"
-                                                                                id="sk_disposisi" name="sk_disposisi">
+                                                                                id="sk_disposisi" name="sk_disposisi" required>
                                                                                 @foreach ($disposisi as $d)
                                                                                     @if (old('sk_disposisi') == $d['name'])
                                                                                         <option name="sk_disposisi"
