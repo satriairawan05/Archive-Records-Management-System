@@ -54,9 +54,13 @@ Route::middleware(['auth'])->group(function () {
     // Jenis Surat
     Route::resource('jenis_surat', \App\Http\Controllers\Admin\JenisSuratController::class)->except(['show']);
     Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
+    // Route::get('surat_masuk/{surat_masuk}/download',[\App\Http\Controllers\Admin\SuratMasukController::class, 'download'])->name('surat_masuk.download');
     Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
+    // Route::get('surat_keluar/{surat_keluar}/download',[\App\Http\Controllers\Admin\SuratKeluarController::class, 'download'])->name('surat_masuk.download');
     Route::get('surat_keluar/{surat_keluar}/document', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'print'])->name('surat_keluar.print');
     Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'updateApprovalStep'])->name('surat_keluar.approval');
+
+    Route::get('/download/{file}', [\App\Http\Controllers\Controller::class,'download'])->name('download.file');
 
     // Role
     Route::resource('role', \App\Http\Controllers\Admin\GroupController::class)->except(['show']);

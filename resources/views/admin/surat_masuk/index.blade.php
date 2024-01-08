@@ -70,7 +70,7 @@
                             <thead class="thead-primary">
                                 <tr>
                                     <th>No</th>
-                                    <th>No Surat</th>
+                                    <th>Jenis Surat</th>
                                     <th>Tanggal Surat</th>
                                     <th>Penerima</th>
                                     <th>Action</th>
@@ -80,7 +80,7 @@
                                 @foreach ($surat as $s)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $s->sm_no_surat }}</td>
+                                        <td>{{ $s->sm_jenis }}</td>
                                         <td>{{ \Carbon\Carbon::parse($s->sm_tgl_surat)->isoFormat('DD MMMM YYYY') }}</td>
                                         <td>{{ $s->sm_penerima }}</td>
                                         <td>
@@ -88,6 +88,7 @@
                                                 <a href="{{ route('surat_masuk.show', $s->sm_id) }}"
                                                     class="btn btn-sm btn-secondary" target="__blank"><i
                                                         class="fa fa-file-pdf-o"></i></a>
+                                                <a class="btn btn-sm btn-light" target="__blank" href="{{ route('download.file',['file' => $s->sm_file]) }}"><i class="fa fa-download"></i></a>
                                             @endif
                                             @if ($update == 1)
                                                 <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"

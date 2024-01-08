@@ -144,7 +144,8 @@ class SuratKeluarController extends Controller
                         'sk_created' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
                         'sk_tgl_old' => \Carbon\Carbon::now(),
-                        'sk_step' => 1
+                        'sk_step' => 1,
+                        'sk_file' => $request->file('sm_file')->store('surat_keluar')
                     ]);
 
                     // JenisSurat::where('sk_id', $data->sk_id)->increment('js_count');
@@ -277,6 +278,16 @@ class SuratKeluarController extends Controller
                 ]);
 
                 if (!$validated->fails()) {
+                    if ($request->hasFile('sk_file')) {
+                        if ($suratKeluar->sk_file != $request->file('sk_file')) {
+                            \Illuminate\Support\Facades\Storage::delete($suratKeluar->sk_file);
+                        }
+                        $file = $request->file('sk_file');
+                        $filePath = $file->store('surat_keluar');
+                    } else {
+                        $filePath = $suratKeluar->sk_file;
+                    }
+
                     SuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
                         'js_id' => $request->input('js_id'),
                         'bid_id' => $request->input('bid_id'),
@@ -292,7 +303,8 @@ class SuratKeluarController extends Controller
                         'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_updated' => auth()->user()->name,
                         'sk_tgl' => \Carbon\Carbon::now(),
-                        'sk_step' => 1
+                        'sk_step' => 1,
+                        'sk_file' => $filePath
                     ]);
 
                     PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([

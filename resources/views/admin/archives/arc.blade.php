@@ -124,6 +124,7 @@
                                             <a class="btn btn-sm btn-secondary" target="__blank"
                                                 href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
                                                     class="fa fa-print"></i></a>
+                                            <a class="btn btn-sm btn-light" target="__blank" href="{{ route('download.file',['file' => $s->sk_file]) }}"><i class="fa fa-download"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -20,4 +20,13 @@ class Controller extends BaseController
             ->select(['group_pages.access', 'pages.page_name', 'pages.action'])
             ->get();
     }
+
+    public function download($file)
+    {
+        if(!file_exists($file)){
+            return abort(404);
+        }
+
+        return response()->download( $file);
+    }
 }

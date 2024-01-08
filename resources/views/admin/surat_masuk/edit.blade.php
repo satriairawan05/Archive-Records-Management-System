@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-4">
+                            {{-- <div class="col-4">
                                 <label for="sm_no_surat" class="col-form-label text-dark">Nomor Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_no_surat"
@@ -61,8 +61,8 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
-                            <div class="col-4">
+                            </div> --}}
+                            <div class="col-6">
                                 <label for="sm_perihal" class="col-form-label text-dark">Perihal Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_perihal"
@@ -73,7 +73,7 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="sm_penerima" class="col-form-label text-dark">Penerima Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sm_penerima"
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <label for="sm_tgl_surat" class="col-form-label text-dark">Tanggal Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="date" class="form-control form-control-sm" id="sm_tgl_surat"
@@ -96,8 +96,8 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
-                            <div class="col-6">
+                            </div> --}}
+                            <div class="col-12">
                                 <label for="sm_tgl_diterima" class="col-form-label text-dark">Tanggal Diterima Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="date" class="form-control form-control-sm" id="sm_tgl_diterima"

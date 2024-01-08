@@ -139,17 +139,6 @@
                         </div>
                         <div class="form-group row mt-3">
                             <div class="col-6">
-                                <label for="sk_asal" class="col-form-label text-dark">Asal <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm" id="sk_asal"
-                                    placeholder="Asal Surat" name="sk_asal" value="{{ old('sk_asal',$com->com_name) }}" readonly required>
-                                @error('sk_asal')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-6">
                                 <label for="sk_tujuan" class="col-form-label text-dark">Tujuan <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sk_tujuan"
@@ -160,8 +149,6 @@
                                     </div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row mt-3">
                             <div class="col-6">
                                 <label for="sk_tempat_tujuan" class="col-form-label text-dark">Tempat Tujuan Surat <span
                                         class="text-danger">*</span></label>
@@ -173,12 +160,26 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-6">
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
                                 <label for="sk_no" class="col-form-label text-dark">Nomor Surat <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="sk_no"
                                     placeholder="Nomor Surat" name="sk_no" value="{{ old('sk_no',$keluar->sk_no) }}" required>
                                 @error('sk_no')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <div class="col-12">
+                                <label for="sk_file" class="col-form-label text-dark">File Surat <span
+                                        class="text-danger">*</span></label>
+                                <input type="file" class="form-control-file" id="sk_file" name="sk_file" required>
+                                @error('sk_file')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
