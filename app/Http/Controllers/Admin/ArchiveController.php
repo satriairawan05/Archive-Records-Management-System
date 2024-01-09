@@ -40,11 +40,12 @@ class ArchiveController extends Controller
         if ($this->read == 1) {
             try {
                 if ($request->bidang_id && $request->sub_id) {
+                    $suratKeluar = \App\Models\SuratKeluar::where('bid_id', $request->bidang_id)->where('sub_id', $request->sub_id)->get();
                     return view('admin.archives.arc', [
                         'name' => $this->name,
                         'bidang' => \App\Models\Bidang::where('bid_id', $request->bidang_id)->first(),
                         'sub' => \App\Models\SubBidang::where('sub_id', $request->sub_id)->first(),
-                        'surat' => \App\Models\SuratKeluar::where('bid_id', $request->bidang_id)->where('sub_id', $request->sub_id)->latest('sk_step')->get(),
+                        'surat' => $suratKeluar,
                         'pages' => $this->get_access($this->name, auth()->user()->group_id)
                     ]);
                 } else {

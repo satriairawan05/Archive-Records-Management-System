@@ -251,8 +251,10 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                            @if($s->sk_file == null)
                                             <a href="{{ route('surat_keluar.print', $s->sk_id) }}" target="__blank"
                                                 class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                                            @endif
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
                                                     class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>

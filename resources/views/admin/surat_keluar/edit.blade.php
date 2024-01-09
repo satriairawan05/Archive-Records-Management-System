@@ -14,6 +14,17 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script type="text/javascript">
+        const checkFile = document.getElementById('checkFile');
+        const fileView = document.getElementById('fileData');
+
+        checkFile.addEventListener('change', function() {
+            if (this.checked) {
+                fileView.classList.remove('d-none');
+            } else {
+                fileView.classList.add('d-none');
+            }
+        });
+
         $("#jenis_surat").select2();
 
         $("#bidang").select2();
@@ -176,9 +187,13 @@
                         </div>
                         <div class="form-group row mt-3">
                             <div class="col-12">
+                                <label for="checkFile">Include File?</label>
+                                <input type="checkbox" name="checkFile" id="checkFile">
+                            </div>
+                            <div class="col-12 d-none" id="fileData">
                                 <label for="sk_file" class="col-form-label text-dark">File Surat <span
                                         class="text-danger">*</span></label>
-                                <input type="file" class="form-control-file" id="sk_file" name="sk_file" required>
+                                <input type="file" class="form-control-file" id="sk_file" name="sk_file">
                                 @error('sk_file')
                                     <div class="invalid-feedback">
                                         {{ $message }}
