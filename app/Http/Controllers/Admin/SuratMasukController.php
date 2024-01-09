@@ -94,14 +94,14 @@ class SuratMasukController extends Controller
         if ($this->create == 1) {
             try {
                 $validated = Validator::make($request->all(), [
-                    'sm_jenis' => ['required','string'],
-                    'sm_asal' => ['required','string'],
+                    'sm_jenis' => ['required', 'string'],
+                    'sm_asal' => ['required', 'string'],
                     // 'sm_no_surat' => ['required','string'],
                     // 'sm_tgl_surat' => ['required','string'],
-                    'sm_tgl_diterima' => ['required','string'],
+                    'sm_tgl_diterima' => ['required', 'string'],
                     // 'sm_pengirim' => ['required','string'],
-                    'sm_penerima' => ['required','string'],
-                    'sm_perihal' => ['required','string'],
+                    'sm_penerima' => ['required', 'string'],
+                    'sm_perihal' => ['required', 'string'],
                 ]);
 
                 if (!$validated->fails()) {
@@ -179,14 +179,14 @@ class SuratMasukController extends Controller
         if ($this->update == 1) {
             try {
                 $validated = Validator::make($request->all(), [
-                    'sm_jenis' => ['required','string'],
-                    'sm_asal' => ['required','string'],
+                    'sm_jenis' => ['required', 'string'],
+                    'sm_asal' => ['required', 'string'],
                     // 'sm_no_surat' => ['required','string'],
                     // 'sm_tgl_surat' => ['required','string'],
-                    'sm_tgl_diterima' => ['required','string'],
+                    'sm_tgl_diterima' => ['required', 'string'],
                     // 'sm_pengirim' => ['required','string'],
-                    'sm_penerima' => ['required','string'],
-                    'sm_perihal' => ['required','string'],
+                    'sm_penerima' => ['required', 'string'],
+                    'sm_perihal' => ['required', 'string'],
                 ]);
 
                 if (!$validated->fails()) {
@@ -217,13 +217,23 @@ class SuratMasukController extends Controller
                 } else {
                     return redirect()->back()->with('failed', $validated->getMessageBag());
                 }
-
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
         } else {
             return redirect()->back()->with('failed', 'You not Have Authority!');
         }
+    }
+
+    public function download(SuratMasuk $suratMasuk)
+    {
+        $file = $suratMasuk->sm_file;
+
+        if (!\Illuminate\Support\Facades\Storage::exists($file)) {
+            return redirect()->back()->with('error', 'File not found');
+        }
+
+        return response()->download(\Illuminate\Support\Facades\Storage::path($file));
     }
 
     /**

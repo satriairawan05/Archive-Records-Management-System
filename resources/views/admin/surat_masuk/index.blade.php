@@ -88,7 +88,7 @@
                                                 <a href="{{ route('surat_masuk.show', $s->sm_id) }}"
                                                     class="btn btn-sm btn-secondary" target="__blank"><i
                                                         class="fa fa-file-pdf-o"></i></a>
-                                                <a class="btn btn-sm btn-light" target="__blank" href="{{ route('download.file',['file' => $s->sm_file]) }}"><i class="fa fa-download"></i></a>
+                                                <a class="btn btn-sm btn-light" href="{{ route('surat_masuk.download',$s->sm_id) }}"><i class="fa fa-download"></i></a>
                                             @endif
                                             @if ($update == 1)
                                                 <a href="{{ route('surat_masuk.edit', $s->sm_id) }}"

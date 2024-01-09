@@ -21,12 +21,12 @@ class Controller extends BaseController
             ->get();
     }
 
-    public function download($file)
-    {
-        if(!file_exists($file)){
-            return abort(404);
-        }
+    // public function download($file)
+    // {
+    //     if(!file_exists($file)){
+    //         return abort(404);
+    //     }
 
-        return response()->download( $file);
-    }
+    //     return response()->download( $file);
+    // }
 }

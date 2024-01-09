@@ -375,6 +375,17 @@ class SuratKeluarController extends Controller
         }
     }
 
+    public function download(SuratKeluar $suratKeluar)
+    {
+        $file = $suratKeluar->sk_file;
+
+        if (!\Illuminate\Support\Facades\Storage::exists($file)) {
+            return redirect()->back()->with('error', 'File not found');
+        }
+
+        return response()->download(\Illuminate\Support\Facades\Storage::path($file));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
