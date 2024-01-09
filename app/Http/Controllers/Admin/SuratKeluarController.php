@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Approval;
 use App\Models\JenisSurat;
 use App\Models\SuratKeluar;
@@ -142,8 +143,8 @@ class SuratKeluarController extends Controller
                         'sk_table' => $request->input('sk_table'),
                         'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_created' => auth()->user()->name,
-                        'sk_tgl' => \Carbon\Carbon::now(),
-                        'sk_tgl_old' => \Carbon\Carbon::now(),
+                        'sk_tgl' => Carbon::now(),
+                        'sk_tgl_old' => Carbon::now(),
                         'sk_step' => 1,
                         'sk_file' => $request->file('sm_file')->store('surat_keluar')
                     ]);
@@ -302,7 +303,7 @@ class SuratKeluarController extends Controller
                         'sk_table' => $request->input('sk_table'),
                         'sk_lampiran' => $request->input('sk_lampiran'),
                         'sk_updated' => auth()->user()->name,
-                        'sk_tgl' => \Carbon\Carbon::now(),
+                        'sk_tgl' => Carbon::now(),
                         'sk_step' => 1,
                         'sk_file' => $filePath
                     ]);
