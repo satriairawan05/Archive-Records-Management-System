@@ -44,7 +44,7 @@
 
 @section('app')
     <div class="row">
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
             <div class="card">
                 <div class="stat-widget-one card-body">
                     <div class="stat-icon d-inline-block">
@@ -57,33 +57,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6">
-            <div class="card">
-                <div class="stat-widget-one card-body">
-                    <div class="stat-icon d-inline-block">
-                        <i class="fa fa-envelope text-danger border-danger"></i>
-                    </div>
-                    <div class="stat-content d-inline-block">
-                        <div class="stat-text">Surat Keluar (Waiting)</div>
-                        <div class="stat-digit">{{ $skWait }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
             <div class="card">
                 <div class="stat-widget-one card-body">
                     <div class="stat-icon d-inline-block">
                         <i class="fa fa-envelope text-success border-success"></i>
                     </div>
                     <div class="stat-content d-inline-block">
-                        <div class="stat-text">Surat Keluar (Accepted)</div>
-                        <div class="stat-digit">{{ $skAcc }}</div>
+                        <div class="stat-text">Surat Keluar</div>
+                        <div class="stat-digit">{{ $skCount }}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
             <div class="card">
                 <div class="stat-widget-one card-body">
                     <div class="stat-icon d-inline-block">

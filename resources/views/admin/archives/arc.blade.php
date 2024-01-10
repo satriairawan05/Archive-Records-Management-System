@@ -121,9 +121,11 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ $s->sk_no }}</td>
                                         <td>
+                                            @if($s->sk_file == null)
                                             <a class="btn btn-sm btn-secondary" target="__blank"
                                                 href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
                                                     class="fa fa-print"></i></a>
+                                            @endif
                                             @if($s->sk_file != null)
                                             <a class="btn btn-sm btn-light" target="__blank"
                                                 href="{{ route('surat_keluar.download', $s->sk_id) }}"><i

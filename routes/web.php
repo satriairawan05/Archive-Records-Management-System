@@ -26,13 +26,24 @@ Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::middleware(['auth'])->group(function () {
     // Home Page or Dashboard
     Route::get('home', function () {
+        $month = date('m'); // Mendapatkan bulan saat ini dalam format 01-12
+        $year = date('Y'); // Mendapatkan tahun saat ini
+
+        $skAcc = \App\Models\SuratKeluar::whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->count();
+
+        $skWait = \App\Models\SuratKeluar::whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->count();
         return view('admin.home', [
             'name' => 'Home',
             'surat' => \App\Models\JenisSurat::all(),
             'count' => \App\Models\JenisSurat::count(),
+            'skCount' => \App\Models\SuratKeluar::count(),
             'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
-            'skAcc' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->where('sk_status','Closing')->count(),
-            'skWait' => \App\Models\SuratKeluar::whereMonth('created_at', '=', date('m'))->whereNull('sk_status')->count(),
+            'skAcc' => $skAcc,
+            'skWait' => $skWait,
         ]);
     })->name('home');
 
@@ -54,9 +65,9 @@ Route::middleware(['auth'])->group(function () {
     // Jenis Surat
     Route::resource('jenis_surat', \App\Http\Controllers\Admin\JenisSuratController::class)->except(['show']);
     Route::resource('surat_masuk', \App\Http\Controllers\Admin\SuratMasukController::class);
-    Route::get('surat_masuk/{surat_masuk}/download',[\App\Http\Controllers\Admin\SuratMasukController::class, 'download'])->name('surat_masuk.download');
+    Route::get('surat_masuk/{surat_masuk}/download', [\App\Http\Controllers\Admin\SuratMasukController::class, 'download'])->name('surat_masuk.download');
     Route::resource('surat_keluar', \App\Http\Controllers\Admin\SuratKeluarController::class);
-    Route::get('surat_keluar/{surat_keluar}/download',[\App\Http\Controllers\Admin\SuratKeluarController::class, 'download'])->name('surat_keluar.download');
+    Route::get('surat_keluar/{surat_keluar}/download', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'download'])->name('surat_keluar.download');
     Route::get('surat_keluar/{surat_keluar}/document', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'print'])->name('surat_keluar.print');
     Route::put('surat_keluar/{surat_keluar}/approval', [\App\Http\Controllers\Admin\SuratKeluarController::class, 'updateApprovalStep'])->name('surat_keluar.approval');
 

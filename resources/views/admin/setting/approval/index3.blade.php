@@ -96,7 +96,7 @@
                                     <th>No</th>
                                     <th>User</th>
                                     <th>Surat Keluar</th>
-                                    <th>Ordinal</th>
+                                    <th>Approval Ke</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

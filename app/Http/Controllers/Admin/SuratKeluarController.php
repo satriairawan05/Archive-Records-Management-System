@@ -124,11 +124,10 @@ class SuratKeluarController extends Controller
                     'sk_sifat' => ['required', 'string'],
                     'sk_perihal' => ['required', 'string'],
                     'sk_tujuan' => ['required', 'string'],
-                    'sk_deskripsi' => ['required'],
                 ]);
 
                 if (!$validated->fails()) {
-                    SuratKeluar::create([
+                    $sk = SuratKeluar::create([
                         'js_id' => $request->input('js_id'),
                         'bid_id' => $request->input('bid_id'),
                         'sub_id' => $request->input('sub_id'),
@@ -148,6 +147,8 @@ class SuratKeluarController extends Controller
                         'sk_step' => 1,
                         'sk_file' => $request->file('sm_file')->store('surat_keluar')
                     ]);
+
+                    JenisSurat::where('js_id', $sk->sk_id)->increment('js_count');
 
                     // JenisSurat::where('sk_id', $data->sk_id)->increment('js_count');
 
@@ -275,7 +276,6 @@ class SuratKeluarController extends Controller
                     'sk_sifat' => ['required', 'string'],
                     'sk_perihal' => ['required', 'string'],
                     'sk_tujuan' => ['required', 'string'],
-                    'sk_deskripsi' => ['required'],
                 ]);
 
                 if (!$validated->fails()) {

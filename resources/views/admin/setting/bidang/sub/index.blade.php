@@ -82,8 +82,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Bidang</th>
-                                    <th>Name</th>
-                                    <th>Alias</th>
+                                    <th>Sub Bidang</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -93,7 +92,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $b->bid_name }}</td>
                                         <td>{{ $b->sub_name }}</td>
-                                        <td>{{ $b->sub_alias }}</td>
                                         <td>
                                             @if ($update == 1)
                                                 <a href="{{ route('sub_bidang.edit', $b->sub_id) }}"
