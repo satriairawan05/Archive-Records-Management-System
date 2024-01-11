@@ -145,7 +145,7 @@ class SuratKeluarController extends Controller
                         'sk_tgl' => Carbon::now(),
                         'sk_tgl_old' => Carbon::now(),
                         'sk_step' => 1,
-                        'sk_file' => $request->file('sm_file')->store('surat_keluar')
+                        'sk_file' => $request->file('sk_file') ? $request->file('sk_file')->store('surat_keluar') : ''
                     ]);
 
                     JenisSurat::where('js_id', $sk->sk_id)->increment('js_count');
