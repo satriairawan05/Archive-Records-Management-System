@@ -66,12 +66,12 @@ class SuratKeluarController extends Controller
         if ($this->read == 1) {
             try {
                 if (auth()->user()->group_id == 1) {
-                    $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
+                    $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
                 } else {
                     if (auth()->user()->sub_id == null) {
-                        $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->latest('surat_kelaurs.created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->latest('surat_kelaurs.created_at')->get();
                     } else {
-                        $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->where('surat_kelaurs.sub_id', auth()->user()->sub_id)->latest('surat_kelaurs.created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->where('surat_kelaurs.sub_id', auth()->user()->sub_id)->latest('surat_kelaurs.created_at')->get();
                     }
                 }
                 return view('admin.surat_keluar.index', [
@@ -148,7 +148,9 @@ class SuratKeluarController extends Controller
                         'sk_file' => $request->hasFile('sk_file') ? $request->file('sk_file')->store('surat_keluar') : null
                     ]);
 
-                    JenisSurat::where('sk_id', $sk->sk_id)->increment('js_count');
+                    JenisSurat::where('sk_id', $sk->sk_id)->update([
+                        'js_count' => \Illuminate\Support\Facades\DB::raw('js_count + 1')
+                    ]);;
 
                     // JenisSurat::where('sk_id', $data->sk_id)->increment('js_count');
 
