@@ -148,7 +148,7 @@ class SuratKeluarController extends Controller
                         'sk_file' => $request->hasFile('sk_file') ? $request->file('sk_file')->store('surat_keluar') : null
                     ]);
 
-                    JenisSurat::where('js_id', $sk->sk_id)->increment('js_count');
+                    JenisSurat::where('sk_id', $sk->sk_id)->increment('js_count');
 
                     // JenisSurat::where('sk_id', $data->sk_id)->increment('js_count');
 
