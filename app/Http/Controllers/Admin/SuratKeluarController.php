@@ -66,12 +66,12 @@ class SuratKeluarController extends Controller
         if ($this->read == 1) {
             try {
                 if (auth()->user()->group_id == 1) {
-                    $surat = SuratKeluar::latest('created_at')->get();
+                    $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
                 } else {
                     if (auth()->user()->sub_id == null) {
-                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->latest('created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->latest('surat_kelaurs.created_at')->get();
                     } else {
-                        $surat = SuratKeluar::where('bid_id', auth()->user()->bid_id)->where('sub_id', auth()->user()->sub_id)->latest('created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats','surat_keluars.js_id','=','jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->where('surat_kelaurs.sub_id', auth()->user()->sub_id)->latest('surat_kelaurs.created_at')->get();
                     }
                 }
                 return view('admin.surat_keluar.index', [
@@ -145,7 +145,7 @@ class SuratKeluarController extends Controller
                         'sk_tgl' => Carbon::now(),
                         'sk_tgl_old' => Carbon::now(),
                         'sk_step' => 1,
-                        'sk_file' => $request->file('sk_file') ? $request->file('sk_file')->store('surat_keluar') : ''
+                        'sk_file' => $request->file('sk_file') ? $request->file('sk_file')->store('surat_keluar') : null
                     ]);
 
                     JenisSurat::where('js_id', $sk->sk_id)->increment('js_count');
@@ -226,8 +226,9 @@ class SuratKeluarController extends Controller
                     'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
                 ]);
 
-                return view('admin.surat_keluar.document', [
+                return view('admin.surat_keluar.file', [
                     'name' => $this->name,
+                    'surat' => $suratKeluar->find(request()->segment(2))
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());

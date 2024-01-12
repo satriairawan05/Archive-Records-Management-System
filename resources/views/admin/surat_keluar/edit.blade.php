@@ -63,7 +63,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('surat_keluar.update',$keluar->sk_id) }}" method="post">
+                    <form action="{{ route('surat_keluar.update',$keluar->sk_id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="form-group row mt-3">
@@ -187,7 +187,7 @@
                         </div>
                         <div class="form-group row mt-3">
                             <div class="col-12">
-                                <label for="checkFile">Include File?</label>
+                                <label for="checkFile" class="col-form-label text-dark">Include File?</label>
                                 <input type="checkbox" name="checkFile" id="checkFile">
                             </div>
                             <div class="col-12 d-none" id="fileData">

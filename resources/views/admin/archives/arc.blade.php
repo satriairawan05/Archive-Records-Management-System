@@ -127,6 +127,10 @@
                                                     class="fa fa-print"></i></a>
                                             @endif
                                             @if($s->sk_file != null)
+                                                <a href="{{ route('surat_keluar.show', $s->sk_id) }}" target="__blank"
+                                                    class="btn btn-sm btn-secondary"><i class="fa fa-file-pdf-o"></i></a>
+                                            @endif
+                                            @if($s->sk_file != null)
                                             <a class="btn btn-sm btn-light" target="__blank"
                                                 href="{{ route('surat_keluar.download', $s->sk_id) }}"><i
                                                     class="fa fa-download"></i></a>

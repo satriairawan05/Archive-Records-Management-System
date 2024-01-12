@@ -23,7 +23,7 @@
             console.log("Boo, inline PDFs are not supported by this browser");
         }
 
-        PDFObject.embed("{{ asset('storage/'. $surat->sm_file) }}", document.body)
+        PDFObject.embed("{{ asset('storage/'. $surat->sk_file) }}", document.body)
     </script>
 </body>
 </html>

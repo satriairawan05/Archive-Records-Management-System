@@ -142,7 +142,7 @@
                             <thead class="thead-primary">
                                 <tr>
                                     <th>#</th>
-                                    <th>Nomor Surat</th>
+                                    <th>Jenis</th>
                                     <th>Asal</th>
                                     <th>Tujuan</th>
                                     <th>Perihal</th>
@@ -154,7 +154,7 @@
                                 @foreach ($surat as $s)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $s->sk_no_old == $s->sk_no ? $s->sk_no_old : $s->sk_no }}</td>
+                                        <td>{{ $s->js_jenis }}</td>
                                         <td>{{ $s->sk_asal }}</td>
                                         <td>{{ $s->sk_tujuan }}</td>
                                         <td>{{ $s->sk_perihal }}</td>
@@ -195,7 +195,8 @@
                                                                         @endphp
                                                                         <div class="col-10">
                                                                             <select class="form-select form-select-sm"
-                                                                                id="sk_disposisi" name="sk_disposisi" required>
+                                                                                id="sk_disposisi" name="sk_disposisi"
+                                                                                required>
                                                                                 @foreach ($disposisi as $d)
                                                                                     @if (old('sk_disposisi') == $d['name'])
                                                                                         <option name="sk_disposisi"
@@ -251,9 +252,13 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if($s->sk_file == null)
-                                            <a href="{{ route('surat_keluar.print', $s->sk_id) }}" target="__blank"
-                                                class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                                            @if ($s->sk_file == null)
+                                                <a href="{{ route('surat_keluar.print', $s->sk_id) }}" target="__blank"
+                                                    class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                                            @endif
+                                            @if($s->sk_file != null)
+                                                <a href="{{ route('surat_keluar.show', $s->sk_id) }}" target="__blank"
+                                                    class="btn btn-sm btn-secondary"><i class="fa fa-file-pdf-o"></i></a>
                                             @endif
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
