@@ -14,7 +14,6 @@ class GroupPageSeeder extends Seeder
     {
         for ($i = 1; $i <= 35; $i++) {
             \App\Models\GroupPage::create([
-                'gp_id' => $i,
                 'group_id' => 1,
                 'page_id' => $i,
                 'access' => 1,

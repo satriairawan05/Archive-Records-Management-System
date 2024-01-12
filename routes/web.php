@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
             'surat' => \App\Models\JenisSurat::all(),
             'count' => \App\Models\JenisSurat::count(),
             'skCount' => \App\Models\SuratKeluar::count(),
-            'smCount' => \App\Models\SuratMasuk::whereMonth('created_at', '=', date('m'))->count(),
+            'smCount' => \App\Models\SuratMasuk::count(),
             'skAcc' => $skAcc,
             'skWait' => $skWait,
         ]);
