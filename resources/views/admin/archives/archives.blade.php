@@ -25,7 +25,7 @@
                         @if (auth()->user()->bid_id != null)
                             @php
                                 $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
-                                    ->whereNotNull('sk_file')
+                                    ->whereNotNull('sk_remark')
                                     ->count();
                                 $bidangUser = \App\Models\Bidang::where('bid_id', auth()->user()->bid_id)->first();
                             @endphp
@@ -40,7 +40,7 @@
                             @foreach ($bidang as $d)
                                 @php
                                     $skCount = \App\Models\SuratKeluar::where('bid_id', $d->bid_id)
-                                        ->whereNotNull('sk_file')
+                                        ->whereNotNull('sk_remark')
                                         ->count();
                                 @endphp
                                 <a href="?bidang_id={{ $d->bid_id }}"

@@ -336,24 +336,21 @@ class SuratKeluarController extends Controller
      */
     public function updateApprovalStep(Request $request, SuratKeluar $suratKeluar)
     {
+        $this->get_access_page();
+        $surat = $suratKeluar->find(request()->segment(2));
+        $app = \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->first();
         try {
-            $this->get_access_page();
-            $surat = $suratKeluar->find(request()->segment(2));
-            if ($this->approval == 1 && \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $surat->sk_step)->first()) {
+            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
                     ->latest('app_ordinal')
                     ->first();
 
-                dd($request->input('sk_dipsosisi'));
-
-                \App\Models\Approval::where('sk_id', $surat->sk_id)
-                    ->where('user_id', auth()->user()->id)
-                    ->update([
-                        'app_disposisi' => $request->input('sk_dipsosisi'),
-                        'app_date' => \Carbon\Carbon::now(),
-                    ]);
+                $app->update([
+                    'app_disposisi' => $request->input('sk_dipsosisi'),
+                    'app_date' => \Carbon\Carbon::now(),
+                ]);
 
                 // Menentukan nilai skStep sesuai kondisi yang ada
                 $skStep = $latestApproval && $latestApproval->app_ordinal != $surat->sk_step

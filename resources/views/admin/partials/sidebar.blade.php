@@ -7,11 +7,11 @@
         ->select(['group_pages.access', 'pages.page_name', 'pages.action'])
         ->get();
 
-    $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->first();
+    $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->whereNull('app_date')->first();
 
     $countSK =
         $approval != null
-            ? \App\Models\SuratKeluar::where('sk_step', $approval?->app_ordinal)
+            ? \App\Models\SuratKeluar::where('sk_step', $approval->app_ordinal)
                 ->count()
             : '0';
 

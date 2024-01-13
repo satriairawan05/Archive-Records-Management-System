@@ -160,9 +160,10 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMMM YYYY') }}</td>
                                         <td>
-                                            @if (
-                                                $approval == 1 &&
-                                                    \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->where('app_ordinal', $s->sk_step)->whereNull('app_disposisi')->first())
+                                        @php
+                                            $app = \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->first();
+                                        @endphp
+                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal)
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>
@@ -191,22 +192,22 @@
                                                                                     class="text-danger">*</span></label>
                                                                         </div>
                                                                         @php
-                                                                            $disposisi = [['name' => 'Accepted'], ['name' => 'Rejected']];
+                                                                            $disposisi = ['Accepted','Rejected'];
                                                                         @endphp
                                                                         <div class="col-10">
                                                                             <select class="form-select form-select-sm"
                                                                                 id="sk_disposisi" name="sk_disposisi"
                                                                                 required>
                                                                                 @foreach ($disposisi as $d)
-                                                                                    @if (old('sk_disposisi') == $d['name'])
+                                                                                    @if (old('sk_disposisi') == $d)
                                                                                         <option name="sk_disposisi"
-                                                                                            value="{{ $d['name'] }}"
+                                                                                            value="{{ $d }}"
                                                                                             selected>
-                                                                                            {!! $d['name'] !!}</option>
+                                                                                            {!! $d !!}</option>
                                                                                     @else
                                                                                         <option name="sk_disposisi"
-                                                                                            value="{{ $d['name'] }}">
-                                                                                            {!! $d['name'] !!}
+                                                                                            value="{{ $d }}">
+                                                                                            {!! $d !!}
                                                                                         </option>
                                                                                     @endif
                                                                                 @endforeach

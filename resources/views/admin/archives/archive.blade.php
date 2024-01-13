@@ -27,7 +27,7 @@
                             @php
                                 $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
                                     ->where('sub_id', auth()->user()->sub_id)
-                                    ->whereNotNull('sk_file')
+                                    ->whereNotNull('sk_remark')
                                     ->count();
                                 $subBidangUser = \App\Models\SubBidang::where('sub_id', auth()->user()->sub_id)->first();
                             @endphp
@@ -43,7 +43,7 @@
                                 @php
                                     $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
                                         ->where('sub_id', auth()->user()->sub_id)
-                                        ->whereNotNull('sk_file')
+                                        ->whereNotNull('sk_remark')
                                         ->count();
                                 @endphp
                                 <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ auth()->user()->sub_id }}"
@@ -58,7 +58,7 @@
                                     @php
                                         $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
                                             ->where('sub_id', $d->sub_id)
-                                            ->whereNotNull('sk_file')
+                                            ->whereNotNull('sk_remark')
                                             ->count();
                                     @endphp
                                     <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ $d->sub_id }}"
