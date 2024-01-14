@@ -53,14 +53,14 @@ class SuratMasukController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             if (auth()->user()->group_id == 1) {
-                $surat = SuratMasuk::latest('surat_masuks.created_at')->get();
+                $surat = SuratMasuk::latest()->get();
             } else {
                 if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
-                    $surat = SuratMasuk::latest('surat_masuks.created_at')->get();
+                    $surat = SuratMasuk::latest()->get();
                 } else if(auth()->user()->sub_id == null) {
-                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->latest('surat_masuks.created_at')->get();
+                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->latest()->get();
                 } else {
-                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->where('surat_masuks.sub_id', auth()->user()->sub_id)->latest('surat_keluars.created_at')->get();
+                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->where('surat_masuks.sub_id', auth()->user()->sub_id)->latest()->get();
                 }
             }
             try {

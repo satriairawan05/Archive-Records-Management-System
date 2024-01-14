@@ -160,9 +160,11 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMMM YYYY') }}</td>
                                         <td>
-                                        @php
-                                            $app = \App\Models\Approval::where('sk_id', $s->sk_id)->where('user_id', auth()->user()->id)->first();
-                                        @endphp
+                                            @php
+                                                $app = \App\Models\Approval::where('sk_id', $s->sk_id)
+                                                    ->where('user_id', auth()->user()->id)
+                                                    ->first();
+                                            @endphp
                                             @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal && $app->app_date == null)
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
@@ -192,7 +194,7 @@
                                                                                     class="text-danger">*</span></label>
                                                                         </div>
                                                                         @php
-                                                                            $disposisi = ['Accepted','Rejected'];
+                                                                            $disposisi = ['Accepted', 'Rejected'];
                                                                         @endphp
                                                                         <div class="col-10">
                                                                             <select class="form-select form-select-sm"
@@ -254,12 +256,18 @@
                                                 </div>
                                             @endif
                                             @if ($s->sk_file == null)
-                                                <a href="{{ route('surat_keluar.print', $s->sk_id) }}" target="__blank"
-                                                    class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-sm btn-secondary" target="__blank"
+                                                    href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
+                                                        class="fa fa-print"></i></a>
                                             @endif
-                                            @if($s->sk_file != null)
+                                            @if ($s->sk_file != null)
                                                 <a href="{{ route('surat_keluar.show', $s->sk_id) }}" target="__blank"
                                                     class="btn btn-sm btn-secondary"><i class="fa fa-file-pdf-o"></i></a>
+                                            @endif
+                                            @if ($s->sk_file != null)
+                                                <a class="btn btn-sm btn-light" target="__blank"
+                                                    href="{{ route('surat_keluar.download', $s->sk_id) }}"><i
+                                                        class="fa fa-download"></i></a>
                                             @endif
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
