@@ -69,9 +69,9 @@ class SuratKeluarController extends Controller
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
                 } else {
                     if (auth()->user()->sub_id == null) {
-                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->latest('surat_kelaurs.created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->latest('surat_keluars.created_at')->get();
                     } else {
-                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->where('surat_kelaurs.sub_id', auth()->user()->sub_id)->latest('surat_kelaurs.created_at')->get();
+                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluar.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id', auth()->user()->sub_id)->latest('surat_keluars.created_at')->get();
                     }
                 }
                 return view('admin.surat_keluar.index', [
