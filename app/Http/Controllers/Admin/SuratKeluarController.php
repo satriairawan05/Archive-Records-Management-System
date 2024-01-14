@@ -68,7 +68,9 @@ class SuratKeluarController extends Controller
                 if (auth()->user()->group_id == 1) {
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
                 } else {
-                    if (auth()->user()->sub_id == null) {
+                    if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
+                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
+                    } else if(auth()->user()->sub_id == null) {
                         $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)->latest('surat_keluars.created_at')->get();
                     } else {
                         $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id', auth()->user()->sub_id)->latest('surat_keluars.created_at')->get();
@@ -340,7 +342,7 @@ class SuratKeluarController extends Controller
         $surat = $suratKeluar->find(request()->segment(2));
         $app = \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->first();
         try {
-            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal) {
+            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
@@ -359,6 +361,7 @@ class SuratKeluarController extends Controller
 
                 // Membuat array update untuk SuratKeluar
                 $updateSK = [
+                    'sk_status' => $request->input('sk_dipsosisi'),
                     'sk_remark' => $request->input('sk_remark'),
                     'sk_step' => $skStep,
                 ];
@@ -371,7 +374,7 @@ class SuratKeluarController extends Controller
                 // Melakukan update pada SuratKeluar
                 SuratKeluar::where('sk_id', $surat->sk_id)->update($updateSK);
 
-                return redirect()->back()->with('success', 'Surat Keluar ' . $pic->name . ' telah anda ' . $surat->sk_remark . '!');
+                return redirect()->back()->with('success', 'Data Updated!');
             } else {
                 return redirect()->back()->with('failed', 'You Not Have Authority!');
             }

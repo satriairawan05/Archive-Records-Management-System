@@ -11,8 +11,10 @@
 
     $countSK =
         $approval != null
-            ? \App\Models\SuratKeluar::where('sk_step', $approval->app_ordinal)
-                ->count()
+            ? \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')
+            ->where('surat_keluars.sk_step', $approval->app_ordinal)
+            ->whereNull('approvals.app_date')
+            ->count()
             : '0';
 
     $createSM = 0;

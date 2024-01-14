@@ -176,18 +176,18 @@ class JenisSuratController extends Controller
      */
     public function destroy(JenisSurat $jenisSurat)
     {
-        $this->get_access_page();
-        if ($this->delete == 1) {
-            try {
-                $data = $jenisSurat->find(request()->segment(2));
-                JenisSurat::destroy($data->id);
+        try {
+            $this->get_access_page();
+            if ($this->delete == 1) {
+            $data = $jenisSurat->find(request()->segment(2));
+            JenisSurat::destroy($data->id);
 
-                return redirect()->back()->with('success', 'Data Deleted!');
-            } catch (\Illuminate\Database\QueryException $e) {
-                return redirect()->back()->with('failed', $e->getMessage());
+            return redirect()->back()->with('success', 'Data Deleted!');
+            } else {
+                return redirect()->back()->with('failed', 'You not Have Authority!');
             }
-        } else {
-            return redirect()->back()->with('failed', 'You not Have Authority!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('failed', $e->getMessage());
         }
     }
 }
