@@ -60,7 +60,7 @@ class ApprovalController extends Controller
                         'pages' => $this->get_access($this->name, auth()->user()->group_id),
                         'user' => \App\Models\User::all(),
                         'surat' => \App\Models\SuratKeluar::where('bid_id', request()->input('bidang_id'))->where('sub_id', request()->input('sub_id'))->whereNull('sk_remark')->get(),
-                        'approval' => Approval::where('bid_id', request()->input('bidang_id'))->where('sub_id', request()->input('sub_id'))->get()
+                        'approval' => Approval::where('bid_id', request()->input('bidang_id'))->where('sub_id', request()->input('sub_id'))->whereNull('app_date')->get()
                     ]);
                 } else {
                     if (request()->input('bidang_id')) {

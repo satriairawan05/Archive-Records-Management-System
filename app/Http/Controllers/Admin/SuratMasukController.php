@@ -52,10 +52,21 @@ class SuratMasukController extends Controller
     {
         $this->get_access_page();
         if ($this->read == 1) {
+            if (auth()->user()->group_id == 1) {
+                $surat = SuratMasuk::latest('surat_masuks.created_at')->get();
+            } else {
+                if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
+                    $surat = SuratMasuk::latest('surat_masuks.created_at')->get();
+                } else if(auth()->user()->sub_id == null) {
+                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->latest('surat_masuks.created_at')->get();
+                } else {
+                    $surat = SuratMasuk::where('surat_masuks.bid_id', auth()->user()->bid_id)->where('surat_masuks.sub_id', auth()->user()->sub_id)->latest('surat_keluars.created_at')->get();
+                }
+            }
             try {
                 return view('admin.surat_masuk.index', [
                     'name' => $this->name,
-                    'surat' => SuratMasuk::latest('created_at')->get(),
+                    'surat' => $surat,
                     'pages' => $this->get_access($this->name, auth()->user()->group_id)
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
@@ -75,7 +86,9 @@ class SuratMasukController extends Controller
         if ($this->create == 1) {
             try {
                 return view('admin.surat_masuk.create', [
-                    'name' => $this->name
+                    'name' => $this->name,
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all(),
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -108,6 +121,8 @@ class SuratMasukController extends Controller
                     SuratMasuk::create([
                         'sm_jenis' => $request->input('sm_jenis'),
                         'sm_asal' => $request->input('sm_asal'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
                         // 'sm_no_surat' => $request->input('sm_no_surat'),
                         // 'sm_tgl_surat' => $request->input('sm_tgl_surat'),
                         'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
@@ -160,7 +175,9 @@ class SuratMasukController extends Controller
             try {
                 return view('admin.surat_masuk.edit', [
                     'name' => $this->name,
-                    'surat' => $suratMasuk->find(request()->segment(2))
+                    'surat' => $suratMasuk->find(request()->segment(2)),
+                    'bidang' => \App\Models\Bidang::all(),
+                    'sub' => \App\Models\SubBidang::all(),
                 ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
@@ -203,6 +220,8 @@ class SuratMasukController extends Controller
                     SuratMasuk::where('sm_id', $suratMasuk->sm_id)->update([
                         'sm_jenis' => $request->input('sm_jenis'),
                         'sm_asal' => $request->input('sm_asal'),
+                        'bid_id' => $request->input('bid_id'),
+                        'sub_id' => $request->input('sub_id'),
                         // 'sm_no_surat' => $request->input('sm_no_surat'),
                         // 'sm_tgl_surat' => $request->input('sm_tgl_surat'),
                         'sm_tgl_diterima' => $request->input('sm_tgl_diterima'),
