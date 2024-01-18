@@ -349,8 +349,8 @@ class SuratKeluarController extends Controller
                     ->latest('app_ordinal')
                     ->first();
 
-                $app->update([
-                    'app_disposisi' => $request->input('sk_dipsosisi'),
+                \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->update([
+                    'app_disposisi' => $request->input('sk_disposisi'),
                     'app_date' => \Carbon\Carbon::now(),
                 ]);
 
@@ -361,7 +361,6 @@ class SuratKeluarController extends Controller
 
                 // Membuat array update untuk SuratKeluar
                 $updateSK = [
-                    'sk_status' => $request->input('sk_dipsosisi'),
                     'sk_remark' => $request->input('sk_remark'),
                     'sk_step' => $skStep,
                 ];
@@ -374,7 +373,7 @@ class SuratKeluarController extends Controller
                 // Melakukan update pada SuratKeluar
                 SuratKeluar::where('sk_id', $surat->sk_id)->update($updateSK);
 
-                return redirect()->back()->with('success', 'Data Updated!');
+                return redirect()->back()->with('success', 'Data ' . $pic->name . ' Updated!');
             } else {
                 return redirect()->back()->with('failed', 'You Not Have Authority!');
             }

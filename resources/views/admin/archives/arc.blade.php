@@ -121,19 +121,17 @@
                                         <td>{{ $s->sk_perihal }}</td>
                                         <td>{{ $s->sk_no }}</td>
                                         <td>
-                                            @if($s->sk_file == null)
-                                            <a class="btn btn-sm btn-secondary" target="__blank"
-                                                href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
-                                                    class="fa fa-print"></i></a>
+                                            @if ($s->sk_file == null)
+                                                <a class="btn btn-sm btn-secondary" target="__blank"
+                                                    href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
+                                                        class="fa fa-print"></i></a>
                                             @endif
-                                            @if($s->sk_file != null)
+                                            @if ($s->sk_file != null)
                                                 <a href="{{ route('surat_keluar.show', $s->sk_id) }}" target="__blank"
                                                     class="btn btn-sm btn-secondary"><i class="fa fa-file-pdf-o"></i></a>
-                                            @endif
-                                            @if($s->sk_file != null)
-                                            <a class="btn btn-sm btn-light" target="__blank"
-                                                href="{{ route('surat_keluar.download', $s->sk_id) }}"><i
-                                                    class="fa fa-download"></i></a>
+                                                <a class="btn btn-sm btn-light" target="__blank"
+                                                    href="{{ route('surat_keluar.download', $s->sk_id) }}"><i
+                                                        class="fa fa-download"></i></a>
                                             @endif
                                         </td>
                                     </tr>
