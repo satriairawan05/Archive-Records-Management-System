@@ -130,8 +130,8 @@
                     </li>
                 @endif
                 @if ($readArchive == 1)
-                    <li><a href="{{ route('archives') }}"><i class="fa fa-archive"></i><span
-                                class="nav-text">Archives</span></a></li>
+                    {{-- <li><a href="{{ route('archives') }}"><i class="fa fa-archive"></i><span
+                                class="nav-text">Archives</span></a></li> --}}
                 @endif
             @endif
 
