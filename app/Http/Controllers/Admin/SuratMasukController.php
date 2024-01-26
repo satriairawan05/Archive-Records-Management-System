@@ -64,11 +64,26 @@ class SuratMasukController extends Controller
                 }
             }
             try {
-                return view('admin.surat_masuk.index', [
-                    'name' => $this->name,
-                    'surat' => $surat,
-                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
-                ]);
+                if (request()->bidang_id && request()->sub_id) {
+                    return view('admin.surat_masuk.index', [
+                        'name' => $this->name,
+                        'surat' => $surat,
+                        'pages' => $this->get_access($this->name, auth()->user()->group_id)
+                    ]);
+                }else {
+                    if (request()->bidang_id) {
+                        return view('admin.surat_masuk.index2', [
+                            'name' => $this->name,
+                            'sub' => \App\Models\SubBidang::all(),
+                            'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first()
+                        ]);
+                    } else {
+                        return view('admin.surat_masuk.index3', [
+                            'name' => $this->name,
+                            'bidang' => \App\Models\Bidang::all()
+                        ]);
+                    }
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }

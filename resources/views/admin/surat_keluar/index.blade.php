@@ -127,6 +127,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
                 <li class="breadcrumb-item active">Surat Keluar</li>
+                <li class="breadcrumb-item active">{{ $bidang->bid_name }}</li>
+                <li class="breadcrumb-item active">{{ $sub->sub_name }}</li>
             </ol>
         </div>
     </div>
@@ -263,9 +265,9 @@
                                             @if ($s->sk_file != null)
                                                 <a href="{{ route('surat_keluar.show', $s->sk_id) }}" target="__blank"
                                                     class="btn btn-sm btn-secondary"><i class="fa fa-file-pdf-o"></i></a>
-                                                {{-- <a class="btn btn-sm btn-light" target="__blank"
+                                                <a class="btn btn-sm btn-light" target="__blank"
                                                     href="{{ route('surat_keluar.download', $s->sk_id) }}"><i
-                                                        class="fa fa-download"></i></a> --}}
+                                                        class="fa fa-download"></i></a>
                                             @endif
                                             @if ($update == 1 && $s->sk_created == auth()->user()->name)
                                                 <a href="{{ route('surat_keluar.edit', $s->sk_id) }}"
