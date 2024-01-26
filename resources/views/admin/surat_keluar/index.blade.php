@@ -127,6 +127,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i></a></li>
                 <li class="breadcrumb-item active">Surat Keluar</li>
+                <li class="breadcrumb-item active">{{ $bidang->bid_name }}</li>
+                <li class="breadcrumb-item active">{{ $sub->sub_name }}</li>
             </ol>
         </div>
     </div>

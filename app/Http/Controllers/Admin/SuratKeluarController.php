@@ -66,21 +66,57 @@ class SuratKeluarController extends Controller
         if ($this->read == 1) {
             try {
                 if (auth()->user()->group_id == 1) {
-                    $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
+                    $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                        ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                        ->where('approvals.user_id',auth()->user()->id)
+                        ->whereNull('approvals.app_date')
+                        ->latest('surat_keluars.created_at')
+                        ->get();
                 } else {
+                    $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                        ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                        ->where('approvals.user_id',auth()->user()->id)
+                        ->whereNull('approvals.app_date');
+
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
-                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->latest('surat_keluars.created_at')->get();
-                    } else if(auth()->user()->sub_id == null) {
-                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)->latest('surat_keluars.created_at')->get();
+                        $surat = $query->latest('surat_keluars.created_at')->get();
+                    } else if (auth()->user()->sub_id == null) {
+                        $surat = $query->where('surat_keluars.bid_id', auth()->user()->bid_id)->latest('surat_keluars.created_at')->get();
                     } else {
-                        $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id', auth()->user()->sub_id)->latest('surat_keluars.created_at')->get();
+                        $surat = $query->where('surat_keluars.bid_id', auth()->user()->bid_id)
+                            ->where('surat_keluars.sub_id', auth()->user()->sub_id)
+                            ->latest('surat_keluars.created_at')
+                            ->get();
                     }
                 }
-                return view('admin.surat_keluar.index', [
-                    'name' => $this->name,
-                    'surat' => $surat,
-                    'pages' => $this->get_access($this->name, auth()->user()->group_id)
-                ]);
+
+                if (request()->bidang_id && request()->sub_id) {
+                    return view('admin.surat_keluar.index', [
+                        'surat' => $surat,
+                        'name' => $this->name,
+                        'pages' => $this->get_access($this->name, auth()->user()->group_id),
+                        'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first(),
+                        'sub' => \App\Models\SubBidang::where('bid_id', request()->bidang_id)->where('sub_id',request()->sub_id)->first()
+                    ]);
+                } else {
+                    if (request()->bidang_id) {
+                        return view('admin.surat_keluar.index2', [
+                            'name' => $this->name,
+                            'sub' => \App\Models\SubBidang::all(),
+                            'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first()
+                        ]);
+                    } else {
+                        return view('admin.surat_keluar.index3', [
+                            'name' => $this->name,
+                            'bidang' => \App\Models\Bidang::all()
+                        ]);
+                    }
+                }
+                // return view('admin.surat_keluar.index', [
+                //     'name' => $this->name,
+                //     'surat' => $surat,
+                //     'pages' => $this->get_access($this->name, auth()->user()->group_id)
+                // ]);
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('failed', $e->getMessage());
             }
