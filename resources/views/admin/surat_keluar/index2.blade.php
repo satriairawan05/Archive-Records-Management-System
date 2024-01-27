@@ -25,7 +25,7 @@
                     <div class="list-group">
                         @if (auth()->user()->bid_id != null && auth()->user()->sub_id != null)
                             @php
-                                $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.sub_id', auth()->user()->sub_id)
+                                $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('approvals.sub_id', auth()->user()->sub_id)
                                     ->whereNull('approvals.app_date')
                                     ->count();
                                 $subBidangUser = \App\Models\SubBidang::where('sub_id', auth()->user()->sub_id)->first();
@@ -40,9 +40,8 @@
                         @else
                             @if (auth()->user()->sub_id != null)
                                 @php
-                                    $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
-                                        ->where('sub_id', auth()->user()->sub_id)
-                                        ->whereNull('sk_remark')
+                                    $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('approvals.sub_id', auth()->user()->sub_id)
+                                    ->whereNull('approvals.app_date')
                                         ->count();
                                 @endphp
                                 <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ auth()->user()->sub_id }}"
@@ -55,7 +54,7 @@
                             @else
                                 @foreach ($sub as $d)
                                     @php
-                                        $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.sub_id', $d->sub_id)
+                                        $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('approvals.sub_id', $d->sub_id)
                                     ->whereNull('approvals.app_date')
                                     ->count();
                                     @endphp

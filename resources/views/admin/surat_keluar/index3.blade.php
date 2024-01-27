@@ -24,7 +24,7 @@
                     <div class="list-group">
                         @if (auth()->user()->bid_id != null)
                             @php
-                                $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)
+                                $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('approvals.bid_id', auth()->user()->bid_id)
                                     ->whereNull('approvals.app_date')
                                     ->count();
                                 $bidangUser = \App\Models\Bidang::where('bid_id', auth()->user()->bid_id)->first();
@@ -39,7 +39,7 @@
                         @else
                             @foreach ($bidang as $d)
                                 @php
-                                    $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.bid_id', $d->bid_id)
+                                    $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('approvals.bid_id', $d->bid_id)
                                     ->whereNull('approvals.app_date')
                                     ->count();
                                 @endphp
