@@ -221,9 +221,9 @@ class SuratKeluarController extends Controller
         // dd($suratKeluar);
         try {
             // Increment 'ps_count' in PrintSuratKeluar
-            PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
-            ]);
+            // PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+            //     'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
+            // ]);
 
             // Find surat keluar based on the segment
             $surat = $suratKeluar->find(request()->segment(2));
@@ -444,9 +444,13 @@ class SuratKeluarController extends Controller
 
                 // PrintSuratKeluar::where('sk_id', $data->sk_id)->delete();
 
-                JenisSurat::where('js_id', $data->js_id)->update([
-                    'js_count' => \Illuminate\Support\Facades\DB::raw('js_count - 1')
-                ]);
+                $jenisSurat = JenisSurat::where('js_id', $suratKeluar->js_id)->first();
+
+                    if ($jenisSurat) {
+                        $jenisSurat->update([
+                            'js_count' => $jenisSurat->js_count - 1
+                        ]);
+                    }
 
                 return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
