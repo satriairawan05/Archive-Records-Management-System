@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('sk_id')->nullable();
             $table->string('app_disposisi')->nullable();
             $table->date('app_date')->nullable();
-            $table->string('app_ordinal')->nullable();
+            $table->integer('app_ordinal')->nullable();
             // $table->boolean('app_closed')->default(true)->nullable();
             $table->string('app_created')->nullable();
             $table->string('app_updated')->nullable();
