@@ -379,7 +379,7 @@ class SuratKeluarController extends Controller
         $surat = $suratKeluar->find(request()->segment(2));
         $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)->where('user_id', auth()->user()->id)->first();
         try {
-            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
+            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
@@ -387,7 +387,7 @@ class SuratKeluarController extends Controller
                     ->first();
 
                 \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->update([
-                    'app_disposisi' => $request->input('sk_disposisi'),
+                    // 'app_disposisi' => $request->input('sk_disposisi'),
                     'app_date' => \Carbon\Carbon::now(),
                 ]);
 
@@ -398,7 +398,7 @@ class SuratKeluarController extends Controller
 
                 // Membuat array update untuk SuratKeluar
                 $updateSK = [
-                    'sk_remark' => $request->input('sk_remark'),
+                    'sk_remark' => $request->input('sk_disposisi') . ' with comment '. $request->input('sk_remark') . ' by '. auth()->user()->name,
                     'sk_step' => $skStep,
                 ];
 

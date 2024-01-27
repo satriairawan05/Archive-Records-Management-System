@@ -167,7 +167,7 @@
                                                     ->where('user_id',auth()->user()->id)
                                                     ->first();
                                             @endphp
-                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal && $app->app_date == null)
+                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal)
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>
