@@ -7,14 +7,16 @@
         ->select(['group_pages.access', 'pages.page_name', 'pages.action'])
         ->get();
 
-    $approval = \App\Models\Approval::where('user_id', auth()->user()->id)->whereNull('app_date')->first();
+    $approval = \App\Models\Approval::where('user_id', auth()->user()->id)
+        ->whereNull('app_date')
+        ->first();
 
     $countSK =
         $approval != null
-            ? \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')
-            ->where('surat_keluars.sk_step', $approval->app_ordinal)
-            ->whereNull('approvals.app_date')
-            ->count()
+            ? \App\Models\SuratKeluar::leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                ->where('surat_keluars.sk_step', $approval->app_ordinal)
+                ->whereNull('approvals.app_date')
+                ->count()
             : '0';
 
     $createSM = 0;
@@ -129,7 +131,11 @@
                         </a>
                     </li>
                 @endif
-               
+                @if ($readArchive == 1)
+                    <li><a href="{{ route('archives') }}"><i class="fa fa-archive"></i><span
+                                class="nav-text">Archives</span></a></li>
+                @endif
+
             @endif
 
             <li class="nav-label">Setting</li>
