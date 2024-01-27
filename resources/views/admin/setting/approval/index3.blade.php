@@ -95,7 +95,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>User</th>
-                                    {{-- <th>Surat Keluar</th> --}}
+                                    <th>Surat Keluar</th>
                                     <th>Approval Ke</th>
                                     <th>Action</th>
                                 </tr>
@@ -125,7 +125,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                {{-- <td>
+                                                <td>
                                                     <select id="sk_edit" name="sk_id"
                                                         class="form-control form-control-sm">
                                                         @foreach ($surat as $s)
@@ -139,7 +139,7 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-                                                </td> --}}
+                                                </td>
                                                 <td>
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="app_ordinal" id="app_ordinal" min="1" step="1"
@@ -212,7 +212,7 @@
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 <select id="sk_add" name="sk_id"
                                                     class="form-control form-control-sm">
                                                     @foreach ($surat as $s)
@@ -226,7 +226,7 @@
                                                         @endif
                                                     @endforeach
                                                 </select>
-                                            </td> --}}
+                                            </td>
                                             <td>
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="app_ordinal" id="app_ordinal" min="1" step="1"
