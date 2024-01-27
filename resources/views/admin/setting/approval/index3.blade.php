@@ -218,10 +218,10 @@
                                                     @foreach ($surat as $s)
                                                         @if (old('sk_id') == $s->sk_id)
                                                             <option value="{{ $s->sk_id }}" selected>
-                                                                {{ $s->sk_created }}
+                                                                {{ $s->sk_perihal }}
                                                             </option>
                                                         @else
-                                                            <option value="{{ $s->sk_id }}">{{ $s->sk_created }}
+                                                            <option value="{{ $s->sk_id }}">{{ $s->sk_perihal }}
                                                             </option>
                                                         @endif
                                                     @endforeach

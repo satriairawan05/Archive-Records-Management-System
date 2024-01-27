@@ -2,20 +2,20 @@
 
 @php
     $read = 0;
-    $approval = 0;
+    // $approval = 0;
     $update = 0;
     $delete = 0;
     $closing = 0;
 
     foreach ($pages as $r) {
-        if ($r->page_name == $name) {
+        if ($r->page_name == 'Surat Keluar') {
             if ($r->action == 'Read') {
                 $read = $r->access;
             }
 
-            if ($r->action == 'Approval') {
-                $approval = $r->access;
-            }
+            // if ($r->action == 'Approval') {
+            //    $approval = $r->access;
+            // }
 
             if ($r->action == 'Update') {
                 $update = $r->access;
@@ -164,10 +164,10 @@
                                         <td>
                                             @php
                                                 $app = \App\Models\Approval::where('sk_id', $s->sk_id)
-                                                    ->where('user_id', auth()->user()->id)
+                                                    ->where('user_id',auth()->user()->id)
                                                     ->first();
                                             @endphp
-                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal && $app->app_date == null)
+                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal && $app->app_ordinal == null)
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>

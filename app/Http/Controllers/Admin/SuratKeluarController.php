@@ -94,6 +94,7 @@ class SuratKeluarController extends Controller
                     return view('admin.surat_keluar.index', [
                         'surat' => $surat,
                         'name' => $this->name,
+                        'approval' => $this->approval,
                         'pages' => $this->get_access($this->name, auth()->user()->group_id),
                         'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first(),
                         'sub' => \App\Models\SubBidang::where('bid_id', request()->bidang_id)->where('sub_id',request()->sub_id)->first()
