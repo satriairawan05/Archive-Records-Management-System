@@ -69,13 +69,14 @@ class SuratKeluarController extends Controller
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                         ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                         ->where('approvals.user_id',auth()->user()->id)
+                        ->whereNull('approvals.app_date')
                         ->latest('surat_keluars.created_at')
                         ->get();
                 } else {
                     $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                         ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                         ->where('approvals.user_id',auth()->user()->id)
-                        ->whereNull('surat_keluars.sk_remark');
+                        ->whereNull('approvals.app_date');
 
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
@@ -376,9 +377,9 @@ class SuratKeluarController extends Controller
     {
         $this->get_access_page();
         $surat = $suratKeluar->find(request()->segment(2));
-        $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)->where('user_id', auth()->user()->id)->first();
+        $app = \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->first();
         try {
-            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal) {
+            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
@@ -386,7 +387,7 @@ class SuratKeluarController extends Controller
                     ->first();
 
                 \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->update([
-                    // 'app_disposisi' => $request->input('sk_disposisi'),
+                    'app_disposisi' => $request->input('sk_disposisi'),
                     'app_date' => \Carbon\Carbon::now(),
                 ]);
 
@@ -397,7 +398,7 @@ class SuratKeluarController extends Controller
 
                 // Membuat array update untuk SuratKeluar
                 $updateSK = [
-                    'sk_remark' => $request->input('sk_disposisi') . ' with comment '. $request->input('sk_remark') . ' by '. auth()->user()->name,
+                    'sk_remark' => $request->input('sk_remark'),
                     'sk_step' => $skStep,
                 ];
 
@@ -441,7 +442,7 @@ class SuratKeluarController extends Controller
 
                 SuratKeluar::destroy($data->sk_id);
 
-                PrintSuratKeluar::where('sk_id', $data->sk_id)->delete();
+                // PrintSuratKeluar::where('sk_id', $data->sk_id)->delete();
 
                 JenisSurat::where('js_id', $data->js_id)->update([
                     'js_count' => \Illuminate\Support\Facades\DB::raw('js_count - 1')

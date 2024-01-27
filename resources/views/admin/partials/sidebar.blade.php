@@ -8,16 +8,14 @@
         ->get();
 
     $approval = \App\Models\Approval::where('user_id', auth()->user()->id)
-        //->whereNull('app_date')
+        ->whereNull('app_date')
         ->first();
 
     $countSK =
         $approval != null
             ? \App\Models\SuratKeluar::leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                 ->where('surat_keluars.sk_step', $approval->app_ordinal)
-                ->where('approvals.user_id',auth()->user()->id)
-                ->whereNull('sk_remark')
-                // ->whereNull('approvals.app_date')
+                ->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
                 ->count()
             : '0';
 

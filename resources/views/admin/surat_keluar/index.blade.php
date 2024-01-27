@@ -165,9 +165,10 @@
                                             @php
                                                 $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)
                                                     ->where('user_id',auth()->user()->id)
+                                                    ->whereNull('app_date')
                                                     ->first();
                                             @endphp
-                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal)
+                                            @if ($approval == 1 && $app && $s->sk_step == $app->app_ordinal && $app->app_date == null)
                                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                                     data-target=".bd-example-modal-lg"><i
                                                         class="fa fa-bookmark"></i></button>
