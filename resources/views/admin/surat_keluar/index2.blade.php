@@ -25,9 +25,8 @@
                     <div class="list-group">
                         @if (auth()->user()->bid_id != null && auth()->user()->sub_id != null)
                             @php
-                                $skCount = \App\Models\SuratKeluar::where('bid_id', auth()->user()->bid_id)
-                                    ->where('sub_id', auth()->user()->sub_id)
-                                    ->whereNull('sk_remark')
+                                $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.sub_id', auth()->user()->sub_id)
+                                    ->whereNull('approvals.app_date')
                                     ->count();
                                 $subBidangUser = \App\Models\SubBidang::where('sub_id', auth()->user()->sub_id)->first();
                             @endphp
@@ -56,10 +55,9 @@
                             @else
                                 @foreach ($sub as $d)
                                     @php
-                                        $skCount = \App\Models\SuratKeluar::where('bid_id', $bidang->bid_id)
-                                            ->where('sub_id', $d->sub_id)
-                                            ->whereNull('sk_remark')
-                                            ->count();
+                                        $skCount = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.sub_id', $d->sub_id)
+                                    ->whereNull('approvals.app_date')
+                                    ->count();
                                     @endphp
                                     <a href="?bidang_id={{ $bidang->bid_id }}&sub_id={{ $d->sub_id }}"
                                         class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $d->sub_name }}
