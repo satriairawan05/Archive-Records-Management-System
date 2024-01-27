@@ -69,14 +69,14 @@ class SuratKeluarController extends Controller
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                         ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                         ->where('approvals.user_id',auth()->user()->id)
-                        ->whereNull('approvals.app_date')
+                        ->whereNull('surat_keluars.sk_remark')
                         ->latest('surat_keluars.created_at')
                         ->get();
                 } else {
                     $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                         ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                         ->where('approvals.user_id',auth()->user()->id)
-                        ->whereNull('approvals.app_date');
+                        ->whereNull('surat_keluars.sk_remark');
 
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
