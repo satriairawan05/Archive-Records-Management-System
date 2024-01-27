@@ -267,9 +267,9 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                    'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
-                ]);
+                // PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                //     'ps_count' => \Illuminate\Support\Facades\DB::raw('ps_count + 1')
+                // ]);
 
                 return view('admin.surat_keluar.file', [
                     'name' => $this->name,
@@ -354,9 +354,9 @@ class SuratKeluarController extends Controller
                         'sk_file' => $filePath
                     ]);
 
-                    PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
-                        'ps_count' => 0
-                    ]);
+                    // PrintSuratKeluar::where('sk_id', $suratKeluar->sk_id)->update([
+                    //     'ps_count' => 0
+                    // ]);
 
                     return redirect()->to(route('surat_keluar.index'))->with('success', 'Successfully Updated!');
                 } else {
@@ -377,7 +377,7 @@ class SuratKeluarController extends Controller
     {
         $this->get_access_page();
         $surat = $suratKeluar->find(request()->segment(2));
-        $app = \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->first();
+        $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)->where('sub_id',auth()->user()->sub_id)->where('user_id', auth()->user()->id)->first();
         try {
             if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
