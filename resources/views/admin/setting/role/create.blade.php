@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-10">
                                 <input type="text"
-                                    class="form-control form-control-sm @error('group_name')
+                                    class="form-control text-dark form-control-sm @error('group_name')
                                     is-invalid
                                 @enderror"
                                     id="group_name" placeholder="Masukan Role Name" value="{{ old('group_name') }}"
@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-12 my-3">
-                                <table class="table table-light">
+                                <table class="table table-light text-dark">
                                     <thead class="thead-primary">
                                         <tr>
                                             <th style="width: 10px">#</th>
