@@ -74,22 +74,21 @@ class SuratKeluarController extends Controller
                         ->get();
                 } else {
                     $app = \App\Models\Approval::where('user_id', auth()->user()->id)->whereNull('app_date')->first();
-                    if (auth()->user()->group_id == 2) {
+
+                    if ($app != null) {
                         $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                             ->where('surat_keluars.sk_step', $app->app_ordinal)
-                            ->where('surat_keluars.sk_id',$app->sk_id)
+                            ->where('surat_keluars.sk_id', $app->sk_id)
                             // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                             // ->where('approvals.user_id',auth()->user()->id)
                             ->where('surat_keluars.sk_created', auth()->user()->name);
                     } else {
                         $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
-                            ->where('surat_keluars.sk_step', $app->app_ordinal)
-                            ->where('surat_keluars.sk_id',$app->sk_id);
-                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
-                        // ->where('approvals.user_id',auth()->user()->id)
-                        // ->where('surat_keluars.sk_created',auth()->user()->name);
+                            // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                            // ->where('approvals.user_id',auth()->user()->id)
+                            ->where('surat_keluars.sk_created', auth()->user()->name);
                     }
-
+                    
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
                     } else if (auth()->user()->sub_id == null) {
@@ -406,11 +405,11 @@ class SuratKeluarController extends Controller
                     'app_date' => \Carbon\Carbon::now(),
                 ]);
 
-                
-                if($request->input('sk_disposisi') == 'Rejected'){
+
+                if ($request->input('sk_disposisi') == 'Rejected') {
                     $skStep = 1;
 
-                    \App\Models\Approval::where('sk_id',$suratKeluar->sk_id)->update([
+                    \App\Models\Approval::where('sk_id', $suratKeluar->sk_id)->update([
                         'app_date' => null,
                         'app_disposisi' => null,
                     ]);
