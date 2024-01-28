@@ -258,7 +258,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if ($s->sk_file == null)
+                                            @if ($s->sk_file === null)
                                                 <a class="btn btn-sm btn-secondary" target="__blank"
                                                     href="{{ route('surat_keluar.print', $s->sk_id) }}"><i
                                                         class="fa fa-print"></i></a>
