@@ -27,7 +27,6 @@
                             @php
                                 $smCount = \App\Models\SuratMasuk::where('bid_id', auth()->user()->bid_id)
                                     ->where('sub_id', auth()->user()->sub_id)
-                                    ->whereNotNull('sk_remark')
                                     ->count();
                                 $subBidangUser = \App\Models\SubBidang::where('sub_id', auth()->user()->sub_id)->first();
                             @endphp
