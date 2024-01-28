@@ -67,17 +67,16 @@ class SuratKeluarController extends Controller
             try {
                 if (auth()->user()->group_id == 1) {
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
-                        ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
-                        ->where('approvals.user_id',auth()->user()->id)
-                        ->whereNull('approvals.app_date')
+                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                        // ->where('approvals.user_id',auth()->user()->id)
+                        // ->whereNull('approvals.app_date')
                         ->latest('surat_keluars.created_at')
                         ->get();
                 } else {
                     $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
-                        ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
-                        ->where('approvals.user_id',auth()->user()->id)
-                        ->orWhere('surat_keluars.sk_created',auth()->user()->name)
-                        ->whereNull('approvals.app_date');
+                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                        // ->where('approvals.user_id',auth()->user()->id)
+                        ->where('surat_keluars.sk_created',auth()->user()->name);
 
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
