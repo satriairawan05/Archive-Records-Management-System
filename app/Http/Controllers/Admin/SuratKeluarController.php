@@ -73,10 +73,22 @@ class SuratKeluarController extends Controller
                         ->latest('surat_keluars.created_at')
                         ->get();
                 } else {
-                    $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                    $app = \App\Models\Approval::where('user_id', auth()->user()->id)->whereNull('app_date')->first();
+                    if (auth()->user()->group_id == 2) {
+                        $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                            ->where('surat_keluars.sk_step', $app->app_ordinal)
+                            ->where('surat_keluars.sk_id',$app->sk_id)
+                            // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                            // ->where('approvals.user_id',auth()->user()->id)
+                            ->where('surat_keluars.sk_created', auth()->user()->name);
+                    } else {
+                        $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                            ->where('surat_keluars.sk_step', $app->app_ordinal)
+                            ->where('surat_keluars.sk_id',$app->sk_id);
                         // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                         // ->where('approvals.user_id',auth()->user()->id)
-                        ->where('surat_keluars.sk_created',auth()->user()->name);
+                        // ->where('surat_keluars.sk_created',auth()->user()->name);
+                    }
 
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
@@ -97,7 +109,7 @@ class SuratKeluarController extends Controller
                         'approval' => $this->approval,
                         'pages' => $this->get_access($this->name, auth()->user()->group_id),
                         'bidang' => \App\Models\Bidang::where('bid_id', request()->bidang_id)->first(),
-                        'sub' => \App\Models\SubBidang::where('bid_id', request()->bidang_id)->where('sub_id',request()->sub_id)->first()
+                        'sub' => \App\Models\SubBidang::where('bid_id', request()->bidang_id)->where('sub_id', request()->sub_id)->first()
                     ]);
                 } else {
                     if (request()->bidang_id) {
@@ -231,6 +243,7 @@ class SuratKeluarController extends Controller
             // Retrieve approval information
             $approval = Approval::leftJoin('users', 'approvals.user_id', '=', 'users.id')
                 ->where('approvals.sk_id', $surat->sk_id)
+                ->where('approvals.app_disposisi', 'Accepted')
                 ->latest('approvals.app_id')
                 ->first();
 
@@ -377,9 +390,11 @@ class SuratKeluarController extends Controller
     {
         $this->get_access_page();
         $surat = $suratKeluar->find(request()->segment(2));
-        $app = \App\Models\Approval::where('sk_id', $surat->sk_id)->where('user_id', auth()->user()->id)->first();
+        $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)->where('sub_id', auth()->user()->sub_id)
+            ->where('user_id', auth()->user()->id)
+            ->whereNull('app_date')->first();
         try {
-            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
+            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
@@ -391,10 +406,20 @@ class SuratKeluarController extends Controller
                     'app_date' => \Carbon\Carbon::now(),
                 ]);
 
-                // Menentukan nilai skStep sesuai kondisi yang ada
-                $skStep = $latestApproval && $latestApproval->app_ordinal != $surat->sk_step
-                    ? $surat->sk_step + 1
-                    : $surat->sk_step;
+                
+                if($request->input('sk_disposisi') == 'Rejected'){
+                    $skStep = 1;
+
+                    \App\Models\Approval::where('sk_id',$suratKeluar->sk_id)->update([
+                        'app_date' => null,
+                        'app_disposisi' => null,
+                    ]);
+                } else {
+                    // Menentukan nilai skStep sesuai kondisi yang ada
+                    $skStep = $latestApproval && $latestApproval->app_ordinal != $surat->sk_step
+                        ? $surat->sk_step + 1
+                        : $surat->sk_step;
+                }
 
                 // Membuat array update untuk SuratKeluar
                 $updateSK = [
@@ -446,11 +471,11 @@ class SuratKeluarController extends Controller
 
                 $jenisSurat = JenisSurat::where('js_id', $suratKeluar->js_id)->first();
 
-                    if ($jenisSurat) {
-                        $jenisSurat->update([
-                            'js_count' => $jenisSurat->js_count - 1
-                        ]);
-                    }
+                if ($jenisSurat) {
+                    $jenisSurat->update([
+                        'js_count' => $jenisSurat->js_count - 1
+                    ]);
+                }
 
                 return redirect()->back()->with('success', 'Successfully Deleted!');
             } catch (\Illuminate\Database\QueryException $e) {
