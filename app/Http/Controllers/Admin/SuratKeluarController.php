@@ -88,7 +88,7 @@ class SuratKeluarController extends Controller
                             // ->where('approvals.user_id',auth()->user()->id)
                             ->where('surat_keluars.sk_created', auth()->user()->name);
                     }
-                    
+
                     if (auth()->user()->bid_id == null && auth()->user()->sub_id == null) {
                         $surat = $query->latest('surat_keluars.created_at')->get();
                     } else if (auth()->user()->sub_id == null) {
