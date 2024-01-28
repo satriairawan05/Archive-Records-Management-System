@@ -134,40 +134,42 @@
 
             @endif
 
-            <li class="nav-label">Setting</li>
-            @if ($readJS == 1)
-                <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span class="nav-text">
-                                Jenis Surat</span></i></a></li>
-            @endif
-            @if ($readCom == 1 || $readBid == 1 || $readSub == 1)
-                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                            class="fa fa-building"></i><span class="nav-text">Profile</span></a>
-                    <ul aria-expanded="false">
-                        @if ($readCom == 1)
-                            <li><a href="{{ route('perusahaan.index') }}">Company</a></li>
-                        @endif
-                        @if ($readBid == 1)
-                            <li><a href="{{ route('bidang.index') }}">Bidang</a></li>
-                        @endif
-                        @if ($readSub == 1)
-                            <li><a href="{{ route('sub_bidang.index') }}">Sub Bidang</a></li>
-                        @endif
-                    </ul>
-                </li>
-            @endif
-            @if ($readUser == 1)
-                <li><a href="{{ route('user.index') }}"><i class="fa fa-users"><span class="nav-text">
-                                Users</span></i></a>
-                </li>
-            @endif
-            @if ($readApproval == 1)
-                <li><a href="{{ route('approval.index') }}"><i class="fa fa-bookmark"><span class="nav-text">
-                                Approval</span></i></a></li>
-            @endif
-            @if (auth()->user()->group_id == 1)
-                <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text">
-                                Role</span></i></a>
-                </li>
+            @if($readJS == 1 || $readCom == 1 || $readBid == 1 || $readSub == 1 || $readUser == 1 || $readApproval == 1)
+                <li class="nav-label">Setting</li>
+                @if ($readJS == 1)
+                    <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span class="nav-text">
+                                    Jenis Surat</span></i></a></li>
+                @endif
+                @if ($readCom == 1 || $readBid == 1 || $readSub == 1)
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="fa fa-building"></i><span class="nav-text">Profile</span></a>
+                        <ul aria-expanded="false">
+                            @if ($readCom == 1)
+                                <li><a href="{{ route('perusahaan.index') }}">Company</a></li>
+                            @endif
+                            @if ($readBid == 1)
+                                <li><a href="{{ route('bidang.index') }}">Bidang</a></li>
+                            @endif
+                            @if ($readSub == 1)
+                                <li><a href="{{ route('sub_bidang.index') }}">Sub Bidang</a></li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                @if ($readUser == 1)
+                    <li><a href="{{ route('user.index') }}"><i class="fa fa-users"><span class="nav-text">
+                                    Users</span></i></a>
+                    </li>
+                @endif
+                @if ($readApproval == 1)
+                    <li><a href="{{ route('approval.index') }}"><i class="fa fa-bookmark"><span class="nav-text">
+                                    Approval</span></i></a></li>
+                @endif
+                @if (auth()->user()->group_id == 1)
+                    <li><a href="{{ route('role.index') }}"><i class="fa fa-cog"><span class="nav-text">
+                                    Role</span></i></a>
+                    </li>
+                @endif
             @endif
         </ul>
     </div>
