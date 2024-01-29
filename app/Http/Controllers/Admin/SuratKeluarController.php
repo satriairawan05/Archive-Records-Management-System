@@ -65,19 +65,6 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         if ($this->read == 1) {
             try {
-                $surat = SuratKeluar::get();
-                    // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
-                    // ->where('approvals.user_id',auth()->user()->id)
-                    // ->whereNull('approvals.app_date')
-                    // ->latest('created_at')
-                    // ->get();
-                foreach($surat as $s){
-                    $stepSurat = $s->sk_step;
-
-                    $latestApproval = \App\Models\Approval::where('sk_id', $s->sk_id)
-                    ->latest('app_ordinal')
-                    ->first();
-                }
                 if (auth()->user()->group_id == 1) {
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
                         // ->where('approvals.user_id',auth()->user()->id)
@@ -89,17 +76,28 @@ class SuratKeluarController extends Controller
 
                     if ($app) {
                         $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
-                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                            // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                             ->where('surat_keluars.sk_step', $app->app_ordinal)
                             ->where('surat_keluars.sk_id', $app->sk_id);
-                            // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id');
-                            // ->where('approvals.user_id',auth()->user()->id)
-                            // ->where('surat_keluars.sk_created', auth()->user()->name);
+                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id');
+                        // ->where('approvals.user_id',auth()->user()->id)
+                        // ->where('surat_keluars.sk_created', auth()->user()->name);
                     } else {
+                        $surat = SuratKeluar::get();
+                        // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
+                        // ->where('approvals.user_id',auth()->user()->id)
+                        // ->whereNull('approvals.app_date')
+                        // ->latest('created_at')
+                        // ->get();
+                        foreach ($surat as $s) {
+                            $latestApproval = \App\Models\Approval::where('sk_id', $s->sk_id)
+                                ->latest('app_ordinal')
+                                ->first();
+                        }
                         $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
-                        // kalau mau gk nampil suratnya di uncomment dibawah ini
-                        ->whereNot('surat_keluars.sk_step')
-                        // yang whereNot aja di diuncomment
+                            // kalau mau gk nampil suratnya di uncomment dibawah ini
+                            // ->whereNot('surat_keluars.sk_step', $latestApproval?->app_ordinal)
+                            // yang whereNot aja di diuncomment
                             // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                             // ->where('approvals.user_id',auth()->user()->id)
                             ->where('surat_keluars.sk_created', auth()->user()->name);
@@ -406,8 +404,8 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         $surat = $suratKeluar->find(request()->segment(2));
         $app = \App\Models\Approval::
-        // where('bid_id', auth()->user()->bid_id)
-        // ->where('sub_id', auth()->user()->sub_id)
+            // where('bid_id', auth()->user()->bid_id)
+            // ->where('sub_id', auth()->user()->sub_id)
             where('user_id', auth()->user()->id)
             //->whereNull('app_date')
             ->first();
