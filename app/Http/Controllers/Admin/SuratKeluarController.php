@@ -404,13 +404,13 @@ class SuratKeluarController extends Controller
         $this->get_access_page();
         $surat = $suratKeluar->find(request()->segment(2));
         $app = \App\Models\Approval::
-            // where('bid_id', auth()->user()->bid_id)
-            // ->where('sub_id', auth()->user()->sub_id)
-            where('user_id', auth()->user()->id)
-            //->whereNull('app_date')
+            where('sk_id', $suratKeluar->sk_id)
+            // ->where('sub_id', request()->sub_id)
+            ->where('user_id', auth()->user()->id)
+            ->whereNull('app_date')
             ->first();
         try {
-            if ($this->approval == 1 && $app && $surat->sk_step == $app->app_ordinal && $app->app_date == null) {
+            if ($this->approval == 1 && $app && $suratKeluar->sk_step == $app->app_ordinal) {
                 $pic = \App\Models\User::where('name', $surat->sk_created)->select('name')->first();
 
                 $latestApproval = \App\Models\Approval::where('sk_id', $surat->sk_id)
