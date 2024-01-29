@@ -163,9 +163,10 @@
                                         <td>{{ \Carbon\Carbon::parse($s->sk_tgl)->isoFormat('DD MMMM YYYY') }}</td>
                                         <td>
                                             @php
-                                                $app = \App\Models\Approval::where('bid_id', auth()->user()->bid_id)
+                                                $app = \App\Models\Approval::
+                                                // where('bid_id', auth()->user()->bid_id)
                                                 // ->where('sub_id',auth()->user()->sub_id)
-                                                // ->where('sk_id',$s->sk_id)
+                                                where('sk_id',$s->sk_id)
                                                     ->where('user_id',auth()->user()->id)
                                                     // ->whereNull('app_date')
                                                     ->first();
