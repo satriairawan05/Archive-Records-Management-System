@@ -28,7 +28,7 @@
         $countSK = $countSK->where('approvals.user_id', auth()->user()->id)->whereNull('approvals.app_date');
     }
 
-    $count = $countSK->count();
+    $countSKValue = $countSK->count();
 
     $createSM = 0;
     $createSK = 0;
@@ -135,8 +135,8 @@
                 @if ($readSK == 1)
                     <li><a href="{{ route('surat_keluar.index') }}"><i class="fa fa-envelope-o"></i><span
                                 class="nav-text">Surat Keluar
-                                @if ($countSK > 0)
-                                    <span class="badge badge-info">{{ $countSK }}</span>
+                                @if ($countSKValue > 0)
+                                    <span class="badge badge-info">{!! $countSKValue !!}</span>
                                 @endif
                             </span>
                         </a>
