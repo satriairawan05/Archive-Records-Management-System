@@ -11,22 +11,24 @@
     //    ->whereNull('app_date')
     //    ->first();
 
-    $countSK = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id');
+    $countSK = \App\Models\SuratKeluar::leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id');
 
-    if(auth()->user()->bid_id != null && auth()->user()->sub_id != null){
-        $countSK->where('surat_keluars.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id',auth()->user()->sub_id)
-            ->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
-            ->count();
+    if (auth()->user()->bid_id != null && auth()->user()->sub_id != null) {
+        $countSK = $countSK
+            ->where('surat_keluars.bid_id', auth()->user()->bid_id)
+            ->where('surat_keluars.sub_id', auth()->user()->sub_id)
+            ->where('approvals.user_id', auth()->user()->id)
+            ->whereNull('approvals.app_date');
+    } elseif (auth()->user()->bid_id != null) {
+        $countSK = $countSK
+            ->where('surat_keluars.bid_id', auth()->user()->bid_id)
+            ->where('approvals.user_id', auth()->user()->id)
+            ->whereNull('approvals.app_date');
     } else {
-        if(auth()->user()->bid_id != null){
-            $countSK->where('surat_keluars.bid_id', auth()->user()->bid_id)
-            ->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
-            ->count();
-        } else {
-            $countSK->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
-            ->count();
-        }
+        $countSK = $countSK->where('approvals.user_id', auth()->user()->id)->whereNull('approvals.app_date');
     }
+
+    $count = $countSK->count();
 
     $createSM = 0;
     $createSK = 0;
@@ -147,10 +149,11 @@
 
             @endif
 
-            @if($readJS == 1 || $readCom == 1 || $readBid == 1 || $readSub == 1 || $readUser == 1 || $readApproval == 1)
+            @if ($readJS == 1 || $readCom == 1 || $readBid == 1 || $readSub == 1 || $readUser == 1 || $readApproval == 1)
                 <li class="nav-label">Setting</li>
                 @if ($readJS == 1)
-                    <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span class="nav-text">
+                    <li><a href="{{ route('jenis_surat.index') }}"><i class="fa fa-envelope-square"><span
+                                    class="nav-text">
                                     Jenis Surat</span></i></a></li>
                 @endif
                 @if ($readCom == 1 || $readBid == 1 || $readSub == 1)
