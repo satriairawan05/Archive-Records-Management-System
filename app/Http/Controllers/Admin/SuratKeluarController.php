@@ -73,6 +73,10 @@ class SuratKeluarController extends Controller
                     // ->get();
                 foreach($surat as $s){
                     $stepSurat = $s->sk_step;
+
+                    $latestApproval = \App\Models\Approval::where('sk_id', $s->sk_id)
+                    ->latest('app_ordinal')
+                    ->first();
                 }
                 if (auth()->user()->group_id == 1) {
                     $surat = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
@@ -93,6 +97,9 @@ class SuratKeluarController extends Controller
                             // ->where('surat_keluars.sk_created', auth()->user()->name);
                     } else {
                         $query = SuratKeluar::leftJoin('jenis_surats', 'surat_keluars.js_id', '=', 'jenis_surats.js_id')
+                        // kalau mau gk nampil suratnya di uncomment dibawah ini
+                        ->whereNot('surat_keluars.sk_step')
+                        // yang whereNot aja di diuncomment
                             // ->leftJoin('approvals', 'surat_keluars.sk_id', '=', 'approvals.sk_id')
                             // ->where('approvals.user_id',auth()->user()->id)
                             ->where('surat_keluars.sk_created', auth()->user()->name);
