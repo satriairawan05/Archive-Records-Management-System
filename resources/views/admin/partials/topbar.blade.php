@@ -83,10 +83,10 @@
                             <i class="mdi mdi-account"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">
+                            {{-- <a href="#" class="dropdown-item">
                                 <i class="icon-user"></i>
                                 <span class="ml-2">Profile </span>
-                            </a>
+                            </a> --}}
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 <button type="submit" class="btn text-dark ml-2 bg-transparent">

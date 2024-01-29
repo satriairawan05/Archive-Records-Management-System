@@ -11,9 +11,22 @@
     //    ->whereNull('app_date')
     //    ->first();
 
-    $countSK =  \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id')->where('surat_keluars.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id',auth()->user()->sub_id)
+    $countSK = \App\Models\SuratKeluar::leftJoin('approvals','surat_keluars.sk_id','=','approvals.sk_id');
+
+    if(auth()->user()->bid_id != null && auth()->user()->sub_id != null){
+        $countSK->where('surat_keluars.bid_id', auth()->user()->bid_id)->where('surat_keluars.sub_id',auth()->user()->sub_id)
             ->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
             ->count();
+    } else {
+        if(auth()->user()->bid_id != null){
+            $countSK->where('surat_keluars.bid_id', auth()->user()->bid_id)
+            ->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
+            ->count();
+        } else {
+            $countSK->where('approvals.user_id',auth()->user()->id)->whereNull('approvals.app_date')
+            ->count();
+        }
+    }
 
     $createSM = 0;
     $createSK = 0;
