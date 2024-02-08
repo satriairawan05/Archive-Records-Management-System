@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('surat_keluars', function (Blueprint $table) {
             $table->increments('sk_id');
-            $table->foreignId('js_id')->nullable();
-            $table->foreignId('bid_id')->nullable();
-            $table->foreignId('sub_id')->nullable();
+            $table->foreignId('js_id')->nullable()->references('js_id')->on('jenis_surats')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('bid_id')->nullable()->references('bid_id')->on('bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('sub_id')->nullable()->references('sub_id')->on('sub_bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('sk_asal')->nullable();
             $table->string('sk_tujuan')->nullable();
             $table->string('sk_tempat_tujuan')->nullable();

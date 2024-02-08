@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_bidangs', function (Blueprint $table) {
             $table->increments('sub_id');
-            $table->foreignId('bid_id')->nullable();
+            $table->foreignId('bid_id')->nullable()->references('bid_id')->on('bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('sub_name')->nullable();
             $table->string('sub_alias')->nullable();
             $table->timestamps();

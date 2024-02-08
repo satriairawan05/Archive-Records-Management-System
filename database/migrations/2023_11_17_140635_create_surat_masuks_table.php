@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('surat_masuks', function (Blueprint $table) {
             $table->increments('sm_id');
             $table->string('sm_jenis')->nullable();
-            $table->foreignId('bid_id')->nullable();
-            $table->foreignId('sub_id')->nullable();
+            $table->foreignId('bid_id')->nullable()->references('bid_id')->on('bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('sub_id')->nullable()->references('sub_id')->on('sub_bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('sm_asal')->nullable();
             $table->string('sm_no_surat')->nullable();
             $table->date('sm_tgl_surat')->nullable();

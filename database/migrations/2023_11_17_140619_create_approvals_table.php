@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('approvals', function (Blueprint $table) {
             $table->increments('app_id');
-            $table->foreignId('user_id')->nullable();
-            $table->foreignId('bid_id')->nullable();
-            $table->foreignId('sub_id')->nullable();
-            $table->foreignId('sk_id')->nullable();
+            $table->foreignId('user_id')->nullable()->references('user_id')->on('users')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('bid_id')->nullable()->references('bid_id')->on('bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('sub_id')->nullable()->references('sub_id')->on('sub_bidangs')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('sk_id')->nullable()->references('sk_id')->on('surat_keluars')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('app_disposisi')->nullable();
             $table->date('app_date')->nullable();
             $table->integer('app_ordinal')->nullable();
